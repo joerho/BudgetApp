@@ -10,7 +10,7 @@ import UIKit
 import SQLite
 
 
-class ViewController: UIViewController {
+class ViewController: UITabBarController {
     var database: Connection!
 
     override func viewDidLoad() {
@@ -51,7 +51,7 @@ class ViewController: UIViewController {
                     t.column(date)
                 })
             }
-        
+
         } catch {
             print(error)
         }
