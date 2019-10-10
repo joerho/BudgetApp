@@ -51,7 +51,6 @@ class ViewController: UITabBarController {
                     t.column(date)
                 })
             }
-
         } catch {
             print(error)
         }
