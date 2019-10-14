@@ -14,9 +14,12 @@ class IncomeViewController: UIViewController {
         super.viewDidLoad()
         self.title = "income"
         // Do any additional setup after loading the view.
-    }
-    
-
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add", style: .plain, target: self, action: #selector(addButtonTapped))
+        }
+        
+        @objc func addButtonTapped(sender: UIBarButtonItem) {
+            present(AddNewViewController(), animated: true, completion: nil)
+        }
     /*
     // MARK: - Navigation
 
