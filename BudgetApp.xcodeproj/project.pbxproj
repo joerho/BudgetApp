@@ -9,19 +9,21 @@
 /* Begin PBXBuildFile section */
 		3C49DCD0234C24F500D28820 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C49DCCF234C24F500D28820 /* Transaction.swift */; };
 		3C49DD04234D4C9200D28820 /* ExpenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C49DD03234D4C9200D28820 /* ExpenseViewController.swift */; };
-		3C49DD08234ECAA400D28820 /* AddIncomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C49DD07234ECAA400D28820 /* AddIncomeViewController.swift */; };
 		3C49DD0F234EFD4900D28820 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C49DD0D234EFD4900D28820 /* TabBarController.swift */; };
-		3C49DD10234EFD4900D28820 /* TabBarController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C49DD0E234EFD4900D28820 /* TabBarController.xib */; };
 		3C7E5B3E234FF792004CFACF /* IncomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7E5B3D234FF792004CFACF /* IncomeViewController.swift */; };
 		3C7E5B40235048DA004CFACF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7E5B3F235048DA004CFACF /* HomeViewController.swift */; };
 		3C7E5B4223504D99004CFACF /* AddNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7E5B4123504D99004CFACF /* AddNewViewController.swift */; };
 		3CD90659234BF985007AED2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD90658234BF985007AED2D /* AppDelegate.swift */; };
 		3CD9065B234BF985007AED2D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD9065A234BF985007AED2D /* SceneDelegate.swift */; };
-		3CD9065D234BF985007AED2D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD9065C234BF985007AED2D /* ViewController.swift */; };
 		3CD90662234BF986007AED2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3CD90661234BF986007AED2D /* Assets.xcassets */; };
 		3CD90665234BF986007AED2D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CD90663234BF986007AED2D /* LaunchScreen.storyboard */; };
 		3CD90670234BF987007AED2D /* BudgetAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD9066F234BF987007AED2D /* BudgetAppTests.swift */; };
 		3CD9067B234BF987007AED2D /* BudgetAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD9067A234BF987007AED2D /* BudgetAppUITests.swift */; };
+		3CE1E04C23567E1D008E6317 /* AddNewTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE1E04B23567E1D008E6317 /* AddNewTransactionViewController.swift */; };
+		3CE1E0532357A2C0008E6317 /* TransactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE1E0522357A2C0008E6317 /* TransactionViewModel.swift */; };
+		5009D116AF33BC606CB652CA /* Pods_BudgetAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1E1251FFF07EBFF031C3E30 /* Pods_BudgetAppUITests.framework */; };
+		693230677255F6ED4FB07B61 /* Pods_BudgetApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 010666AAF7DF6025D54DD630 /* Pods_BudgetApp.framework */; };
+		F72D276E6DED48FB0149B3B3 /* Pods_BudgetAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01186ABE423C14D24479E650 /* Pods_BudgetAppTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,21 +57,20 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		010666AAF7DF6025D54DD630 /* Pods_BudgetApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BudgetApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		01186ABE423C14D24479E650 /* Pods_BudgetAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BudgetAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		02C06C7DC1C8AD68378AD58D /* Pods-BudgetAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BudgetAppTests.release.xcconfig"; path = "Target Support Files/Pods-BudgetAppTests/Pods-BudgetAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		04F6598AA3747B1C69EF3C58 /* Pods-BudgetApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BudgetApp.release.xcconfig"; path = "Target Support Files/Pods-BudgetApp/Pods-BudgetApp.release.xcconfig"; sourceTree = "<group>"; };
 		119DDD2EE73532809039E29A /* Pods-BudgetApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BudgetApp.debug.xcconfig"; path = "Target Support Files/Pods-BudgetApp/Pods-BudgetApp.debug.xcconfig"; sourceTree = "<group>"; };
 		3C49DCCF234C24F500D28820 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		3C49DD03234D4C9200D28820 /* ExpenseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseViewController.swift; sourceTree = "<group>"; };
-		3C49DD07234ECAA400D28820 /* AddIncomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddIncomeViewController.swift; sourceTree = "<group>"; };
 		3C49DD0D234EFD4900D28820 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		3C49DD0E234EFD4900D28820 /* TabBarController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabBarController.xib; sourceTree = "<group>"; };
 		3C7E5B3D234FF792004CFACF /* IncomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeViewController.swift; sourceTree = "<group>"; };
 		3C7E5B3F235048DA004CFACF /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		3C7E5B4123504D99004CFACF /* AddNewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewViewController.swift; sourceTree = "<group>"; };
 		3CD90655234BF985007AED2D /* BudgetApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BudgetApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CD90658234BF985007AED2D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3CD9065A234BF985007AED2D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		3CD9065C234BF985007AED2D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3CD90661234BF986007AED2D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3CD90664234BF986007AED2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3CD90666234BF986007AED2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -79,9 +80,12 @@
 		3CD90676234BF987007AED2D /* BudgetAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BudgetAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CD9067A234BF987007AED2D /* BudgetAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetAppUITests.swift; sourceTree = "<group>"; };
 		3CD9067C234BF987007AED2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3CE1E04B23567E1D008E6317 /* AddNewTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewTransactionViewController.swift; sourceTree = "<group>"; };
+		3CE1E0522357A2C0008E6317 /* TransactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionViewModel.swift; sourceTree = "<group>"; };
 		4342A5B752999CBD68A1A616 /* Pods-BudgetAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BudgetAppUITests.release.xcconfig"; path = "Target Support Files/Pods-BudgetAppUITests/Pods-BudgetAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		6C36953EB9DB262FE1A683BC /* Pods-BudgetAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BudgetAppTests.debug.xcconfig"; path = "Target Support Files/Pods-BudgetAppTests/Pods-BudgetAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		74A746BA2EAC8C5CD439EF9F /* Pods-BudgetAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BudgetAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-BudgetAppUITests/Pods-BudgetAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		D1E1251FFF07EBFF031C3E30 /* Pods_BudgetAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BudgetAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				693230677255F6ED4FB07B61 /* Pods_BudgetApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,6 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F72D276E6DED48FB0149B3B3 /* Pods_BudgetAppTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,6 +109,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5009D116AF33BC606CB652CA /* Pods_BudgetAppUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,6 +137,7 @@
 				3CD90679234BF987007AED2D /* BudgetAppUITests */,
 				3CD90656234BF985007AED2D /* Products */,
 				221EF15306547FF9FC4D880E /* Pods */,
+				A3F09FD03FBB5EECF5C99AAD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -146,20 +154,14 @@
 		3CD90657234BF985007AED2D /* BudgetApp */ = {
 			isa = PBXGroup;
 			children = (
+				3CE1E0512357A29E008E6317 /* ViewModel */,
+				3CE1E0502356DE65008E6317 /* Model */,
+				3CE1E04F23567F89008E6317 /* ViewControllers */,
 				3CD90658234BF985007AED2D /* AppDelegate.swift */,
 				3CD9065A234BF985007AED2D /* SceneDelegate.swift */,
-				3CD9065C234BF985007AED2D /* ViewController.swift */,
 				3CD90661234BF986007AED2D /* Assets.xcassets */,
 				3CD90663234BF986007AED2D /* LaunchScreen.storyboard */,
 				3CD90666234BF986007AED2D /* Info.plist */,
-				3C49DCCF234C24F500D28820 /* Transaction.swift */,
-				3C49DD03234D4C9200D28820 /* ExpenseViewController.swift */,
-				3C49DD07234ECAA400D28820 /* AddIncomeViewController.swift */,
-				3C49DD0D234EFD4900D28820 /* TabBarController.swift */,
-				3C49DD0E234EFD4900D28820 /* TabBarController.xib */,
-				3C7E5B3D234FF792004CFACF /* IncomeViewController.swift */,
-				3C7E5B3F235048DA004CFACF /* HomeViewController.swift */,
-				3C7E5B4123504D99004CFACF /* AddNewViewController.swift */,
 			);
 			path = BudgetApp;
 			sourceTree = "<group>";
@@ -180,6 +182,45 @@
 				3CD9067C234BF987007AED2D /* Info.plist */,
 			);
 			path = BudgetAppUITests;
+			sourceTree = "<group>";
+		};
+		3CE1E04F23567F89008E6317 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				3C49DD0D234EFD4900D28820 /* TabBarController.swift */,
+				3C7E5B3D234FF792004CFACF /* IncomeViewController.swift */,
+				3C7E5B3F235048DA004CFACF /* HomeViewController.swift */,
+				3C7E5B4123504D99004CFACF /* AddNewViewController.swift */,
+				3CE1E04B23567E1D008E6317 /* AddNewTransactionViewController.swift */,
+				3C49DD03234D4C9200D28820 /* ExpenseViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		3CE1E0502356DE65008E6317 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3C49DCCF234C24F500D28820 /* Transaction.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3CE1E0512357A29E008E6317 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				3CE1E0522357A2C0008E6317 /* TransactionViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		A3F09FD03FBB5EECF5C99AAD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				010666AAF7DF6025D54DD630 /* Pods_BudgetApp.framework */,
+				01186ABE423C14D24479E650 /* Pods_BudgetAppTests.framework */,
+				D1E1251FFF07EBFF031C3E30 /* Pods_BudgetAppUITests.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -292,7 +333,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3CD90665234BF986007AED2D /* LaunchScreen.storyboard in Resources */,
-				3C49DD10234EFD4900D28820 /* TabBarController.xib in Resources */,
 				3CD90662234BF986007AED2D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -404,7 +444,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3CD9065D234BF985007AED2D /* ViewController.swift in Sources */,
 				3C7E5B3E234FF792004CFACF /* IncomeViewController.swift in Sources */,
 				3C49DD0F234EFD4900D28820 /* TabBarController.swift in Sources */,
 				3CD90659234BF985007AED2D /* AppDelegate.swift in Sources */,
@@ -412,8 +451,9 @@
 				3C7E5B4223504D99004CFACF /* AddNewViewController.swift in Sources */,
 				3C49DD04234D4C9200D28820 /* ExpenseViewController.swift in Sources */,
 				3C49DCD0234C24F500D28820 /* Transaction.swift in Sources */,
-				3C49DD08234ECAA400D28820 /* AddIncomeViewController.swift in Sources */,
+				3CE1E04C23567E1D008E6317 /* AddNewTransactionViewController.swift in Sources */,
 				3CD9065B234BF985007AED2D /* SceneDelegate.swift in Sources */,
+				3CE1E0532357A2C0008E6317 /* TransactionViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

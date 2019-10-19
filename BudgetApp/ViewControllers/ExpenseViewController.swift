@@ -13,12 +13,12 @@ class ExpenseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "expense"
+        self.title = "Expense"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add", style: .plain, target: self, action: #selector(addButtonTapped))
     }
     
-    @objc func addButtonTapped(sender: UIBarButtonItem) {
-        present(AddNewViewController(), animated: true, completion: nil)
+    @objc fileprivate func addButtonTapped(sender: UIBarButtonItem) {
+        present(UINavigationController( rootViewController: AddNewTransactionViewController()), animated: true, completion: nil)
     }
     
 }

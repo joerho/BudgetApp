@@ -21,4 +21,6 @@ target 'BudgetApp' do
 
   pod 'SQLite.swift', '~> 0.12.0'
 
+  pod 'Eureka'
+
 end

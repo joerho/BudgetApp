@@ -62,8 +62,8 @@ class AddNewViewController: LBTAFormController {
             tfArray.append(tf)
         }
         
-        tfArray[0].placeholder = "Amount"
-        tfArray[1].placeholder = "Description"
+        tfArray[0].placeholder = "Description"
+        tfArray[1].placeholder = "Amount"
         
 
         

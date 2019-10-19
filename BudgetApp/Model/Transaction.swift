@@ -9,15 +9,14 @@
 import Foundation
 
 
-
-class Transaction {
+public class Transaction {
     let id: Int64?
     let description: String
-    let date: NSDate
+    let date: Date
     let amount: NSDecimalNumber
     let type: Bool //true for income false for expense
     
-    init(description: String, date: NSDate, amount: NSDecimalNumber, type: Bool) {
+    init(description: String, date: Date, amount: NSDecimalNumber, type: Bool) {
         self.id = nil
         self.description = description
         self.date = date
@@ -25,7 +24,7 @@ class Transaction {
         self.type = type
     }
     
-    init(id: Int64, description: String, date: NSDate, amount: NSDecimalNumber, type: Bool) {
+    init(id: Int64, description: String, date: Date, amount: NSDecimalNumber, type: Bool) {
         self.id = id
         self.description = description
         self.date = date
