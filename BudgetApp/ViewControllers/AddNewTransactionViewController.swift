@@ -12,7 +12,7 @@ class AddNewTransactionViewController: FormViewController {
     
     static let dateFormatter: DateFormatter = {
       let formatter = DateFormatter()
-      formatter.dateFormat = "MMM d yyyy"
+      formatter.dateFormat = "MM/dd/yyyy"
       return formatter
     }()
     
@@ -58,13 +58,20 @@ class AddNewTransactionViewController: FormViewController {
         }
         
         +++ Section()
-        <<< TextRow() {
-          $0.title = "Amount"
-          $0.placeholder = "e.g. Pick up my laundry"
-          $0.value = ""
+        <<< DecimalRow() {
+            $0.useFormatterDuringInput = true
+            $0.title = "Amount"
+            $0.value = nil
+            $0.placeholder = "Amount in dollars"
+            let formatter = NumberFormatter()
+            formatter.currencySymbol = "$"
+            formatter.numberStyle = NumberFormatter.Style.currency
+            $0.formatter = formatter
+            
           $0.onChange { [unowned self] row in
             //self.viewModel.title = row.value
           }
+            
           $0.add(rule: RuleRequired()) //1
           $0.validationOptions = .validatesOnChange //2
           $0.cellUpdate { (cell, row) in //3
@@ -88,14 +95,5 @@ class AddNewTransactionViewController: FormViewController {
         dismiss(animated: true)
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
