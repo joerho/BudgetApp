@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C1F8DB4235E47F000207B37 /* ExpenseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1F8DB3235E47F000207B37 /* ExpenseViewModel.swift */; };
 		3C49DCD0234C24F500D28820 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C49DCCF234C24F500D28820 /* Transaction.swift */; };
 		3C49DD04234D4C9200D28820 /* ExpenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C49DD03234D4C9200D28820 /* ExpenseViewController.swift */; };
 		3C49DD0F234EFD4900D28820 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C49DD0D234EFD4900D28820 /* TabBarController.swift */; };
@@ -62,6 +63,7 @@
 		02C06C7DC1C8AD68378AD58D /* Pods-BudgetAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BudgetAppTests.release.xcconfig"; path = "Target Support Files/Pods-BudgetAppTests/Pods-BudgetAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		04F6598AA3747B1C69EF3C58 /* Pods-BudgetApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BudgetApp.release.xcconfig"; path = "Target Support Files/Pods-BudgetApp/Pods-BudgetApp.release.xcconfig"; sourceTree = "<group>"; };
 		119DDD2EE73532809039E29A /* Pods-BudgetApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BudgetApp.debug.xcconfig"; path = "Target Support Files/Pods-BudgetApp/Pods-BudgetApp.debug.xcconfig"; sourceTree = "<group>"; };
+		3C1F8DB3235E47F000207B37 /* ExpenseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseViewModel.swift; sourceTree = "<group>"; };
 		3C49DCCF234C24F500D28820 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		3C49DD03234D4C9200D28820 /* ExpenseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseViewController.swift; sourceTree = "<group>"; };
 		3C49DD0D234EFD4900D28820 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 			isa = PBXGroup;
 			children = (
 				3CE1E0522357A2C0008E6317 /* AddNewTransactionViewModel.swift */,
+				3C1F8DB3235E47F000207B37 /* ExpenseViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -450,6 +453,7 @@
 				3C7E5B40235048DA004CFACF /* HomeViewController.swift in Sources */,
 				3C7E5B4223504D99004CFACF /* AddNewViewController.swift in Sources */,
 				3C49DD04234D4C9200D28820 /* ExpenseViewController.swift in Sources */,
+				3C1F8DB4235E47F000207B37 /* ExpenseViewModel.swift in Sources */,
 				3C49DCD0234C24F500D28820 /* Transaction.swift in Sources */,
 				3CE1E04C23567E1D008E6317 /* AddNewTransactionViewController.swift in Sources */,
 				3CD9065B234BF985007AED2D /* SceneDelegate.swift in Sources */,

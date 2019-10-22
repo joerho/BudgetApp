@@ -11,14 +11,32 @@ import UIKit
 
 class ExpenseViewController: UIViewController {
     
+    var viewModel: ViewModel!
+    
+    // MARK: - Life Cycle
+    
+    convenience init(viewModel: ViewModel) {
+        self.init()
+        self.viewModel = viewModel
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Expense"
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add", style: .plain, target: self, action: #selector(addButtonTapped))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add", style: .plain, target: self, action: .addButtonTapped)
     }
     
+    
+    // MARK: - Actions
     @objc fileprivate func addButtonTapped(sender: UIBarButtonItem) {
-        present(UINavigationController( rootViewController: AddNewTransactionViewController()), animated: true, completion: nil)
+        let addViewModel = viewModel.addNewTransactionViewModel()
+        let addVC = UINavigationController(rootViewController: AddNewTransactionViewController(viewModel: addViewModel))
+        navigationController?.present(addVC, animated: true)
     }
     
+}
+
+// MARK: - Selectors
+extension Selector {
+    fileprivate static let addButtonTapped = #selector(ExpenseViewController.addButtonTapped(sender:))
 }
