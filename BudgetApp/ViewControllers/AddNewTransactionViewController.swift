@@ -18,34 +18,38 @@ class AddNewTransactionViewController: FormViewController {
       return formatter
     }()
     
+    static let numberFormatter: CurrencyFormatter = {
+        let formatter = CurrencyFormatter()
+        formatter.numberStyle = .currency
+        formatter.locale = .current
+        
+        return formatter
+    }()
+    
     
     // MARK: - Life Cycle
     
     convenience init(viewModel: ViewModel) {
         self.init()
         self.viewModel = viewModel
+        initialize()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setupNavBar()
         setupForm()
-        
-        // Do any additional setup after loading the view.
     }
     
     private func setupForm() {
         form
         +++ Section()
-        <<< DateTimeRow() {
-            $0.dateFormatter = type(of: self).dateFormatter //1
-            $0.title = "Date" //2
-            //$0.value = viewModel.dueDate //3
-            $0.minimumDate = Date() //4
-            $0.onChange { [unowned self] row in //5
+        <<< DateRow() {
+            $0.dateFormatter = type(of: self).dateFormatter
+            $0.title = "Date"
+            $0.value = viewModel.date
+            $0.onChange { [unowned self] row in
                 if let date = row.value {
-//                  self.viewModel.dueDate = date
+                    self.viewModel.date = date
                 }
             }
         }
@@ -53,17 +57,10 @@ class AddNewTransactionViewController: FormViewController {
         +++ Section()
         <<< TextRow() {
             $0.title = "Description"
-            $0.placeholder = "e.g. Pick up my laundry"
-            $0.value = ""
+            $0.placeholder = "e.g. Pho with Brandon"
+            $0.value = viewModel.description
             $0.onChange { [unowned self] row in
-                //self.viewModel.title = row.value
-            }
-            $0.add(rule: RuleRequired()) //1
-            $0.validationOptions = .validatesOnChange //2
-            $0.cellUpdate { (cell, row) in //3
-                if !row.isValid {
-                    cell.titleLabel?.textColor = .red
-                }
+                self.viewModel.description = row.value
             }
         }
         
@@ -71,15 +68,13 @@ class AddNewTransactionViewController: FormViewController {
         <<< DecimalRow() {
             $0.useFormatterDuringInput = true
             $0.title = "Amount"
-            $0.value = nil
-            $0.placeholder = "Amount in dollars"
-            let formatter = NumberFormatter()
-            formatter.currencySymbol = "$"
-            formatter.numberStyle = NumberFormatter.Style.currency
-            $0.formatter = formatter
+            $0.value = viewModel.amount
+            $0.placeholder = "e.g $420.69"
+            $0.formatter = type(of: self).numberFormatter
             
             $0.onChange { [unowned self] row in
-                //self.viewModel.title = row.value
+                self.viewModel.amount = row.value!
+                print(self.viewModel.amount)
             }
             
             $0.add(rule: RuleRequired()) //1
@@ -93,12 +88,13 @@ class AddNewTransactionViewController: FormViewController {
     }
         
     
-    private func setupNavBar() {
+    private func initialize() {
         self.title = "Add New"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: .closeView)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: .closeView)
     }
     
+
     
     // MARK: - Actions
     @objc fileprivate func closeView(sender: UIBarButtonItem) {
@@ -107,6 +103,27 @@ class AddNewTransactionViewController: FormViewController {
 
 
 }
+
+class CurrencyFormatter: NumberFormatter, FormatterProtocol {
+    override func getObjectValue(_ obj: AutoreleasingUnsafeMutablePointer<AnyObject?>?, for string: String, range rangep: UnsafeMutablePointer<NSRange>?) throws {
+            guard obj != nil else { return }
+            var str = string.components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: "")
+            if !string.isEmpty, numberStyle == .currency && !string.contains(currencySymbol) {
+                // Check if the currency symbol is at the last index
+                if let formattedNumber = self.string(from: 1), String(formattedNumber[formattedNumber.index(before: formattedNumber.endIndex)...]) == currencySymbol {
+                    // This means the user has deleted the currency symbol. We cut the last number and then add the symbol automatically
+                    str = String(str[..<str.index(before: str.endIndex)])
+
+                }
+            }
+            obj?.pointee = NSNumber(value: (Double(str) ?? 0.0)/Double(pow(10.0, Double(minimumFractionDigits))))
+        }
+
+        func getNewPosition(forPosition position: UITextPosition, inTextInput textInput: UITextInput, oldValue: String?, newValue: String?) -> UITextPosition {
+            return textInput.position(from: position, offset:((newValue?.count ?? 0) - (oldValue?.count ?? 0))) ?? position
+        }
+}
+
 
 
 // MARK: - Selector

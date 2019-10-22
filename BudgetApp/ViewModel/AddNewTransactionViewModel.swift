@@ -24,12 +24,12 @@ extension AddNewTransactionViewController {
             }
         }
         
-        var amount: NSDecimalNumber {
+        var amount: Double {
             get {
-                return transaction.amount
+                return transaction.amount.doubleValue
             }
             set {
-                transaction.amount = newValue
+                transaction.amount = NSDecimalNumber(value: newValue)
             }
         }
         
@@ -42,9 +42,43 @@ extension AddNewTransactionViewController {
             }
         }
         
-    
+        var categoryOptions: [String] = [
+            Transaction.Category.misc.rawValue,
+            Transaction.Category.food.rawValue,
+            Transaction.Category.transportation.rawValue,
+            Transaction.Category.housing.rawValue,
+            Transaction.Category.utilities.rawValue,
+            Transaction.Category.personal.rawValue,
+            Transaction.Category.entertainment.rawValue,
+        ]
         
+        var category: String? {
+            get {
+                return transaction.category?.rawValue
+            }
+            set {
+                if let value = newValue {
+                    transaction.category = Transaction.Category(rawValue: value)!
+                }
+            }
+        }
         
+        var repeatOptions: [String] = [
+            Transaction.RepeatFrequency.never.rawValue,
+            Transaction.RepeatFrequency.daily.rawValue,
+            Transaction.RepeatFrequency.weekly.rawValue,
+            Transaction.RepeatFrequency.monthly.rawValue,
+            Transaction.RepeatFrequency.annually.rawValue,
+        ]
+        
+        var repeats: String {
+            get {
+                return transaction.repeats.rawValue
+            }
+            set {
+                transaction.repeats = Transaction.RepeatFrequency(rawValue: newValue)!
+            }
+        }
         
         
         // MARK: - Life Cycle
