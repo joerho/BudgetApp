@@ -24,12 +24,12 @@ extension AddNewTransactionViewController {
             }
         }
         
-        var amount: Double {
+        var amount: NSDecimalNumber {
             get {
-                return transaction.amount.doubleValue
+                return transaction.amount
             }
             set {
-                transaction.amount = NSDecimalNumber(value: newValue)
+                transaction.amount = newValue
             }
         }
         

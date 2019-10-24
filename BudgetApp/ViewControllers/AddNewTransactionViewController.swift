@@ -18,10 +18,16 @@ class AddNewTransactionViewController: FormViewController {
       return formatter
     }()
     
+    let categorySectionTag: String = "add category section"
+    let categoryRowTag: String = "add category row"
+    
     static let numberFormatter: CurrencyFormatter = {
         let formatter = CurrencyFormatter()
         formatter.numberStyle = .currency
         formatter.locale = .current
+        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 2
+        formatter.generatesDecimalNumbers = true
         
         return formatter
     }()
@@ -54,7 +60,7 @@ class AddNewTransactionViewController: FormViewController {
             }
         }
             
-        +++ Section()
+        //+++ Section()
         <<< TextRow() {
             $0.title = "Description"
             $0.placeholder = "e.g. Pho with Brandon"
@@ -64,17 +70,18 @@ class AddNewTransactionViewController: FormViewController {
             }
         }
         
-        +++ Section()
+        //+++ Section()
         <<< DecimalRow() {
             $0.useFormatterDuringInput = true
             $0.title = "Amount"
-            $0.value = viewModel.amount
+            $0.value = viewModel.amount.doubleValue
             $0.placeholder = "e.g $420.69"
             $0.formatter = type(of: self).numberFormatter
             
             $0.onChange { [unowned self] row in
-                self.viewModel.amount = row.value!
+                self.viewModel.amount = NSDecimalNumber(string: String(row.value!))
                 print(self.viewModel.amount)
+                
             }
             
             $0.add(rule: RuleRequired()) //1
@@ -85,12 +92,38 @@ class AddNewTransactionViewController: FormViewController {
                 }
             }
         }
+        
+        <<< PushRow<String>() { //1
+            $0.title = "Repeats" //2
+            $0.value = viewModel.repeats //3
+            $0.options = viewModel.repeatOptions //4
+            $0.onChange { [unowned self] row in //5
+              if let value = row.value {
+                self.viewModel.repeats = value
+              }
+            }
+        }
+        
+        +++ Section("Category") {
+            $0.tag = self.categorySectionTag
+            $0.hidden = (self.viewModel.category != nil) ? false : true
+        }
+
+        <<< TransactionCategoryRow() { row in
+            row.tag = self.categoryRowTag
+            row.value = self.viewModel.category
+            row.options = self.viewModel.categoryOptions
+
+            row.onChange { [unowned self] row in
+                self.viewModel.category = row.value
+            }
+        }
     }
         
     
     private func initialize() {
         self.title = "Add New"
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: .closeView)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: .donePressed)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: .closeView)
     }
     
@@ -98,6 +131,10 @@ class AddNewTransactionViewController: FormViewController {
     
     // MARK: - Actions
     @objc fileprivate func closeView(sender: UIBarButtonItem) {
+        dismiss(animated: true)
+    }
+    
+    @objc fileprivate func donePressed(sender: UIBarButtonItem) {
         dismiss(animated: true)
     }
 
@@ -129,4 +166,9 @@ class CurrencyFormatter: NumberFormatter, FormatterProtocol {
 // MARK: - Selector
 extension Selector {
     fileprivate static let closeView = #selector(AddNewTransactionViewController.closeView(sender:))
+    
+    fileprivate static let donePressed = #selector(AddNewTransactionViewController.donePressed(sender:))
 }
+
+
+
