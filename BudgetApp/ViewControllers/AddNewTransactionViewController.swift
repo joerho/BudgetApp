@@ -18,9 +18,7 @@ class AddNewTransactionViewController: FormViewController {
       return formatter
     }()
     
-    let categorySectionTag: String = "add category section"
-    let categoryRowTag: String = "add category row"
-    
+
     static let numberFormatter: CurrencyFormatter = {
         let formatter = CurrencyFormatter()
         formatter.numberStyle = .currency
@@ -48,7 +46,7 @@ class AddNewTransactionViewController: FormViewController {
     
     private func setupForm() {
         form
-        +++ Section()
+        +++ Section("Transaction")
         <<< DateRow() {
             $0.dateFormatter = type(of: self).dateFormatter
             $0.title = "Date"
@@ -104,20 +102,18 @@ class AddNewTransactionViewController: FormViewController {
             }
         }
         
-        +++ Section("Category") {
-            $0.tag = self.categorySectionTag
-            $0.hidden = (self.viewModel.category != nil) ? false : true
-        }
-
-        <<< TransactionCategoryRow() { row in
-            row.tag = self.categoryRowTag
-            row.value = self.viewModel.category
-            row.options = self.viewModel.categoryOptions
-
-            row.onChange { [unowned self] row in
-                self.viewModel.category = row.value
+        <<< PushRow<String>() {
+            $0.title = "Category"
+            $0.value = viewModel.category
+            $0.options = viewModel.categoryOptions
+            $0.onChange { [unowned self] row in
+                if let value = row.value {
+                    self.viewModel.category = value
+                }
+                
             }
         }
+
     }
         
     
