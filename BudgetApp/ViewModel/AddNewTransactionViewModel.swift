@@ -33,7 +33,8 @@ extension AddNewTransactionViewController {
             }
         }
         
-        var date: Date {
+        var date: String {
+            
             get {
                 return transaction.date
             }

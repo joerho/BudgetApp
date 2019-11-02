@@ -50,10 +50,11 @@ class AddNewTransactionViewController: FormViewController {
         <<< DateRow() {
             $0.dateFormatter = type(of: self).dateFormatter
             $0.title = "Date"
-            $0.value = viewModel.date
+            $0.value = AddNewTransactionViewController.dateFormatter.date(from: viewModel.date)
             $0.onChange { [unowned self] row in
                 if let date = row.value {
-                    self.viewModel.date = date
+                    self.viewModel.date = AddNewTransactionViewController.dateFormatter.string(from: date)
+                    print(self.viewModel.date)
                 }
             }
         }
@@ -131,6 +132,7 @@ class AddNewTransactionViewController: FormViewController {
     }
     
     @objc fileprivate func donePressed(sender: UIBarButtonItem) {
+        Database.instance.addExpense(transactionViewModel: self.viewModel)
         dismiss(animated: true)
     }
 

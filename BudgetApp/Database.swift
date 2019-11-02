@@ -10,8 +10,17 @@ import Foundation
 import SQLite
 
 class Database {
+    
     static let instance = Database()
     private let db: Connection?
+    private let income = Table("income")
+    private let expense = Table("expense")
+    private let id = Expression<Int64>("id")
+    private let description = Expression<String?>("description")
+    private let amount = Expression<Double>("amount")
+    private let date = Expression<String>("date")
+    private let category = Expression<String?>("category")
+    private let repeats = Expression<String>("repeats")
     
     private init() {
         do {
@@ -29,17 +38,12 @@ class Database {
     
     func createExpenseTable() {
         do {
-            let id = Expression<Int64>("id")
-            let description = Expression<String?>("description")
-            let amount = Expression<Double>("amount")
-            let date = Expression<String>("date")
-            let category = Expression<String?>("category")
-            let repeats = Expression<String>("repeats")
+            
             
             
             if !tableExists(tableName: "expense") {
                 print("creating table 'expense'")
-                let expense = Table("expense")
+                //let expense = Table("expense")
                 try db?.run(expense.create { t in
                     t.column(id, primaryKey: .autoincrement)
                     t.column(description)
@@ -56,14 +60,9 @@ class Database {
     
     func createIncomeTable() {
         do {
-            let id = Expression<Int64>("id")
-            let description = Expression<String?>("description")
-            let amount = Expression<Double>("amount")
-            let date = Expression<String>("date")
-            
             if !tableExists(tableName: "income") {
                 print("creating table 'income'")
-                let income = Table("income")
+                //let income = Table("income")
                 try db?.run(income.create { t in
                     t.column(id, primaryKey: .autoincrement)
                     t.column(description)
@@ -90,6 +89,32 @@ class Database {
         //should not reach
         return false
     }
+    
+    func addExpense(transactionViewModel: AddNewTransactionViewController.ViewModel) {
+        do {
+            let insert = expense.insert(
+                description <- transactionViewModel.description,
+                amount <- transactionViewModel.amount.doubleValue,
+                date <- transactionViewModel.date,
+                category <- transactionViewModel.category,
+                repeats <- transactionViewModel.repeats
+                )
+            try db!.run(insert)
+            print("successfully added transaction (expense)")
+            
+        } catch {
+            print(error)
+        }
+    }
+    
+    func getExpenses() -> ExpenseViewController.ExpenseViewModel {
+        var expenses = [AddNewTransactionViewController.ViewModel]()
+        
+        
+        
+        return expenses
+    }
+    
     
     
 }

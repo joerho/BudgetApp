@@ -12,13 +12,13 @@ import Foundation
 class Transaction {
     var id: Int64?
     var description: String?
-    var date: Date
+    var date: String
     var amount: NSDecimalNumber
     
     fileprivate var category_raw: String?
     fileprivate var repeats_raw: String
     
-    init(id: Int64? = nil, description: String? = nil, date: Date = Date(), amount: NSDecimalNumber = 0.0, category: String? = Category.misc.rawValue, repeats: String = RepeatFrequency.never.rawValue) {
+    init(id: Int64? = nil, description: String? = nil, date: String = "", amount: NSDecimalNumber = 0.0, category: String? = Category.misc.rawValue, repeats: String = RepeatFrequency.never.rawValue) {
         self.id = id
         self.description = description
         self.date = date
