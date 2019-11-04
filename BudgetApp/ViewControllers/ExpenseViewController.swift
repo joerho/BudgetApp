@@ -8,30 +8,60 @@
 
 import Foundation
 import UIKit
+import ReactiveCocoa
 
 class ExpenseViewController: UIViewController {
     
     var viewModel: ViewModel!
+    
+    lazy var tableView: UITableView = {
+        let tbl = UITableView()
+        tbl.register(TransactionTableViewCell.self, forCellReuseIdentifier: String(describing: TransactionTableViewCell.self))
+        tbl.dataSource = self
+        tbl.delegate = self
+        tbl.tableFooterView = UIView()
+        return tbl
+    }()
     
     // MARK: - Life Cycle
     
     convenience init(viewModel: ViewModel) {
         self.init()
         self.viewModel = viewModel
+        initialize()
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    private func initialize() {
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(tableView)
+        tableView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        tableView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        tableView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        tableView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
         self.title = "Expense"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add", style: .plain, target: self, action: .addButtonTapped)
+    }
+    
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
     
     
     // MARK: - Actions
     @objc fileprivate func addButtonTapped(sender: UIBarButtonItem) {
         let addViewModel = viewModel.addNewTransactionViewModel()
-        let addVC = UINavigationController(rootViewController: AddNewTransactionViewController(viewModel: addViewModel))
-        navigationController?.present(addVC, animated: true)
+        let addVC = AddNewTransactionViewController(viewModel: addViewModel)
+        let nav = UINavigationController(rootViewController: addVC)
+        
+//        addVC.reactive.trigger(for: #selector(addVC.donePressed(sender:))).observe{ _ in
+//            self.tableView.reloadData()
+//        }
+
+        navigationController?.present(nav, animated: true)
     }
     
 }
@@ -39,4 +69,35 @@ class ExpenseViewController: UIViewController {
 // MARK: - Selectors
 extension Selector {
     fileprivate static let addButtonTapped = #selector(ExpenseViewController.addButtonTapped(sender:))
+}
+
+
+// MARK: - UITableViewDataSource
+extension ExpenseViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.numberOfTransactions
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60.0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: TransactionTableViewCell.self)) as! TransactionTableViewCell
+        cell.textLabel?.text = viewModel.description(at: indexPath.row)
+        cell.detailTextLabel?.text = viewModel.dateText(at: indexPath.row)
+        return cell
+    }
+}
+
+
+// MARK: -UITableViewDelegate
+extension ExpenseViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let editViewModel = viewModel.editViewModel(at: indexPath.row)
+        let editVC = AddNewTransactionViewController(viewModel: editViewModel)
+        navigationController?.present(editVC, animated: true)
+    }
 }

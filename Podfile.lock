@@ -1,6 +1,11 @@
 PODS:
   - Eureka (5.0.0)
   - LBTATools (1.0.5)
+  - ReactiveCocoa (9.0.0):
+    - ReactiveSwift (~> 5.0)
+  - ReactiveSwift (5.0.1):
+    - Result (~> 4.1)
+  - Result (4.1.0)
   - SQLite.swift (0.12.0):
     - SQLite.swift/standard (= 0.12.0)
   - SQLite.swift/standard (0.12.0)
@@ -8,19 +13,26 @@ PODS:
 DEPENDENCIES:
   - Eureka
   - LBTATools
+  - ReactiveCocoa (~> 9.0)
   - SQLite.swift (~> 0.12.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Eureka
     - LBTATools
+    - ReactiveCocoa
+    - ReactiveSwift
+    - Result
     - SQLite.swift
 
 SPEC CHECKSUMS:
   Eureka: 0f64f477ec8ef6201c6fec143d60ff5c201cf654
   LBTATools: 4c2fb348fa3a98f00ff203befc59bf1ab94f1a54
+  ReactiveCocoa: 29709cf0cc7502ddd04a51220e10ee0336d8bec8
+  ReactiveSwift: cac20a5bbe560c5806bd29c0fccf90d03b996ac1
+  Result: bd966fac789cc6c1563440b348ab2598cc24d5c7
   SQLite.swift: 7cad9db150a03716336e69469ec9559c85aece5b
 
-PODFILE CHECKSUM: 583b5e22ef46f3058711f49522c38413a3d99f9d
+PODFILE CHECKSUM: 410823c023ed63acf321839afcc97fdd64da382b
 
 COCOAPODS: 1.7.0

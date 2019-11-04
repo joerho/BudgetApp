@@ -107,12 +107,27 @@ class Database {
         }
     }
     
-    func getExpenses() -> ExpenseViewController.ExpenseViewModel {
-        var expenses = [AddNewTransactionViewController.ViewModel]()
+    func getExpenses() -> [Transaction] {
+        var transactions = [Transaction]()
+        
+        do {
+            for transaction in try db!.prepare(expense) {
+                transactions.append(Transaction(
+                    id: transaction[id],
+                    description: transaction[description],
+                    date: transaction[date],
+                    amount: NSDecimalNumber(value: transaction[amount]),
+                    category: transaction[category],
+                    repeats: transaction[repeats]
+                ))
+            }
+            print(transactions)
+        } catch {
+            print(error)
+        }
         
         
-        
-        return expenses
+        return transactions
     }
     
     

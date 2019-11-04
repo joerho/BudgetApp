@@ -22,7 +22,7 @@ class AddNewTransactionViewController: FormViewController {
     static let numberFormatter: CurrencyFormatter = {
         let formatter = CurrencyFormatter()
         formatter.numberStyle = .currency
-        formatter.locale = .current
+        formatter.locale = .init(identifier: "en_US_POSIX")
         formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 2
         formatter.generatesDecimalNumbers = true
@@ -128,7 +128,11 @@ class AddNewTransactionViewController: FormViewController {
     
     // MARK: - Actions
     @objc fileprivate func closeView(sender: UIBarButtonItem) {
-        dismiss(animated: true)
+        let alert = UIAlertController(title: "Delete this item?", message: nil, preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+        let delete = UIAlertAction(title: "Delete", style: .destructive) { [weak self] _ in
+            self?.dismiss(animated: true)
+        }
     }
     
     @objc fileprivate func donePressed(sender: UIBarButtonItem) {

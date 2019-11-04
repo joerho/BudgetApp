@@ -18,7 +18,7 @@ class IncomeViewController: UIViewController {
         }
         
         @objc func addButtonTapped(sender: UIBarButtonItem) {
-            present(AddNewViewController(), animated: true, completion: nil)
+            present(AddNewTransactionViewController(), animated: true, completion: nil)
         }
     /*
     // MARK: - Navigation

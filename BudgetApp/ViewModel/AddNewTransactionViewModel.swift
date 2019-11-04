@@ -36,6 +36,9 @@ extension AddNewTransactionViewController {
         var date: String {
             
             get {
+                if transaction.date == "" {
+                    transaction.date = AddNewTransactionViewController.dateFormatter.string(from: Date())
+                }
                 return transaction.date
             }
             set {
@@ -87,6 +90,7 @@ extension AddNewTransactionViewController {
         init(transaction: Transaction) {
             self.transaction = transaction
         }
+        
     }
     
     
