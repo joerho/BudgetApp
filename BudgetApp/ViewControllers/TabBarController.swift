@@ -20,8 +20,8 @@ class TabBarController: UITabBarController{
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        Database.instance.getExpenses()
-        let viewModel = ExpenseViewController.ViewModel(transactions: [])
+        
+        let viewModel = ExpenseViewController.ViewModel(transactions: Database.instance.getExpenses())
         item1 = UINavigationController(rootViewController: ExpenseViewController(viewModel: viewModel))
         item2 = UINavigationController(rootViewController: HomeViewController())
         item3 = UINavigationController(rootViewController: IncomeViewController())

@@ -84,11 +84,15 @@ extension AddNewTransactionViewController {
             }
         }
         
-        
         // MARK: - Life Cycle
         
         init(transaction: Transaction) {
             self.transaction = transaction
+        }
+        
+        // MARK: - Action
+        func getTransaction() -> Transaction {
+            return self.transaction
         }
         
     }

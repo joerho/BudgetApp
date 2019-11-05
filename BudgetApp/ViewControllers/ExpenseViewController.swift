@@ -56,11 +56,7 @@ class ExpenseViewController: UIViewController {
         let addViewModel = viewModel.addNewTransactionViewModel()
         let addVC = AddNewTransactionViewController(viewModel: addViewModel)
         let nav = UINavigationController(rootViewController: addVC)
-        
-//        addVC.reactive.trigger(for: #selector(addVC.donePressed(sender:))).observe{ _ in
-//            self.tableView.reloadData()
-//        }
-
+        addVC.addNewTransactionViewControllerDelegate = self
         navigationController?.present(nav, animated: true)
     }
     
@@ -91,7 +87,7 @@ extension ExpenseViewController: UITableViewDataSource {
 }
 
 
-// MARK: -UITableViewDelegate
+// MARK: - UITableViewDelegate
 extension ExpenseViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -99,5 +95,13 @@ extension ExpenseViewController: UITableViewDelegate {
         let editViewModel = viewModel.editViewModel(at: indexPath.row)
         let editVC = AddNewTransactionViewController(viewModel: editViewModel)
         navigationController?.present(editVC, animated: true)
+    }
+}
+
+// MARK: - AddNewTransactionViewControllerDelegate
+extension ExpenseViewController: AddNewTransactionViewControllerDelegate {
+    func didAddTransaction(_ transaction: Transaction) {
+        viewModel.addTransaction(transaction: transaction)
+        tableView.reloadData()
     }
 }

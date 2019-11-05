@@ -8,8 +8,13 @@
 import Eureka
 import UIKit
 
+protocol AddNewTransactionViewControllerDelegate {
+    func didAddTransaction(_ transaction: Transaction)
+}
+
 class AddNewTransactionViewController: FormViewController {
     
+    var addNewTransactionViewControllerDelegate: AddNewTransactionViewControllerDelegate?
     var viewModel: ViewModel!
     
     static let dateFormatter: DateFormatter = {
@@ -128,15 +133,13 @@ class AddNewTransactionViewController: FormViewController {
     
     // MARK: - Actions
     @objc fileprivate func closeView(sender: UIBarButtonItem) {
-        let alert = UIAlertController(title: "Delete this item?", message: nil, preferredStyle: .alert)
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
-        let delete = UIAlertAction(title: "Delete", style: .destructive) { [weak self] _ in
-            self?.dismiss(animated: true)
-        }
+        dismiss(animated: true)
     }
     
     @objc fileprivate func donePressed(sender: UIBarButtonItem) {
-        Database.instance.addExpense(transactionViewModel: self.viewModel)
+        let model = viewModel.getTransaction()
+        addNewTransactionViewControllerDelegate?.didAddTransaction(model)
+        Database.instance.addExpense(transactionViewModel: viewModel)
         dismiss(animated: true)
     }
 

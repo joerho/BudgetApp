@@ -39,15 +39,13 @@ extension ExpenseViewController {
         
         func addNewTransactionViewModel() -> AddNewTransactionViewController.ViewModel {
             let transaction = Transaction()
-            transactions.append(transaction)
+            //transactions.append(transaction)
             let addViewModel = AddNewTransactionViewController.ViewModel(transaction: transaction)
             return addViewModel
         }
         
-        func removeLastTransaction() {
-            print(numberOfTransactions)
-            print(transactions.endIndex)
-            transactions.remove(at: transactions.endIndex - 1)
+        func addTransaction(transaction: Transaction) {
+            transactions.append(transaction)
         }
         
         // MARK: - Life Cycle
