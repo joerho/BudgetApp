@@ -81,6 +81,7 @@ extension ExpenseViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: TransactionTableViewCell.self)) as! TransactionTableViewCell
         cell.textLabel?.text = viewModel.description(at: indexPath.row)
         cell.detailTextLabel?.text = viewModel.dateText(at: indexPath.row)
+
         return cell
     }
 }
@@ -93,6 +94,7 @@ extension ExpenseViewController: UITableViewDelegate {
         
         let editViewModel = viewModel.editViewModel(at: indexPath.row)
         let editVC = AddNewTransactionViewController(viewModel: editViewModel, edit: true)
+        editVC.addNewTransactionViewControllerDelegate = self
         let nav = UINavigationController(rootViewController: editVC)
         navigationController?.present(nav, animated: true)
     }
@@ -102,6 +104,10 @@ extension ExpenseViewController: UITableViewDelegate {
 extension ExpenseViewController: AddNewTransactionViewControllerDelegate {
     func didAddTransaction(_ transaction: Transaction) {
         viewModel.addTransaction(transaction: transaction)
+        tableView.reloadData()
+    }
+    
+    func didUpdateTransaction() {
         tableView.reloadData()
     }
 }

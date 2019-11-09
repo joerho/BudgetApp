@@ -10,7 +10,7 @@ import UIKit
 
 protocol AddNewTransactionViewControllerDelegate {
     func didAddTransaction(_ transaction: Transaction)
-    //func didEditTransaction(_ transaction: Transaction)
+    func didUpdateTransaction()
 }
 
 
@@ -158,7 +158,7 @@ class AddNewTransactionViewController: FormViewController {
         self.title = "Edit Transaction"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: .donePressedEdit)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: .closeView)
-        self.navigationItem.rightBarButtonItem?.isEnabled = false
+        self.navigationItem.rightBarButtonItem?.isEnabled = true
     }
     
 
@@ -176,8 +176,7 @@ class AddNewTransactionViewController: FormViewController {
     }
     
     @objc fileprivate func donePressedEdit(sender: UIBarButtonItem) {
-        //let model = viewModel.getTransaction()
-        //addNewTransactionViewControllerDelegate?.didEditTransaction(model)
+        addNewTransactionViewControllerDelegate?.didUpdateTransaction()
         Database.instance.updateExpense(transactionViewModel: viewModel)
         dismiss(animated: true)
     }

@@ -14,6 +14,7 @@ extension ExpenseViewController {
     
     class ViewModel {
         private var transactions: [Transaction]
+
         
         var numberOfTransactions: Int {
             return transactions.count
