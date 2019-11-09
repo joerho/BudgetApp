@@ -15,7 +15,13 @@ extension AddNewTransactionViewController {
         
         private let transaction: Transaction
         
-        var description: String? {
+        var id: Int64? {
+            get {
+                return transaction.id
+            }
+        }
+        
+        var description: String {
             get {
                 return transaction.description
             }
@@ -24,7 +30,7 @@ extension AddNewTransactionViewController {
             }
         }
         
-        var amount: NSDecimalNumber {
+        var amount: NSDecimalNumber? {
             get {
                 return transaction.amount
             }

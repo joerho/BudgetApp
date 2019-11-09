@@ -24,7 +24,7 @@ extension ExpenseViewController {
         }
         
         func description(at index: Int) -> String {
-            return transaction(at: index).description ?? ""
+            return transaction(at: index).description
         }
         
         func dateText(at index: Int) -> String {

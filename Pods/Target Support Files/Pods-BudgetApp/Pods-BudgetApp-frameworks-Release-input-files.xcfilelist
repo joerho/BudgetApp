@@ -1,7 +1,3 @@
 ${PODS_ROOT}/Target Support Files/Pods-BudgetApp/Pods-BudgetApp-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework
-${BUILT_PRODUCTS_DIR}/LBTATools/LBTATools.framework
-${BUILT_PRODUCTS_DIR}/ReactiveCocoa/ReactiveCocoa.framework
-${BUILT_PRODUCTS_DIR}/ReactiveSwift/ReactiveSwift.framework
-${BUILT_PRODUCTS_DIR}/Result/Result.framework
 ${BUILT_PRODUCTS_DIR}/SQLite.swift/SQLite.framework

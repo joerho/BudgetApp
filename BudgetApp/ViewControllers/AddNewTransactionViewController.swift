@@ -10,12 +10,24 @@ import UIKit
 
 protocol AddNewTransactionViewControllerDelegate {
     func didAddTransaction(_ transaction: Transaction)
+    //func didEditTransaction(_ transaction: Transaction)
 }
+
 
 class AddNewTransactionViewController: FormViewController {
     
     var addNewTransactionViewControllerDelegate: AddNewTransactionViewControllerDelegate?
     var viewModel: ViewModel!
+    var edit: Bool!
+    
+    
+    private var validateArr = [Bool]() {
+        didSet {
+            if !self.validateArr.contains(false) {
+                self.navigationItem.rightBarButtonItem?.isEnabled = true
+            }
+        }
+    }
     
     static let dateFormatter: DateFormatter = {
       let formatter = DateFormatter()
@@ -38,18 +50,19 @@ class AddNewTransactionViewController: FormViewController {
     
     // MARK: - Life Cycle
     
-    convenience init(viewModel: ViewModel) {
+    convenience init(viewModel: ViewModel, edit: Bool) {
         self.init()
         self.viewModel = viewModel
-        initialize()
+        self.edit = edit
+        
+        edit ? initializeEdit() : initializeAdd()
+        setupForm()
+        print("here")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupForm()
-    }
     
     private func setupForm() {
+        
         form
         +++ Section("Transaction")
         <<< DateRow() {
@@ -70,7 +83,16 @@ class AddNewTransactionViewController: FormViewController {
             $0.placeholder = "e.g. Pho with Brandon"
             $0.value = viewModel.description
             $0.onChange { [unowned self] row in
-                self.viewModel.description = row.value
+                if let value = row.value {
+                    self.viewModel.description = value
+                }
+            }
+            $0.add(rule: RuleRequired())
+            $0.validationOptions = .validatesOnChange
+            $0.cellUpdate { (cell, row) in //3
+                if !row.isValid || row.value == "" {
+                    cell.titleLabel?.textColor = .red
+                }
             }
         }
         
@@ -78,20 +100,18 @@ class AddNewTransactionViewController: FormViewController {
         <<< DecimalRow() {
             $0.useFormatterDuringInput = true
             $0.title = "Amount"
-            $0.value = viewModel.amount.doubleValue
+            $0.value = viewModel.amount?.doubleValue
             $0.placeholder = "e.g $420.69"
             $0.formatter = type(of: self).numberFormatter
-            
             $0.onChange { [unowned self] row in
-                self.viewModel.amount = NSDecimalNumber(string: String(row.value!))
-                print(self.viewModel.amount)
-                
+                if let value = row.value {
+                    self.viewModel.amount = NSDecimalNumber(string: String(value))
+                }
             }
-            
             $0.add(rule: RuleRequired()) //1
             $0.validationOptions = .validatesOnChange //2
             $0.cellUpdate { (cell, row) in //3
-                if !row.isValid {
+                if !row.isValid || row.value == 0.0 {
                     cell.titleLabel?.textColor = .red
                 }
             }
@@ -116,17 +136,29 @@ class AddNewTransactionViewController: FormViewController {
                 if let value = row.value {
                     self.viewModel.category = value
                 }
-                
             }
         }
-
+        
+        form.validate()
+        for row in form.allRows {
+            //validateArr.append(row.isValid)
+            row.isValid
+        }
     }
         
     
-    private func initialize() {
-        self.title = "Add New"
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: .donePressed)
+    private func initializeAdd() {
+        self.title = "Add New Transaction"
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: .donePressedAdd)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: .closeView)
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
+    }
+    
+    private func initializeEdit() {
+        self.title = "Edit Transaction"
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: .donePressedEdit)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: .closeView)
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
     }
     
 
@@ -136,10 +168,17 @@ class AddNewTransactionViewController: FormViewController {
         dismiss(animated: true)
     }
     
-    @objc fileprivate func donePressed(sender: UIBarButtonItem) {
+    @objc fileprivate func donePressedAdd(sender: UIBarButtonItem) {
         let model = viewModel.getTransaction()
         addNewTransactionViewControllerDelegate?.didAddTransaction(model)
         Database.instance.addExpense(transactionViewModel: viewModel)
+        dismiss(animated: true)
+    }
+    
+    @objc fileprivate func donePressedEdit(sender: UIBarButtonItem) {
+        //let model = viewModel.getTransaction()
+        //addNewTransactionViewControllerDelegate?.didEditTransaction(model)
+        Database.instance.updateExpense(transactionViewModel: viewModel)
         dismiss(animated: true)
     }
 
@@ -172,8 +211,8 @@ class CurrencyFormatter: NumberFormatter, FormatterProtocol {
 extension Selector {
     fileprivate static let closeView = #selector(AddNewTransactionViewController.closeView(sender:))
     
-    fileprivate static let donePressed = #selector(AddNewTransactionViewController.donePressed(sender:))
+    fileprivate static let donePressedAdd = #selector(AddNewTransactionViewController.donePressedAdd(sender:))
+    
+    fileprivate static let donePressedEdit = #selector(AddNewTransactionViewController.donePressedEdit(sender:))
+
 }
-
-
-

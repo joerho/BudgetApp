@@ -16,7 +16,7 @@ class Database {
     private let income = Table("income")
     private let expense = Table("expense")
     private let id = Expression<Int64>("id")
-    private let description = Expression<String?>("description")
+    private let description = Expression<String>("description")
     private let amount = Expression<Double>("amount")
     private let date = Expression<String>("date")
     private let category = Expression<String?>("category")
@@ -90,11 +90,12 @@ class Database {
         return false
     }
     
+    
     func addExpense(transactionViewModel: AddNewTransactionViewController.ViewModel) {
         do {
             let insert = expense.insert(
                 description <- transactionViewModel.description,
-                amount <- transactionViewModel.amount.doubleValue,
+                amount <- transactionViewModel.amount!.doubleValue,
                 date <- transactionViewModel.date,
                 category <- transactionViewModel.category,
                 repeats <- transactionViewModel.repeats
@@ -102,6 +103,23 @@ class Database {
             try db!.run(insert)
             print("successfully added transaction (expense)")
             
+        } catch {
+            print(error)
+        }
+    }
+    
+    func updateExpense(transactionViewModel: AddNewTransactionViewController.ViewModel) {
+        do {
+            let transaction = expense.filter(id == transactionViewModel.id!)
+            let update = transaction.update(
+                [
+                    description <- transactionViewModel.description,
+                    amount <- transactionViewModel.amount!.doubleValue,
+                    date <- transactionViewModel.date,
+                    category <- transactionViewModel.category,
+                    repeats <- transactionViewModel.repeats
+                ])
+            try db!.run(update)
         } catch {
             print(error)
         }
@@ -129,7 +147,5 @@ class Database {
         
         return transactions
     }
-    
-    
     
 }

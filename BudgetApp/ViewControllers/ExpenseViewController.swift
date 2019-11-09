@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import ReactiveCocoa
 
 class ExpenseViewController: UIViewController {
     
@@ -54,7 +53,7 @@ class ExpenseViewController: UIViewController {
     // MARK: - Actions
     @objc fileprivate func addButtonTapped(sender: UIBarButtonItem) {
         let addViewModel = viewModel.addNewTransactionViewModel()
-        let addVC = AddNewTransactionViewController(viewModel: addViewModel)
+        let addVC = AddNewTransactionViewController(viewModel: addViewModel, edit: false)
         let nav = UINavigationController(rootViewController: addVC)
         addVC.addNewTransactionViewControllerDelegate = self
         navigationController?.present(nav, animated: true)
@@ -93,8 +92,9 @@ extension ExpenseViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let editViewModel = viewModel.editViewModel(at: indexPath.row)
-        let editVC = AddNewTransactionViewController(viewModel: editViewModel)
-        navigationController?.present(editVC, animated: true)
+        let editVC = AddNewTransactionViewController(viewModel: editViewModel, edit: true)
+        let nav = UINavigationController(rootViewController: editVC)
+        navigationController?.present(nav, animated: true)
     }
 }
 
