@@ -81,6 +81,8 @@ extension ExpenseViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: TransactionTableViewCell.self)) as! TransactionTableViewCell
         cell.textLabel?.text = viewModel.description(at: indexPath.row)
         cell.detailTextLabel?.text = viewModel.dateText(at: indexPath.row)
+        cell.customLabel?.text = viewModel.amount(at: indexPath.row)
+        cell.accessoryType = .disclosureIndicator
 
         return cell
     }
