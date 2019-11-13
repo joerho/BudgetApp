@@ -37,9 +37,11 @@ class ExpenseViewController: UIViewController {
         tableView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         tableView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         tableView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        
+        tableView.allowsSelectionDuringEditing = true
+        tableView.allowsSelection = false
         self.title = "Expense"
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add", style: .plain, target: self, action: .addButtonTapped)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: .addButtonTapped)
+        self.navigationItem.leftBarButtonItem = self.editButtonItem
     }
     
     
@@ -48,6 +50,13 @@ class ExpenseViewController: UIViewController {
         super.viewWillAppear(animated)
         tableView.reloadData()
     }
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(!isEditing, animated: true)
+        tableView.setEditing(!tableView.isEditing, animated: true)
+    }
+    
+    
     
     
     // MARK: - Actions
@@ -92,8 +101,8 @@ extension ExpenseViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension ExpenseViewController: UITableViewDelegate {
     
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         let editViewModel = viewModel.editViewModel(at: indexPath.row)
         let editVC = AddNewTransactionViewController(viewModel: editViewModel, edit: true)
         editVC.addNewTransactionViewControllerDelegate = self

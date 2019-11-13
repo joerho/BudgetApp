@@ -76,26 +76,43 @@ class AddNewTransactionViewController: FormViewController {
                     cell.titleLabel?.textColor = .red
                 }
             }
+            $0.onRowValidationChanged { (cell, row) in
+                if self.form.isClean() {
+                    self.navigationItem.rightBarButtonItem?.isEnabled = true
+                }
+                else {
+                    self.navigationItem.rightBarButtonItem?.isEnabled = false
+                }
+            }
         }
         
         //+++ Section()
         <<< DecimalRow() {
             $0.useFormatterDuringInput = true
             $0.title = "Amount"
-            $0.value = Double(viewModel.amount)/100
+            $0.value = edit ? Double(viewModel.amount)/100 : nil
             $0.placeholder = "e.g $420.69"
             $0.formatter = viewModel.numberFormatter
             $0.onChange { [unowned self] row in
                 if let value = row.value {
                     self.viewModel.amount = Int(value * 100)
-                    //print(self.viewModel.amount)
+                    print(self.viewModel.amount)
                 }
             }
-            $0.add(rule: RuleRequired()) //1
-            $0.validationOptions = .validatesOnChange //2
-            $0.cellUpdate { (cell, row) in //3
-                if !row.isValid || row.value == 0 {
+            $0.add(rule: RuleRequired())
+            $0.add(rule: RuleGreaterThan(min: 0))
+            $0.validationOptions = .validatesOnChange
+            $0.cellUpdate { (cell, row) in
+                if !row.isValid {
                     cell.titleLabel?.textColor = .red
+                }
+            }
+            $0.onRowValidationChanged { (cell, row) in
+                if self.form.isClean() {
+                    self.navigationItem.rightBarButtonItem?.isEnabled = true
+                }
+                else {
+                    self.navigationItem.rightBarButtonItem?.isEnabled = false
                 }
             }
         }
@@ -123,12 +140,8 @@ class AddNewTransactionViewController: FormViewController {
         }
         
         form.validate()
-        for row in form.allRows {
-            //validateArr.append(row.isValid)
-            row.isValid
-        }
     }
-        
+
     
     private func initializeAdd() {
         self.title = "Add New Transaction"
@@ -178,4 +191,17 @@ extension Selector {
     
     fileprivate static let donePressedEdit = #selector(AddNewTransactionViewController.donePressedEdit(sender:))
 
+}
+
+// MARK: - Form
+extension Form {
+
+    public func isClean() ->Bool {
+        for row in rows {
+            if !row.isValid {
+                return false
+            }
+        }
+        return true
+    }
 }

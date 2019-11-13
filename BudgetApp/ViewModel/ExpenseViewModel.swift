@@ -25,9 +25,8 @@ extension ExpenseViewController {
         }
         
         func amount(at index: Int) -> String {
-            let amount = transactions[index].amount
-            
-            return "$" + String(amount)
+            let amount = Double(transactions[index].amount) / 100
+            return "$" + String(format: "%.2f", amount)
         }
         
         
@@ -54,11 +53,13 @@ extension ExpenseViewController {
         
         func addTransaction(transaction: Transaction) {
             transactions.append(transaction)
+            transactions.sort(by: {$0.date > $1.date })
         }
         
         // MARK: - Life Cycle
         init(transactions: [Transaction]) {
             self.transactions = transactions
+            self.transactions.sort(by: {$0.date > $1.date })
         }
     }
 }
