@@ -19,7 +19,7 @@ class Database {
     private let description = Expression<String>("description")
     private let amount = Expression<Int>("amount")
     private let date = Expression<String>("date")
-    private let category = Expression<String?>("category")
+    private let category = Expression<String>("category")
     private let repeats = Expression<String>("repeats")
     
     private init() {
@@ -38,9 +38,6 @@ class Database {
     
     func createExpenseTable() {
         do {
-            
-            
-            
             if !tableExists(tableName: "expense") {
                 print("creating table 'expense'")
                 //let expense = Table("expense")
@@ -91,14 +88,14 @@ class Database {
     }
     
     
-    func addExpense(transactionViewModel: AddNewTransactionViewController.ViewModel) {
+    func addExpense(transaction: Transaction) {
         do {
             let insert = expense.insert(
-                description <- transactionViewModel.description,
-                amount <- transactionViewModel.amount,
-                date <- transactionViewModel.date,
-                category <- transactionViewModel.category,
-                repeats <- transactionViewModel.repeats
+                description <- transaction.description,
+                amount <- transaction.amount,
+                date <- transaction.date,
+                category <- transaction.category.rawValue,
+                repeats <- transaction.repeats.rawValue
                 )
             try db!.run(insert)
             print("successfully added transaction (expense)")
@@ -108,16 +105,16 @@ class Database {
         }
     }
     
-    func updateExpense(transactionViewModel: AddNewTransactionViewController.ViewModel) {
+    func updateExpense(transaction: Transaction) {
         do {
-            let transaction = expense.filter(id == transactionViewModel.id!)
-            let update = transaction.update(
+            let item = expense.filter(id == transaction.id!)
+            let update = item.update(
                 [
-                    description <- transactionViewModel.description,
-                    amount <- transactionViewModel.amount,
-                    date <- transactionViewModel.date,
-                    category <- transactionViewModel.category,
-                    repeats <- transactionViewModel.repeats
+                    description <- transaction.description,
+                    amount <- transaction.amount,
+                    date <- transaction.date,
+                    category <- transaction.category.rawValue,
+                    repeats <- transaction.repeats.rawValue
                 ])
             try db!.run(update)
         } catch {
@@ -125,6 +122,15 @@ class Database {
         }
     }
     
+    func deleteExpense(transaction: Transaction) {
+        do {
+            let item = expense.filter(id == transaction.id!)
+            let delete = item.delete()
+            try db!.run(delete)
+        } catch {
+            print(error)
+        }
+    }
     func getExpenses() -> [Transaction] {
         var transactions = [Transaction]()
         

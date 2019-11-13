@@ -10,7 +10,7 @@ import UIKit
 
 protocol AddNewTransactionViewControllerDelegate {
     func didAddTransaction(_ transaction: Transaction)
-    func didUpdateTransaction()
+    func didUpdateTransaction(_ transaction: Transaction)
 }
 
 
@@ -96,7 +96,6 @@ class AddNewTransactionViewController: FormViewController {
             $0.onChange { [unowned self] row in
                 if let value = row.value {
                     self.viewModel.amount = Int(value * 100)
-                    print(self.viewModel.amount)
                 }
             }
             $0.add(rule: RuleRequired())
@@ -167,13 +166,12 @@ class AddNewTransactionViewController: FormViewController {
     @objc fileprivate func donePressedAdd(sender: UIBarButtonItem) {
         let model = viewModel.getTransaction()
         addNewTransactionViewControllerDelegate?.didAddTransaction(model)
-        Database.instance.addExpense(transactionViewModel: viewModel)
         dismiss(animated: true)
     }
     
     @objc fileprivate func donePressedEdit(sender: UIBarButtonItem) {
-        addNewTransactionViewControllerDelegate?.didUpdateTransaction()
-        Database.instance.updateExpense(transactionViewModel: viewModel)
+        let model = viewModel.getTransaction()
+        addNewTransactionViewControllerDelegate?.didUpdateTransaction(model)
         dismiss(animated: true)
     }
 

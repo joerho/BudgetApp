@@ -15,10 +15,10 @@ class Transaction {
     var date: String
     var amount: Int
     
-    fileprivate var category_raw: String?
+    fileprivate var category_raw: String
     fileprivate var repeats_raw: String
     
-    init(id: Int64? = nil, description: String = "", date: String = "", amount: Int = 0, category: String? = Category.misc.rawValue, repeats: String = RepeatFrequency.never.rawValue) {
+    init(id: Int64? = nil, description: String = "", date: String = "", amount: Int = 0, category: String = Category.misc.rawValue, repeats: String = RepeatFrequency.never.rawValue) {
         self.id = id
         self.description = description
         self.date = date
@@ -55,15 +55,12 @@ extension Transaction {
 // MARK: - Computed Variables
 
 extension Transaction {
-    var category: Category? {
-        get {
-            if let value = self.category_raw {
-                return Category(rawValue: value)!
-            }
-            return nil
+    var category: Category {
+        get{
+            return Category(rawValue: self.category_raw)!
         }
         set {
-            self.category_raw = newValue?.rawValue
+            self.category_raw = newValue.rawValue
         }
     }
     

@@ -13,7 +13,11 @@ extension ExpenseViewController {
     
     
     class ViewModel {
-        private var transactions: [Transaction]
+        private var transactions: [Transaction] {
+            didSet{
+                transactions.sort(by: {$0.date > $1.date })
+            }
+        }
 
         
         var numberOfTransactions: Int {
@@ -21,6 +25,7 @@ extension ExpenseViewController {
         }
 
         private func transaction(at index: Int) -> Transaction {
+            print(index)
             return transactions[index]
         }
         
@@ -46,15 +51,24 @@ extension ExpenseViewController {
         
         func addNewTransactionViewModel() -> AddNewTransactionViewController.ViewModel {
             let transaction = Transaction()
-            //transactions.append(transaction)
             let addViewModel = AddNewTransactionViewController.ViewModel(transaction: transaction)
             return addViewModel
         }
         
+        func deleteTransaction(at index: Int) {
+            Database.instance.deleteExpense(transaction: transaction(at: index))
+            transactions.remove(at: index)
+        }
+        
+        func updateTransaction(transaction: Transaction) {
+            Database.instance.updateExpense(transaction: transaction)
+        }
+        
         func addTransaction(transaction: Transaction) {
             transactions.append(transaction)
-            transactions.sort(by: {$0.date > $1.date })
+            Database.instance.addExpense(transaction: transaction)
         }
+        
         
         // MARK: - Life Cycle
         init(transactions: [Transaction]) {

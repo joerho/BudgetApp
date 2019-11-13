@@ -86,21 +86,36 @@ extension ExpenseViewController: UITableViewDataSource {
         return 60.0
     }
     
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: TransactionTableViewCell.self)) as! TransactionTableViewCell
         cell.textLabel?.text = viewModel.description(at: indexPath.row)
         cell.detailTextLabel?.text = viewModel.dateText(at: indexPath.row)
         cell.customLabel?.text = viewModel.amount(at: indexPath.row)
-        cell.accessoryType = .disclosureIndicator
+        cell.editingAccessoryType = .disclosureIndicator
+        
 
         return cell
     }
+    
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            viewModel.deleteTransaction(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
+    
+    
 }
 
 
 // MARK: - UITableViewDelegate
 extension ExpenseViewController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, willBeginEditingRowAt indexPath: IndexPath) {
+        print(indexPath.row)
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let editViewModel = viewModel.editViewModel(at: indexPath.row)
@@ -118,7 +133,9 @@ extension ExpenseViewController: AddNewTransactionViewControllerDelegate {
         tableView.reloadData()
     }
     
-    func didUpdateTransaction() {
+    // potentially change to index?
+    func didUpdateTransaction(_ transaction: Transaction) {
+        viewModel.updateTransaction(transaction: transaction)
         tableView.reloadData()
     }
 }

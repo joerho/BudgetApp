@@ -21,18 +21,6 @@ extension AddNewTransactionViewController {
           return formatter
         }()
         
-
-//        let numberFormatter: CurrencyFormatter = {
-//            let formatter = CurrencyFormatter()
-//            formatter.numberStyle = .currency
-//            formatter.locale = .init(identifier: "en_US_POSIX")
-//            formatter.minimumFractionDigits = 2
-//            formatter.maximumFractionDigits = 2
-//            formatter.generatesDecimalNumbers = false
-//
-//            return formatter
-//        }()
-        
         let numberFormatter: CurrencyFormatter = {
             let formatter = CurrencyFormatter()
             formatter.numberStyle = .currency
@@ -69,7 +57,6 @@ extension AddNewTransactionViewController {
         }
         
         var date: String {
-            
             get {
                 if transaction.date == "" {
                     transaction.date = dateFormatter.string(from: Date())
@@ -91,14 +78,12 @@ extension AddNewTransactionViewController {
             Transaction.Category.entertainment.rawValue,
         ]
         
-        var category: String? {
+        var category: String {
             get {
-                return transaction.category?.rawValue
+                return transaction.category.rawValue
             }
             set {
-                if let value = newValue {
-                    transaction.category = Transaction.Category(rawValue: value)!
-                }
+                transaction.category = Transaction.Category(rawValue: newValue)!
             }
         }
         
