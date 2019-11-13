@@ -15,6 +15,35 @@ extension AddNewTransactionViewController {
         
         private let transaction: Transaction
         
+        let dateFormatter: DateFormatter = {
+          let formatter = DateFormatter()
+          formatter.dateFormat = "MM/dd/yyyy"
+          return formatter
+        }()
+        
+
+//        let numberFormatter: CurrencyFormatter = {
+//            let formatter = CurrencyFormatter()
+//            formatter.numberStyle = .currency
+//            formatter.locale = .init(identifier: "en_US_POSIX")
+//            formatter.minimumFractionDigits = 2
+//            formatter.maximumFractionDigits = 2
+//            formatter.generatesDecimalNumbers = false
+//
+//            return formatter
+//        }()
+        
+        let numberFormatter: CurrencyFormatter = {
+            let formatter = CurrencyFormatter()
+            formatter.numberStyle = .currency
+            formatter.locale = .init(identifier: "en_US_POSIX")
+            formatter.minimumFractionDigits = 2
+            formatter.maximumFractionDigits = 2
+            //formatter.generatesDecimalNumbers = true
+            
+            return formatter
+        }()
+        
         var id: Int64? {
             get {
                 return transaction.id
@@ -30,7 +59,7 @@ extension AddNewTransactionViewController {
             }
         }
         
-        var amount: NSDecimalNumber? {
+        var amount: Int {
             get {
                 return transaction.amount
             }
@@ -43,7 +72,7 @@ extension AddNewTransactionViewController {
             
             get {
                 if transaction.date == "" {
-                    transaction.date = AddNewTransactionViewController.dateFormatter.string(from: Date())
+                    transaction.date = dateFormatter.string(from: Date())
                 }
                 return transaction.date
             }

@@ -29,24 +29,6 @@ class AddNewTransactionViewController: FormViewController {
         }
     }
     
-    static let dateFormatter: DateFormatter = {
-      let formatter = DateFormatter()
-      formatter.dateFormat = "MM/dd/yyyy"
-      return formatter
-    }()
-    
-
-    static let numberFormatter: CurrencyFormatter = {
-        let formatter = CurrencyFormatter()
-        formatter.numberStyle = .currency
-        formatter.locale = .init(identifier: "en_US_POSIX")
-        formatter.minimumFractionDigits = 2
-        formatter.maximumFractionDigits = 2
-        formatter.generatesDecimalNumbers = true
-        
-        return formatter
-    }()
-    
     
     // MARK: - Life Cycle
     
@@ -66,12 +48,12 @@ class AddNewTransactionViewController: FormViewController {
         form
         +++ Section("Transaction")
         <<< DateRow() {
-            $0.dateFormatter = type(of: self).dateFormatter
+            $0.dateFormatter = viewModel.dateFormatter
             $0.title = "Date"
-            $0.value = AddNewTransactionViewController.dateFormatter.date(from: viewModel.date)
+            $0.value = viewModel.dateFormatter.date(from: viewModel.date)
             $0.onChange { [unowned self] row in
                 if let date = row.value {
-                    self.viewModel.date = AddNewTransactionViewController.dateFormatter.string(from: date)
+                    self.viewModel.date = self.viewModel.dateFormatter.string(from: date)
                     print(self.viewModel.date)
                 }
             }
@@ -100,18 +82,19 @@ class AddNewTransactionViewController: FormViewController {
         <<< DecimalRow() {
             $0.useFormatterDuringInput = true
             $0.title = "Amount"
-            $0.value = viewModel.amount?.doubleValue
+            $0.value = Double(viewModel.amount)/100
             $0.placeholder = "e.g $420.69"
-            $0.formatter = type(of: self).numberFormatter
+            $0.formatter = viewModel.numberFormatter
             $0.onChange { [unowned self] row in
                 if let value = row.value {
-                    self.viewModel.amount = NSDecimalNumber(string: String(value))
+                    self.viewModel.amount = Int(value * 100)
+                    //print(self.viewModel.amount)
                 }
             }
             $0.add(rule: RuleRequired()) //1
             $0.validationOptions = .validatesOnChange //2
             $0.cellUpdate { (cell, row) in //3
-                if !row.isValid || row.value == 0.0 {
+                if !row.isValid || row.value == 0 {
                     cell.titleLabel?.textColor = .red
                 }
             }
@@ -184,25 +167,6 @@ class AddNewTransactionViewController: FormViewController {
 
 }
 
-class CurrencyFormatter: NumberFormatter, FormatterProtocol {
-    override func getObjectValue(_ obj: AutoreleasingUnsafeMutablePointer<AnyObject?>?, for string: String, range rangep: UnsafeMutablePointer<NSRange>?) throws {
-            guard obj != nil else { return }
-            var str = string.components(separatedBy: CharacterSet.decimalDigits.inverted).joined(separator: "")
-            if !string.isEmpty, numberStyle == .currency && !string.contains(currencySymbol) {
-                // Check if the currency symbol is at the last index
-                if let formattedNumber = self.string(from: 1), String(formattedNumber[formattedNumber.index(before: formattedNumber.endIndex)...]) == currencySymbol {
-                    // This means the user has deleted the currency symbol. We cut the last number and then add the symbol automatically
-                    str = String(str[..<str.index(before: str.endIndex)])
-
-                }
-            }
-            obj?.pointee = NSNumber(value: (Double(str) ?? 0.0)/Double(pow(10.0, Double(minimumFractionDigits))))
-        }
-
-        func getNewPosition(forPosition position: UITextPosition, inTextInput textInput: UITextInput, oldValue: String?, newValue: String?) -> UITextPosition {
-            return textInput.position(from: position, offset:((newValue?.count ?? 0) - (oldValue?.count ?? 0))) ?? position
-        }
-}
 
 
 

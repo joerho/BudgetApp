@@ -17,7 +17,7 @@ class Database {
     private let expense = Table("expense")
     private let id = Expression<Int64>("id")
     private let description = Expression<String>("description")
-    private let amount = Expression<Double>("amount")
+    private let amount = Expression<Int>("amount")
     private let date = Expression<String>("date")
     private let category = Expression<String?>("category")
     private let repeats = Expression<String>("repeats")
@@ -95,7 +95,7 @@ class Database {
         do {
             let insert = expense.insert(
                 description <- transactionViewModel.description,
-                amount <- transactionViewModel.amount!.doubleValue,
+                amount <- transactionViewModel.amount,
                 date <- transactionViewModel.date,
                 category <- transactionViewModel.category,
                 repeats <- transactionViewModel.repeats
@@ -114,7 +114,7 @@ class Database {
             let update = transaction.update(
                 [
                     description <- transactionViewModel.description,
-                    amount <- transactionViewModel.amount!.doubleValue,
+                    amount <- transactionViewModel.amount,
                     date <- transactionViewModel.date,
                     category <- transactionViewModel.category,
                     repeats <- transactionViewModel.repeats
@@ -134,7 +134,7 @@ class Database {
                     id: transaction[id],
                     description: transaction[description],
                     date: transaction[date],
-                    amount: NSDecimalNumber(value: transaction[amount]),
+                    amount: transaction[amount],
                     category: transaction[category],
                     repeats: transaction[repeats]
                 ))

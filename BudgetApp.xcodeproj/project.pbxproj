@@ -14,6 +14,7 @@
 		3C7E5B3E234FF792004CFACF /* IncomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7E5B3D234FF792004CFACF /* IncomeViewController.swift */; };
 		3C7E5B40235048DA004CFACF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7E5B3F235048DA004CFACF /* HomeViewController.swift */; };
 		3CAF4592236E28B0004BD61F /* TransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CAF4591236E28B0004BD61F /* TransactionTableViewCell.swift */; };
+		3CAF4596237A64CC004BD61F /* CurrencyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CAF4595237A64CC004BD61F /* CurrencyFormatter.swift */; };
 		3CD90659234BF985007AED2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD90658234BF985007AED2D /* AppDelegate.swift */; };
 		3CD9065B234BF985007AED2D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD9065A234BF985007AED2D /* SceneDelegate.swift */; };
 		3CD90662234BF986007AED2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3CD90661234BF986007AED2D /* Assets.xcassets */; };
@@ -71,6 +72,7 @@
 		3C7E5B3D234FF792004CFACF /* IncomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeViewController.swift; sourceTree = "<group>"; };
 		3C7E5B3F235048DA004CFACF /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		3CAF4591236E28B0004BD61F /* TransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTableViewCell.swift; sourceTree = "<group>"; };
+		3CAF4595237A64CC004BD61F /* CurrencyFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFormatter.swift; sourceTree = "<group>"; };
 		3CD90655234BF985007AED2D /* BudgetApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BudgetApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CD90658234BF985007AED2D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3CD9065A234BF985007AED2D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 				3CD90663234BF986007AED2D /* LaunchScreen.storyboard */,
 				3CD90666234BF986007AED2D /* Info.plist */,
 				3CDDFBEB236383A400732465 /* Database.swift */,
+				3CAF4595237A64CC004BD61F /* CurrencyFormatter.swift */,
 			);
 			path = BudgetApp;
 			sourceTree = "<group>";
@@ -464,6 +467,7 @@
 				3C7E5B40235048DA004CFACF /* HomeViewController.swift in Sources */,
 				3C49DD04234D4C9200D28820 /* ExpenseViewController.swift in Sources */,
 				3CAF4592236E28B0004BD61F /* TransactionTableViewCell.swift in Sources */,
+				3CAF4596237A64CC004BD61F /* CurrencyFormatter.swift in Sources */,
 				3CDDFBEC236383A400732465 /* Database.swift in Sources */,
 				3C1F8DB4235E47F000207B37 /* ExpenseViewModel.swift in Sources */,
 				3C49DCD0234C24F500D28820 /* Transaction.swift in Sources */,

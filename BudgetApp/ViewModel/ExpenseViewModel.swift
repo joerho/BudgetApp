@@ -27,7 +27,7 @@ extension ExpenseViewController {
         func amount(at index: Int) -> String {
             let amount = transactions[index].amount
             
-            return "$" + amount!.stringValue
+            return "$" + String(amount)
         }
         
         
