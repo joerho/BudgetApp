@@ -25,7 +25,6 @@ extension ExpenseViewController {
         }
 
         private func transaction(at index: Int) -> Transaction {
-            print(index)
             return transactions[index]
         }
         
@@ -65,8 +64,8 @@ extension ExpenseViewController {
         }
         
         func addTransaction(transaction: Transaction) {
-            transactions.append(transaction)
             Database.instance.addExpense(transaction: transaction)
+            transactions.append(transaction)
         }
         
         

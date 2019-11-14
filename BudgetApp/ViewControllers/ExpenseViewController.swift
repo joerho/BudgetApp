@@ -59,7 +59,7 @@ class ExpenseViewController: UIViewController {
     
     
     
-    // MARK: - Actions
+// MARK: - Actions
     @objc fileprivate func addButtonTapped(sender: UIBarButtonItem) {
         let addViewModel = viewModel.addNewTransactionViewModel()
         let addVC = AddNewTransactionViewController(viewModel: addViewModel, edit: false)
@@ -112,10 +112,6 @@ extension ExpenseViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 extension ExpenseViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, willBeginEditingRowAt indexPath: IndexPath) {
-        print(indexPath.row)
-    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let editViewModel = viewModel.editViewModel(at: indexPath.row)

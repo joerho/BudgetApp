@@ -9,25 +9,31 @@
 import UIKit
 
 class IncomeViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.title = "income"
-        // Do any additional setup after loading the view.
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add", style: .plain, target: self, action: #selector(addButtonTapped))
-        }
-        
-        @objc func addButtonTapped(sender: UIBarButtonItem) {
-            present(AddNewTransactionViewController(), animated: true, completion: nil)
-        }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+// MARK: - Life Cycle
+    convenience init() {
+        self.init()
+        initialize()
     }
-    */
-
+    
+    private func initialize() {
+        self.title = "Income"
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add", style: .plain, target: self, action: .addButtonTapped)
+        self.navigationItem.leftBarButtonItem = self.editButtonItem
+    }
+        
+    
+    
+// MARK: - Actions
+    @objc func addButtonTapped(sender: UIBarButtonItem) {
+        present(AddNewTransactionViewController(), animated: true, completion: nil)
+    }
 }
+
+
+// MARK: - Selectors
+extension Selector {
+    fileprivate static let addButtonTapped = #selector(IncomeViewController.addButtonTapped(sender:))
+}
+
+
