@@ -14,7 +14,6 @@ class Transaction {
     var description: String
     var date: String
     var amount: Int
-    
     fileprivate var category_raw: String
     fileprivate var repeats_raw: String
     
@@ -29,7 +28,7 @@ class Transaction {
 }
 
 
-// MARK: - Category
+// MARK: - Category, Repeats
 
 extension Transaction {
     enum Category: String {

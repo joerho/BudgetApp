@@ -27,8 +27,6 @@ extension AddNewTransactionViewController {
             formatter.locale = .init(identifier: "en_US_POSIX")
             formatter.minimumFractionDigits = 2
             formatter.maximumFractionDigits = 2
-            //formatter.generatesDecimalNumbers = true
-            
             return formatter
         }()
         
