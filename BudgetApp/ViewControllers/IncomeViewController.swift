@@ -10,15 +10,23 @@ import UIKit
 
 class IncomeViewController: UIViewController {
     
+    var viewModel: ViewModel!
+    
+    lazy var tableView: UITableView = {
+        let tbl = UITableView()
+        return tbl
+    }()
+    
 // MARK: - Life Cycle
-    convenience init() {
+    convenience init(viewModel: ViewModel) {
         self.init()
+        self.viewModel = viewModel
         initialize()
     }
     
     private func initialize() {
         self.title = "Income"
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add", style: .plain, target: self, action: .addButtonTapped)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add , target: self, action: .addButtonTapped)
         self.navigationItem.leftBarButtonItem = self.editButtonItem
     }
         
@@ -26,7 +34,10 @@ class IncomeViewController: UIViewController {
     
 // MARK: - Actions
     @objc func addButtonTapped(sender: UIBarButtonItem) {
-        present(AddNewTransactionViewController(), animated: true, completion: nil)
+        let addViewModel = viewModel.addNewIncomeViewModel()
+        let addVC = AddNewIncomeViewController(viewModel: addViewModel, edit: false)
+        let nav = UINavigationController(rootViewController: addVC)
+        navigationController?.present(nav, animated: true)
     }
 }
 

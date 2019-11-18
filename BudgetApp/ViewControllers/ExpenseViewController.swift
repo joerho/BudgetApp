@@ -22,7 +22,7 @@ class ExpenseViewController: UIViewController {
         return tbl
     }()
     
-    // MARK: - Life Cycle
+// MARK: - Life Cycle
     
     convenience init(viewModel: ViewModel) {
         self.init()

@@ -1,28 +1,21 @@
 //
-//  AddNewTransactionViewController.swift
+//  AddNewIncomeViewController.swift
 //  BudgetApp
 //
-//  Created by joe rho on 10/15/19.
+//  Created by joe rho on 11/15/19.
 //  Copyright © 2019 joe rho. All rights reserved.
 //
-import Eureka
+
 import UIKit
+import Eureka
 
-protocol AddNewTransactionViewControllerDelegate {
-    func didAddTransaction(_ transaction: Transaction)
-    func didUpdateTransaction(_ transaction: Transaction)
-}
-
-
-class AddNewTransactionViewController: FormViewController {
+class AddNewIncomeViewController: FormViewController {
     
-    var addNewTransactionViewControllerDelegate: AddNewTransactionViewControllerDelegate?
     var viewModel: ViewModel!
     var edit: Bool!
     
     
 // MARK: - Life Cycle
-    
     convenience init(viewModel: ViewModel, edit: Bool) {
         self.init()
         self.viewModel = viewModel
@@ -31,11 +24,10 @@ class AddNewTransactionViewController: FormViewController {
         setupForm()
     }
     
-    
     private func setupForm() {
         
         form
-        +++ Section("Transaction")
+        +++ Section("Income")
         <<< DateRow() {
             $0.dateFormatter = viewModel.dateFormatter
             $0.title = "Date"
@@ -51,7 +43,7 @@ class AddNewTransactionViewController: FormViewController {
         //+++ Section()
         <<< TextRow() {
             $0.title = "Description"
-            $0.placeholder = "e.g. Pho with Brandon"
+            $0.placeholder = "e.g. Paycheck"
             $0.value = viewModel.description
             $0.onChange { [unowned self] row in
                 if let value = row.value {
@@ -104,32 +96,10 @@ class AddNewTransactionViewController: FormViewController {
                 }
             }
         }
-        
-        <<< PushRow<String>() { //1
-            $0.title = "Repeats" //2
-            $0.value = viewModel.repeats //3
-            $0.options = viewModel.repeatOptions //4
-            $0.onChange { [unowned self] row in //5
-              if let value = row.value {
-                self.viewModel.repeats = value
-              }
-            }
-        }
-        
-        <<< PushRow<String>() {
-            $0.title = "Category"
-            $0.value = viewModel.category
-            $0.options = viewModel.categoryOptions
-            $0.onChange { [unowned self] row in
-                if let value = row.value {
-                    self.viewModel.category = value
-                }
-            }
-        }
+
         
         form.validate()
     }
-
     
     private func initializeAdd() {
         self.title = "Add New Transaction"
@@ -145,7 +115,6 @@ class AddNewTransactionViewController: FormViewController {
         self.navigationItem.rightBarButtonItem?.isEnabled = true
     }
     
-
     
 // MARK: - Actions
     @objc fileprivate func closeView(sender: UIBarButtonItem) {
@@ -153,42 +122,25 @@ class AddNewTransactionViewController: FormViewController {
     }
     
     @objc fileprivate func donePressedAdd(sender: UIBarButtonItem) {
-        let model = viewModel.getTransaction()
-        addNewTransactionViewControllerDelegate?.didAddTransaction(model)
+//        let model = viewModel.getTransaction()
+//        addNewTransactionViewControllerDelegate?.didAddTransaction(model)
         dismiss(animated: true)
     }
     
     @objc fileprivate func donePressedEdit(sender: UIBarButtonItem) {
-        let model = viewModel.getTransaction()
-        addNewTransactionViewControllerDelegate?.didUpdateTransaction(model)
+//        let model = viewModel.getTransaction()
+//        addNewTransactionViewControllerDelegate?.didUpdateTransaction(model)
         dismiss(animated: true)
     }
 
-
 }
-
-
 
 
 // MARK: - Selector
 extension Selector {
-    fileprivate static let closeView = #selector(AddNewTransactionViewController.closeView(sender:))
+    fileprivate static let closeView = #selector(AddNewIncomeViewController.closeView(sender:))
     
-    fileprivate static let donePressedAdd = #selector(AddNewTransactionViewController.donePressedAdd(sender:))
+    fileprivate static let donePressedAdd = #selector(AddNewIncomeViewController.donePressedAdd(sender:))
     
-    fileprivate static let donePressedEdit = #selector(AddNewTransactionViewController.donePressedEdit(sender:))
-
-}
-
-// MARK: - Form
-extension Form {
-
-    public func isClean() ->Bool {
-        for row in rows {
-            if !row.isValid {
-                return false
-            }
-        }
-        return true
-    }
+    fileprivate static let donePressedEdit = #selector(AddNewIncomeViewController.donePressedEdit(sender:))
 }

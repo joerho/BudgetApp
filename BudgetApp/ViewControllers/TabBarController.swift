@@ -21,10 +21,12 @@ class TabBarController: UITabBarController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let viewModel = ExpenseViewController.ViewModel(transactions: Database.instance.getExpenses())
-        item1 = UINavigationController(rootViewController: ExpenseViewController(viewModel: viewModel))
+        let expenseViewModel = ExpenseViewController.ViewModel(transactions: Database.instance.getExpenses())
+        let incomeViewModel = IncomeViewController.ViewModel(incomes: [])
+        
+        item1 = UINavigationController(rootViewController: ExpenseViewController(viewModel: expenseViewModel))
         item2 = UINavigationController(rootViewController: HomeViewController())
-        item3 = UINavigationController(rootViewController: IncomeViewController())
+        item3 = UINavigationController(rootViewController: IncomeViewController(viewModel: incomeViewModel))
         
         item1?.tabBarItem = UITabBarItem(title: "expense", image: UIImage(systemName: "chevron.down.square.fill"), tag: 0)
         item2?.tabBarItem = UITabBarItem(title: "home", image: UIImage(systemName: "chart.pie"), tag: 1)

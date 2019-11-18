@@ -17,7 +17,7 @@ class Income {
     
     
     
-    init(id: Int64? = nil, description: String = "", date: String = "", amount: Int) {
+    init(id: Int64? = nil, description: String = "", date: String = "", amount: Int = 0) {
         self.id = id
         self.description = description
         self.date = date

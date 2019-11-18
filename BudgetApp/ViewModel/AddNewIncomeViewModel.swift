@@ -9,7 +9,7 @@
 import Foundation
 
 
-extension IncomeViewController {
+extension AddNewIncomeViewController {
     class ViewModel {
         
         private let income: Income
@@ -64,6 +64,7 @@ extension IncomeViewController {
                 income.date = newValue
             }
         }
+        
         
         // MARK: - Life Cycle
         init(income: Income) {

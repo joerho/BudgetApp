@@ -69,7 +69,7 @@ extension ExpenseViewController {
         }
         
         
-        // MARK: - Life Cycle
+// MARK: - Life Cycle
         init(transactions: [Transaction]) {
             self.transactions = transactions
             self.transactions.sort(by: {$0.date > $1.date })
