@@ -36,6 +36,7 @@ class Database {
         createExpenseTable()
     }
     
+// MARK: - Create
     func createExpenseTable() {
         do {
             if !tableExists(tableName: "expense") {
@@ -88,6 +89,7 @@ class Database {
     }
     
     
+// MARK: - Expense
     func addExpense(transaction: Transaction) {
         do {
             let insert = expense.insert(
@@ -131,6 +133,7 @@ class Database {
             print(error)
         }
     }
+    
     func getExpenses() -> [Transaction] {
         var transactions = [Transaction]()
         
@@ -152,6 +155,66 @@ class Database {
         
         
         return transactions
+    }
+    
+// MARK: - Income
+    func addIncome(incomeModel: Income) {
+        do {
+            let insert = income.insert(
+                description <- incomeModel.description,
+                amount <- incomeModel.amount,
+                date <- incomeModel.date
+            )
+            try db!.run(insert)
+            print("successfully added income (income)")
+            
+        } catch {
+            print(error)
+        }
+    }
+    
+    func updateIncome(incomeModel: Income) {
+        do {
+            let item = income.filter(id == incomeModel.id!)
+            let update = item.update(
+                [
+                    description <- incomeModel.description,
+                    amount <- incomeModel.amount,
+                    date <- incomeModel.date
+                ])
+            try db!.run(update)
+        } catch {
+            print(error)
+        }
+    }
+    
+    func deleteIncome(incomeModel: Income) {
+        do {
+            let item = income.filter(id == incomeModel.id!)
+            let delete = item.delete()
+            try db!.run(delete)
+        } catch {
+            print(error)
+        }
+    }
+    
+    func getIncomes() -> [Income] {
+        var incomes = [Income]()
+        
+        do {
+            for income in try db!.prepare(income) {
+                incomes.append(Income(
+                    id: income[id],
+                    description: income[description],
+                    date: income[date],
+                    amount: income[amount]
+                ))
+            }
+        } catch {
+            print(error)
+        }
+        
+        return incomes
     }
     
 }

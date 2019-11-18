@@ -9,8 +9,11 @@
 import UIKit
 import Eureka
 
+protocol AddNewIncomeViewControllerDelegate {
+    func didAddIncome(_ income: Income)
+}
 class AddNewIncomeViewController: FormViewController {
-    
+    var addNewIncomeViewControllerDelegate: AddNewIncomeViewControllerDelegate?
     var viewModel: ViewModel!
     var edit: Bool!
     
@@ -102,14 +105,14 @@ class AddNewIncomeViewController: FormViewController {
     }
     
     private func initializeAdd() {
-        self.title = "Add New Transaction"
+        self.title = "Add New Income"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: .donePressedAdd)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: .closeView)
         self.navigationItem.rightBarButtonItem?.isEnabled = false
     }
     
     private func initializeEdit() {
-        self.title = "Edit Transaction"
+        self.title = "Edit Income"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: .donePressedEdit)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: .closeView)
         self.navigationItem.rightBarButtonItem?.isEnabled = true
@@ -122,8 +125,8 @@ class AddNewIncomeViewController: FormViewController {
     }
     
     @objc fileprivate func donePressedAdd(sender: UIBarButtonItem) {
-//        let model = viewModel.getTransaction()
-//        addNewTransactionViewControllerDelegate?.didAddTransaction(model)
+        let model = viewModel.getIncome()
+        addNewIncomeViewControllerDelegate?.didAddIncome(model)
         dismiss(animated: true)
     }
     

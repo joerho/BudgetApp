@@ -94,7 +94,6 @@ extension ExpenseViewController: UITableViewDataSource {
         cell.customLabel?.text = viewModel.amount(at: indexPath.row)
         cell.editingAccessoryType = .disclosureIndicator
         
-
         return cell
     }
     

@@ -43,6 +43,11 @@ extension IncomeViewController {
             return addViewModel
         }
         
+        func addIncome(income: Income) {
+            Database.instance.addIncome(incomeModel: income)
+            incomes.append(income)
+        }
+        
 // MARK: - Life Cycle
         init(incomes: [Income]) {
             self.incomes = incomes

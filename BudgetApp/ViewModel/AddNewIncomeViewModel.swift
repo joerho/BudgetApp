@@ -66,6 +66,10 @@ extension AddNewIncomeViewController {
         }
         
         
+        func getIncome() -> Income {
+            return self.income
+        }
+        
         // MARK: - Life Cycle
         init(income: Income) {
             self.income = income
