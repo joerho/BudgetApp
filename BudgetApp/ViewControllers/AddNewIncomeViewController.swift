@@ -11,6 +11,7 @@ import Eureka
 
 protocol AddNewIncomeViewControllerDelegate {
     func didAddIncome(_ income: Income)
+    func didUpdateIncome(_ income: Income)
 }
 class AddNewIncomeViewController: FormViewController {
     var addNewIncomeViewControllerDelegate: AddNewIncomeViewControllerDelegate?
@@ -131,8 +132,8 @@ class AddNewIncomeViewController: FormViewController {
     }
     
     @objc fileprivate func donePressedEdit(sender: UIBarButtonItem) {
-//        let model = viewModel.getTransaction()
-//        addNewTransactionViewControllerDelegate?.didUpdateTransaction(model)
+        let model = viewModel.getIncome()
+        addNewIncomeViewControllerDelegate?.didUpdateIncome(model)
         dismiss(animated: true)
     }
 

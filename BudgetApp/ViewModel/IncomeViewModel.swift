@@ -43,6 +43,21 @@ extension IncomeViewController {
             return addViewModel
         }
         
+        func editIncomeViewModel(at index: Int) -> AddNewIncomeViewController.ViewModel {
+            let incomeModel = income(at: index)
+            let editViewModel = AddNewIncomeViewController.ViewModel(income: incomeModel)
+            return editViewModel
+        }
+        
+        func deleteIncome(at index: Int) {
+            Database.instance.deleteIncome(incomeModel: income(at: index))
+            incomes.remove(at: index)
+        }
+        
+        func updateIncome(income: Income) {
+            Database.instance.updateIncome(incomeModel: income)
+        }
+        
         func addIncome(income: Income) {
             Database.instance.addIncome(incomeModel: income)
             incomes.append(income)

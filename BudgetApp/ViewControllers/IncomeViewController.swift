@@ -91,7 +91,7 @@ extension IncomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            //viewModel.deleteTransaction(at: indexPath.row)
+            viewModel.deleteIncome(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
@@ -104,13 +104,24 @@ extension IncomeViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 extension IncomeViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let editViewModel = viewModel.editIncomeViewModel(at: indexPath.row)
+        let  editVC = AddNewIncomeViewController(viewModel: editViewModel, edit: true)
+        editVC.addNewIncomeViewControllerDelegate = self
+        let nav = UINavigationController(rootViewController: editVC)
+        navigationController?.present(nav, animated: true)
+    }
 }
 
 // MARK: - AddNewIncomeViewControllerDelegate
 extension IncomeViewController: AddNewIncomeViewControllerDelegate {
     func didAddIncome(_ income: Income) {
         viewModel.addIncome(income: income)
+        tableView.reloadData()
+    }
+    
+    func didUpdateIncome(_ income: Income) {
+        viewModel.updateIncome(income: income)
         tableView.reloadData()
     }
 }
