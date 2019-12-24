@@ -78,20 +78,31 @@ extension Selector {
 
 // MARK: - UITableViewDataSource
 extension ExpenseViewController: UITableViewDataSource {
+    
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return viewModel.numberOfSections
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return viewModel.sectionTitle(at: section)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numberOfTransactions
+        return viewModel.sectionCount(at: section)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60.0
     }
     
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: TransactionTableViewCell.self)) as! TransactionTableViewCell
-        cell.textLabel?.text = viewModel.description(at: indexPath.row)
-        cell.detailTextLabel?.text = viewModel.dateText(at: indexPath.row)
-        cell.customLabel?.text = viewModel.amount(at: indexPath.row)
+        
+        
+        cell.textLabel?.text = viewModel.description(at: indexPath)
+        cell.detailTextLabel?.text = viewModel.dateText(at: indexPath)
+        cell.customLabel?.text = viewModel.amount(at: indexPath)
         cell.editingAccessoryType = .disclosureIndicator
         
         return cell
@@ -104,8 +115,6 @@ extension ExpenseViewController: UITableViewDataSource {
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
-    
-    
 }
 
 
