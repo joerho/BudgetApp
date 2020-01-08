@@ -58,9 +58,11 @@ extension ExpenseViewController {
         func sectionTransactions(at index: Int) -> [Transaction] {
             return groupedTransactions[index].transactions
         }
+        
         func sectionCount(at index: Int) -> Int {
             return section(at: index).transactions.count
         }
+        
         func sectionTitle(at index: Int) -> String {
             let date = section(at: index).month
             let dateFormatter = DateFormatter()
@@ -84,23 +86,9 @@ extension ExpenseViewController {
             let transaction = section(at: indexPath.section).transactions[indexPath.row]
             return transaction.date
         }
-//
-//        func amount(at index: Int) -> String {
-//            let amount = Double(transactions[index].amount) / 100
-//            return "$" + String(format: "%.2f", amount)
-//        }
-//
-//
-//        func description(at index: Int) -> String {
-//            return transaction(at: index).description
-//        }
-//
-//        func dateText(at index: Int) -> String {
-//            return transaction(at: index).date
-//        }
-//
-        func editViewModel(at index: Int) -> AddNewTransactionViewController.ViewModel {
-            let transaction = self.transaction(at: index)
+
+        func editViewModel(at indexPath: IndexPath) -> AddNewTransactionViewController.ViewModel {
+            let transaction = section(at: indexPath.section).transactions[indexPath.row]
             let editViewModel = AddNewTransactionViewController.ViewModel(transaction: transaction)
             return editViewModel
         }
@@ -111,33 +99,45 @@ extension ExpenseViewController {
             return addViewModel
         }
         
-        func deleteTransaction(at index: Int) {
-            Database.instance.deleteExpense(transaction: transaction(at: index))
-            transactions.remove(at: index)
+        //groups transactions into a list of MonthSection struct
+        func separateIntoSections() {
+            let sections = Dictionary(grouping: transactions) { (transaction) -> Date in
+                return firstDayOfMonth(date: transaction.date)
+            }
+            groupedTransactions = sections.map(MonthSection.init(month:transactions:))
+            groupedTransactions.sort{(lhs, rhs) in lhs.month > rhs.month}
+        }
+        
+        // MARK: - Database Interaction Methods
+
+        func deleteTransaction(at indexPath: IndexPath) {
+            let transaction = section(at: indexPath.section).transactions[indexPath.row]
+            Database.instance.deleteExpense(transaction: transaction)
+            if let index = transactions.firstIndex(of: transaction) {
+                transactions.remove(at: index)
+            }
+            separateIntoSections()
         }
         
         func updateTransaction(transaction: Transaction) {
             Database.instance.updateExpense(transaction: transaction)
         }
         
+        // changes should reflect on groupedTransaction
         func addTransaction(transaction: Transaction) {
             Database.instance.addExpense(transaction: transaction)
             transactions.append(transaction)
+            separateIntoSections()
         }
         
         
-// MARK: - Life Cycle
+        // MARK: - Life Cycle
         init(transactions: [Transaction]) {
             self.transactions = transactions
             self.transactions.sort(by: {$0.date > $1.date })
             self.groupedTransactions = []
             
-            let sections = Dictionary(grouping: transactions) { (transaction) -> Date in
-                return firstDayOfMonth(date: transaction.date)
-            }
-            
-            self.groupedTransactions = sections.map(MonthSection.init(month:transactions:))
-            self.groupedTransactions.sort{(lhs, rhs) in lhs.month > rhs.month}
+            separateIntoSections()
         }
     }
 }

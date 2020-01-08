@@ -9,7 +9,9 @@
 import Foundation
 
 
-class Transaction {
+class Transaction: Comparable {
+    
+    
     var id: Int64?
     var description: String
     var date: String
@@ -25,6 +27,23 @@ class Transaction {
         self.category_raw = category
         self.repeats_raw = repeats
     }
+    
+    static func < (lhs: Transaction, rhs: Transaction) -> Bool {
+        return false
+    }
+    
+    
+    static func == (lhs: Transaction, rhs: Transaction) -> Bool {
+        //scared that id will be null
+        if (lhs.id == rhs.id) {
+            return true
+        }
+        else {
+            return false
+
+        }
+    }
+
 }
 
 

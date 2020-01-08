@@ -99,7 +99,6 @@ extension ExpenseViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: TransactionTableViewCell.self)) as! TransactionTableViewCell
         
-        
         cell.textLabel?.text = viewModel.description(at: indexPath)
         cell.detailTextLabel?.text = viewModel.dateText(at: indexPath)
         cell.customLabel?.text = viewModel.amount(at: indexPath)
@@ -111,7 +110,7 @@ extension ExpenseViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            viewModel.deleteTransaction(at: indexPath.row)
+            viewModel.deleteTransaction(at: indexPath)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
@@ -122,12 +121,13 @@ extension ExpenseViewController: UITableViewDataSource {
 extension ExpenseViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let editViewModel = viewModel.editViewModel(at: indexPath.row)
+        let editViewModel = viewModel.editViewModel(at: indexPath)
         let editVC = AddNewTransactionViewController(viewModel: editViewModel, edit: true)
         editVC.addNewTransactionViewControllerDelegate = self
         let nav = UINavigationController(rootViewController: editVC)
         navigationController?.present(nav, animated: true)
     }
+    
 }
 
 // MARK: - AddNewTransactionViewControllerDelegate
