@@ -29,7 +29,12 @@ class Transaction: Comparable {
     }
     
     static func < (lhs: Transaction, rhs: Transaction) -> Bool {
-        return false
+        if (lhs.date < rhs.date) {
+            return true
+        }
+        else {
+            return false
+        }
     }
     
     
