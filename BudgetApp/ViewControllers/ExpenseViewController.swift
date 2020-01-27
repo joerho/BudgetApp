@@ -23,7 +23,6 @@ class ExpenseViewController: UIViewController {
     }()
     
 // MARK: - Life Cycle
-    
     convenience init(viewModel: ViewModel) {
         self.init()
         self.viewModel = viewModel
@@ -61,10 +60,10 @@ class ExpenseViewController: UIViewController {
     
 // MARK: - Actions
     @objc fileprivate func addButtonTapped(sender: UIBarButtonItem) {
-        let addViewModel = viewModel.addNewTransactionViewModel()
-        let addVC = AddNewTransactionViewController(viewModel: addViewModel, edit: false)
+        let addViewModel = viewModel.addNewExpenseViewModel()
+        let addVC = AddNewExpenseViewController(viewModel: addViewModel, edit: false)
         let nav = UINavigationController(rootViewController: addVC)
-        addVC.addNewTransactionViewControllerDelegate = self
+        addVC.addNewExpenseViewControllerDelegate = self
         navigationController?.present(nav, animated: true)
     }
     
@@ -110,8 +109,15 @@ extension ExpenseViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            viewModel.deleteTransaction(at: indexPath)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+            viewModel.deleteExpense(at: indexPath)
+            tableView.beginUpdates()
+            if (viewModel.sectionCount(at: indexPath.section) > 1) {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
+            else {
+                tableView.deleteSections([indexPath.section], with: .automatic)
+            }
+            tableView.endUpdates()
         }
     }
 }
@@ -122,24 +128,24 @@ extension ExpenseViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let editViewModel = viewModel.editViewModel(at: indexPath)
-        let editVC = AddNewTransactionViewController(viewModel: editViewModel, edit: true)
-        editVC.addNewTransactionViewControllerDelegate = self
+        let editVC = AddNewExpenseViewController(viewModel: editViewModel, edit: true)
+        editVC.addNewExpenseViewControllerDelegate = self
         let nav = UINavigationController(rootViewController: editVC)
         navigationController?.present(nav, animated: true)
     }
     
 }
 
-// MARK: - AddNewTransactionViewControllerDelegate
-extension ExpenseViewController: AddNewTransactionViewControllerDelegate {
-    func didAddTransaction(_ transaction: Transaction) {
-        viewModel.addTransaction(transaction: transaction)
+// MARK: - AddNewExpenseViewControllerDelegate
+extension ExpenseViewController: AddNewExpenseViewControllerDelegate {
+    func didAddExpense(_ expense: Expense) {
+        viewModel.addExpense(expense: expense)
         tableView.reloadData()
     }
     
     // potentially change to index?
-    func didUpdateTransaction(_ transaction: Transaction) {
-        viewModel.updateTransaction(transaction: transaction)
+    func didUpdateExpense(_ expense: Expense) {
+        viewModel.updateExpense(expense: expense)
         tableView.reloadData()
     }
 }

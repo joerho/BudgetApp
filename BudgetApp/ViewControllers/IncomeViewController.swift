@@ -71,8 +71,17 @@ extension Selector {
 
 // MARK: - UITableViewDataSource
 extension IncomeViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return viewModel.numberOfSections
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return viewModel.sectionTitle(at: section)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numberOfIncomes
+        return viewModel.sectionCount(at: section)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -81,9 +90,9 @@ extension IncomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: TransactionTableViewCell.self)) as! TransactionTableViewCell
-        cell.textLabel?.text = viewModel.description(at: indexPath.row)
-        cell.detailTextLabel?.text = viewModel.dateText(at: indexPath.row)
-        cell.customLabel?.text = viewModel.amount(at: indexPath.row)
+        cell.textLabel?.text = viewModel.description(at: indexPath)
+        cell.detailTextLabel?.text = viewModel.dateText(at: indexPath)
+        cell.customLabel?.text = viewModel.amount(at: indexPath)
         cell.editingAccessoryType = .disclosureIndicator
         
         return cell
@@ -91,8 +100,17 @@ extension IncomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            viewModel.deleteIncome(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+            viewModel.deleteIncome(at: indexPath)
+            tableView.beginUpdates()
+            if (viewModel.sectionCount(at: indexPath.section) > 1) {
+                print("here")
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
+            else {
+                print("here1")
+                tableView.deleteSections([indexPath.section], with: .automatic)
+            }
+            tableView.endUpdates()
         }
     }
     

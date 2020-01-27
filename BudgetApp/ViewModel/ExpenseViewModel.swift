@@ -15,14 +15,14 @@ extension ExpenseViewController {
         
         struct MonthSection {
             var month: Date
-            var transactions: [Transaction]
+            var expenses: [Expense]
         }
         
-        private var groupedTransactions: [MonthSection]
+        private var groupedExpenses: [MonthSection]
         
-        private var transactions: [Transaction] {
+        private var expenses: [Expense] {
             didSet{
-                transactions.sort(by: {$0.date > $1.date })
+                expenses.sort(by: {$0.date > $1.date })
             }
         }
         
@@ -33,19 +33,19 @@ extension ExpenseViewController {
         }()
         
         var numberOfSections: Int {
-            return groupedTransactions.count
+            return groupedExpenses.count
         }
 
-        var numberOfTransactions: Int {
-            return transactions.count
+        var numberOfExpenses: Int {
+            return expenses.count
         }
 
-        private func transaction(at index: Int) -> Transaction {
-            return transactions[index]
+        private func expense(at index: Int) -> Expense {
+            return expenses[index]
         }
         
         private func section(at index: Int) -> MonthSection {
-            return groupedTransactions[index]
+            return groupedExpenses[index]
         }
         
         private func firstDayOfMonth(date: String) -> Date {
@@ -55,12 +55,15 @@ extension ExpenseViewController {
             
         }
         
-        func sectionTransactions(at index: Int) -> [Transaction] {
-            return groupedTransactions[index].transactions
+        func sectionExpenses(at index: Int) -> [Expense] {
+            return groupedExpenses[index].expenses
         }
         
         func sectionCount(at index: Int) -> Int {
-            return section(at: index).transactions.count
+            if (groupedExpenses.isEmpty) {
+                return 0
+            }
+            return section(at: index).expenses.count
         }
         
         func sectionTitle(at index: Int) -> String {
@@ -72,70 +75,70 @@ extension ExpenseViewController {
         }
         
         func amount(at indexPath: IndexPath) -> String {
-            let transaction = section(at: indexPath.section).transactions[indexPath.row]
-            let amount = Double(transaction.amount) / 100
+            let expense = section(at: indexPath.section).expenses[indexPath.row]
+            let amount = Double(expense.amount) / 100
             return "$" + String(format: "%.2f", amount)
         }
         
         func description(at indexPath: IndexPath) -> String {
-            let transaction = section(at: indexPath.section).transactions[indexPath.row]
-            return transaction.description
+            let expense = section(at: indexPath.section).expenses[indexPath.row]
+            return expense.description
         }
         
         func dateText(at indexPath: IndexPath) -> String {
-            let transaction = section(at: indexPath.section).transactions[indexPath.row]
-            return transaction.date
+            let expense = section(at: indexPath.section).expenses[indexPath.row]
+            return expense.date
         }
 
-        func editViewModel(at indexPath: IndexPath) -> AddNewTransactionViewController.ViewModel {
-            let transaction = section(at: indexPath.section).transactions[indexPath.row]
-            let editViewModel = AddNewTransactionViewController.ViewModel(transaction: transaction)
+        func editViewModel(at indexPath: IndexPath) -> AddNewExpenseViewController.ViewModel {
+            let expense = section(at: indexPath.section).expenses[indexPath.row]
+            let editViewModel = AddNewExpenseViewController.ViewModel(expense: expense)
             return editViewModel
         }
         
-        func addNewTransactionViewModel() -> AddNewTransactionViewController.ViewModel {
-            let transaction = Transaction()
-            let addViewModel = AddNewTransactionViewController.ViewModel(transaction: transaction)
+        func addNewExpenseViewModel() -> AddNewExpenseViewController.ViewModel {
+            let expense = Expense()
+            let addViewModel = AddNewExpenseViewController.ViewModel(expense: expense)
             return addViewModel
         }
         
-        //groups transactions into a list of MonthSection struct
+        //groups expenses into a list of MonthSection struct
         func separateIntoSections() {
-            let sections = Dictionary(grouping: transactions) { (transaction) -> Date in
-                return firstDayOfMonth(date: transaction.date)
+            let sections = Dictionary(grouping: expenses) { (expense) -> Date in
+                return firstDayOfMonth(date: expense.date)
             }
-            groupedTransactions = sections.map(MonthSection.init(month:transactions:))
-            groupedTransactions.sort{(lhs, rhs) in lhs.month > rhs.month}
+            groupedExpenses = sections.map(MonthSection.init(month:expenses:))
+            groupedExpenses.sort{(lhs, rhs) in lhs.month > rhs.month}
         }
         
         // MARK: - Database Interaction Methods
 
-        func deleteTransaction(at indexPath: IndexPath) {
-            let transaction = section(at: indexPath.section).transactions[indexPath.row]
-            Database.instance.deleteExpense(transaction: transaction)
-            if let index = transactions.firstIndex(of: transaction) {
-                transactions.remove(at: index)
+        func deleteExpense(at indexPath: IndexPath) {
+            let expense = section(at: indexPath.section).expenses[indexPath.row]
+            Database.instance.deleteExpense(expense: expense)
+            if let index = expenses.firstIndex(of: expense) {
+                expenses.remove(at: index)
             }
             separateIntoSections()
         }
         
-        func updateTransaction(transaction: Transaction) {
-            Database.instance.updateExpense(transaction: transaction)
+        func updateExpense(expense: Expense) {
+            Database.instance.updateExpense(expense: expense)
         }
         
-        // changes should reflect on groupedTransaction
-        func addTransaction(transaction: Transaction) {
-            Database.instance.addExpense(transaction: transaction)
-            transactions.append(transaction)
+        // changes should reflect on groupedExpense
+        func addExpense(expense: Expense) {
+            Database.instance.addExpense(expense: expense)
+            expenses.append(expense)
             separateIntoSections()
         }
         
         
         // MARK: - Life Cycle
-        init(transactions: [Transaction]) {
-            self.transactions = transactions
-            self.transactions.sort(by: {$0.date > $1.date })
-            self.groupedTransactions = []
+        init(expenses: [Expense]) {
+            self.expenses = expenses
+            self.expenses.sort(by: {$0.date > $1.date })
+            self.groupedExpenses = []
             
             separateIntoSections()
         }

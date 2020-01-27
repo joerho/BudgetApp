@@ -1,5 +1,5 @@
 //
-//  TransactionViewModel.swift
+//  ExpenseViewModel.swift
 //  BudgetApp
 //
 //  Created by joe rho on 10/16/19.
@@ -9,11 +9,11 @@
 import Foundation
 
 
-extension AddNewTransactionViewController {
+extension AddNewExpenseViewController {
     
     class ViewModel {
         
-        private let transaction: Transaction
+        private let expense: Expense
         
         let dateFormatter: DateFormatter = {
           let formatter = DateFormatter()
@@ -32,85 +32,85 @@ extension AddNewTransactionViewController {
         
         var id: Int64? {
             get {
-                return transaction.id
+                return expense.id
             }
         }
         
         var description: String {
             get {
-                return transaction.description
+                return expense.description
             }
             set {
-                transaction.description = newValue
+                expense.description = newValue
             }
         }
         
         var amount: Int {
             get {
-                return transaction.amount
+                return expense.amount
             }
             set {
-                transaction.amount = newValue
+                expense.amount = newValue
             }
         }
         
         var date: String {
             get {
-                if transaction.date == "" {
-                    transaction.date = dateFormatter.string(from: Date())
+                if expense.date == "" {
+                    expense.date = dateFormatter.string(from: Date())
                 }
-                return transaction.date
+                return expense.date
             }
             set {
-                transaction.date = newValue
+                expense.date = newValue
             }
         }
         
         var categoryOptions: [String] = [
-            Transaction.Category.misc.rawValue,
-            Transaction.Category.food.rawValue,
-            Transaction.Category.transportation.rawValue,
-            Transaction.Category.housing.rawValue,
-            Transaction.Category.utilities.rawValue,
-            Transaction.Category.personal.rawValue,
-            Transaction.Category.entertainment.rawValue,
+            Expense.Category.misc.rawValue,
+            Expense.Category.food.rawValue,
+            Expense.Category.transportation.rawValue,
+            Expense.Category.housing.rawValue,
+            Expense.Category.utilities.rawValue,
+            Expense.Category.personal.rawValue,
+            Expense.Category.entertainment.rawValue,
         ]
         
         var category: String {
             get {
-                return transaction.category.rawValue
+                return expense.category.rawValue
             }
             set {
-                transaction.category = Transaction.Category(rawValue: newValue)!
+                expense.category = Expense.Category(rawValue: newValue)!
             }
         }
         
         var repeatOptions: [String] = [
-            Transaction.RepeatFrequency.never.rawValue,
-            Transaction.RepeatFrequency.daily.rawValue,
-            Transaction.RepeatFrequency.weekly.rawValue,
-            Transaction.RepeatFrequency.monthly.rawValue,
-            Transaction.RepeatFrequency.annually.rawValue,
+            Expense.RepeatFrequency.never.rawValue,
+            Expense.RepeatFrequency.daily.rawValue,
+            Expense.RepeatFrequency.weekly.rawValue,
+            Expense.RepeatFrequency.monthly.rawValue,
+            Expense.RepeatFrequency.annually.rawValue,
         ]
         
         var repeats: String {
             get {
-                return transaction.repeats.rawValue
+                return expense.repeats.rawValue
             }
             set {
-                transaction.repeats = Transaction.RepeatFrequency(rawValue: newValue)!
+                expense.repeats = Expense.RepeatFrequency(rawValue: newValue)!
             }
         }
         
         // MARK: - Life Cycle
         
-        init(transaction: Transaction) {
-            self.transaction = transaction
+        init(expense: Expense) {
+            self.expense = expense
         }
         
         // MARK: - Action
-        func getTransaction() -> Transaction {
-            return self.transaction
+        func getExpense() -> Expense {
+            return self.expense
         }
         
     }

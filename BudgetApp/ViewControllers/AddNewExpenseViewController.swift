@@ -8,15 +8,15 @@
 import Eureka
 import UIKit
 
-protocol AddNewTransactionViewControllerDelegate {
-    func didAddTransaction(_ transaction: Transaction)
-    func didUpdateTransaction(_ transaction: Transaction)
+protocol AddNewExpenseViewControllerDelegate {
+    func didAddExpense(_ transaction: Expense)
+    func didUpdateExpense(_ transaction: Expense)
 }
 
 
-class AddNewTransactionViewController: FormViewController {
+class AddNewExpenseViewController: FormViewController {
     
-    var addNewTransactionViewControllerDelegate: AddNewTransactionViewControllerDelegate?
+    var addNewExpenseViewControllerDelegate: AddNewExpenseViewControllerDelegate?
     var viewModel: ViewModel!
     var edit: Bool!
     
@@ -153,14 +153,14 @@ class AddNewTransactionViewController: FormViewController {
     }
     
     @objc fileprivate func donePressedAdd(sender: UIBarButtonItem) {
-        let model = viewModel.getTransaction()
-        addNewTransactionViewControllerDelegate?.didAddTransaction(model)
+        let model = viewModel.getExpense()
+        addNewExpenseViewControllerDelegate?.didAddExpense(model)
         dismiss(animated: true)
     }
     
     @objc fileprivate func donePressedEdit(sender: UIBarButtonItem) {
-        let model = viewModel.getTransaction()
-        addNewTransactionViewControllerDelegate?.didUpdateTransaction(model)
+        let model = viewModel.getExpense()
+        addNewExpenseViewControllerDelegate?.didUpdateExpense(model)
         dismiss(animated: true)
     }
 
@@ -172,11 +172,11 @@ class AddNewTransactionViewController: FormViewController {
 
 // MARK: - Selector
 extension Selector {
-    fileprivate static let closeView = #selector(AddNewTransactionViewController.closeView(sender:))
+    fileprivate static let closeView = #selector(AddNewExpenseViewController.closeView(sender:))
     
-    fileprivate static let donePressedAdd = #selector(AddNewTransactionViewController.donePressedAdd(sender:))
+    fileprivate static let donePressedAdd = #selector(AddNewExpenseViewController.donePressedAdd(sender:))
     
-    fileprivate static let donePressedEdit = #selector(AddNewTransactionViewController.donePressedEdit(sender:))
+    fileprivate static let donePressedEdit = #selector(AddNewExpenseViewController.donePressedEdit(sender:))
 
 }
 

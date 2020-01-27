@@ -21,7 +21,7 @@ class TabBarController: UITabBarController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let expenseViewModel = ExpenseViewController.ViewModel(transactions: Database.instance.getExpenses())
+        let expenseViewModel = ExpenseViewController.ViewModel(expenses: Database.instance.getExpenses())
         let incomeViewModel = IncomeViewController.ViewModel(incomes: Database.instance.getIncomes())
         
         item1 = UINavigationController(rootViewController: ExpenseViewController(viewModel: expenseViewModel))

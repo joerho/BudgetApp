@@ -9,20 +9,12 @@
 import Foundation
 
 
-class Income {
-    var id: Int64?
-    var description: String
-    var date: String
-    var amount: Int
-    
-    
-    
-    init(id: Int64? = nil, description: String = "", date: String = "", amount: Int = 0) {
-        self.id = id
-        self.description = description
-        self.date = date
-        self.amount = amount
-        
+class Income: Transaction {
+    static var incomeCount: Int64 = 0
+
+    override init(id: Int64? = nil, description: String = "", date: String = "", amount: Int = 0) {
+        super.init(id: Income.incomeCount, description: description, date: date, amount: amount)
+        Income.incomeCount += 1
     }
 }
 

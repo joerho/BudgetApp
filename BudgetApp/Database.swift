@@ -13,8 +13,8 @@ class Database {
     
     static let instance = Database()
     private let db: Connection?
-    private let income = Table("income")
-    private let expense = Table("expense")
+    private let incomeTable = Table("income")
+    private let expenseTable = Table("expense")
     private let id = Expression<Int64>("id")
     private let description = Expression<String>("description")
     private let amount = Expression<Int>("amount")
@@ -42,7 +42,7 @@ class Database {
             if !tableExists(tableName: "expense") {
                 print("creating table 'expense'")
                 //let expense = Table("expense")
-                try db?.run(expense.create { t in
+                try db?.run(expenseTable.create { t in
                     t.column(id, primaryKey: .autoincrement)
                     t.column(description)
                     t.column(amount)
@@ -61,7 +61,7 @@ class Database {
             if !tableExists(tableName: "income") {
                 print("creating table 'income'")
                 //let income = Table("income")
-                try db?.run(income.create { t in
+                try db?.run(incomeTable.create { t in
                     t.column(id, primaryKey: .autoincrement)
                     t.column(description)
                     t.column(amount)
@@ -90,33 +90,34 @@ class Database {
     
     
 // MARK: - Expense
-    func addExpense(transaction: Transaction) {
+    func addExpense(expense: Expense) {
         do {
-            let insert = expense.insert(
-                description <- transaction.description,
-                amount <- transaction.amount,
-                date <- transaction.date,
-                category <- transaction.category.rawValue,
-                repeats <- transaction.repeats.rawValue
+            let insert = expenseTable.insert(
+                id <- expense.id!,
+                description <- expense.description,
+                amount <- expense.amount,
+                date <- expense.date,
+                category <- expense.category.rawValue,
+                repeats <- expense.repeats.rawValue
                 )
             try db!.run(insert)
-            print("successfully added transaction (expense)")
+            print("successfully added expense (expense)")
             
         } catch {
             print(error)
         }
     }
     
-    func updateExpense(transaction: Transaction) {
+    func updateExpense(expense: Expense) {
         do {
-            let item = expense.filter(id == transaction.id!)
+            let item = expenseTable.filter(id == expense.id!)
             let update = item.update(
                 [
-                    description <- transaction.description,
-                    amount <- transaction.amount,
-                    date <- transaction.date,
-                    category <- transaction.category.rawValue,
-                    repeats <- transaction.repeats.rawValue
+                    description <- expense.description,
+                    amount <- expense.amount,
+                    date <- expense.date,
+                    category <- expense.category.rawValue,
+                    repeats <- expense.repeats.rawValue
                 ])
             try db!.run(update)
         } catch {
@@ -124,43 +125,45 @@ class Database {
         }
     }
     
-    func deleteExpense(transaction: Transaction) {
+    func deleteExpense(expense: Expense) {
         do {
-            let item = expense.filter(id == transaction.id!)
+            let item = expenseTable.filter(id == expense.id!)
             let delete = item.delete()
             try db!.run(delete)
+            print("deleted item ", expense.id!)
         } catch {
             print(error)
         }
     }
     
-    func getExpenses() -> [Transaction] {
-        var transactions = [Transaction]()
+    func getExpenses() -> [Expense] {
+        var expenses = [Expense]()
         
         do {
-            for transaction in try db!.prepare(expense) {
-                transactions.append(Transaction(
-                    id: transaction[id],
-                    description: transaction[description],
-                    date: transaction[date],
-                    amount: transaction[amount],
-                    category: transaction[category],
-                    repeats: transaction[repeats]
+            for expense in try db!.prepare(expenseTable) {
+                expenses.append(Expense(
+                    id: expense[id],
+                    description: expense[description],
+                    date: expense[date],
+                    amount: expense[amount],
+                    category: expense[category],
+                    repeats: expense[repeats]
                 ))
             }
-            print(transactions)
+            print(expenses)
         } catch {
             print(error)
         }
         
         
-        return transactions
+        return expenses
     }
     
 // MARK: - Income
     func addIncome(incomeModel: Income) {
         do {
-            let insert = income.insert(
+            let insert = incomeTable.insert(
+                id <- incomeModel.id!,
                 description <- incomeModel.description,
                 amount <- incomeModel.amount,
                 date <- incomeModel.date
@@ -175,7 +178,7 @@ class Database {
     
     func updateIncome(incomeModel: Income) {
         do {
-            let item = income.filter(id == incomeModel.id!)
+            let item = incomeTable.filter(id == incomeModel.id!)
             let update = item.update(
                 [
                     description <- incomeModel.description,
@@ -190,7 +193,7 @@ class Database {
     
     func deleteIncome(incomeModel: Income) {
         do {
-            let item = income.filter(id == incomeModel.id!)
+            let item = incomeTable.filter(id == incomeModel.id!)
             let delete = item.delete()
             try db!.run(delete)
         } catch {
@@ -202,7 +205,7 @@ class Database {
         var incomes = [Income]()
         
         do {
-            for income in try db!.prepare(income) {
+            for income in try db!.prepare(incomeTable) {
                 incomes.append(Income(
                     id: income[id],
                     description: income[description],
