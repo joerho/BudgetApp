@@ -123,7 +123,7 @@ extension IncomeViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension IncomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let editViewModel = viewModel.editIncomeViewModel(at: indexPath.row)
+        let editViewModel = viewModel.editIncomeViewModel(at: indexPath)
         let  editVC = AddNewIncomeViewController(viewModel: editViewModel, edit: true)
         editVC.addNewIncomeViewControllerDelegate = self
         let nav = UINavigationController(rootViewController: editVC)

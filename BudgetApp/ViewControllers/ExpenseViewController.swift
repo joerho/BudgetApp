@@ -22,7 +22,7 @@ class ExpenseViewController: UIViewController {
         return tbl
     }()
     
-// MARK: - Life Cycle
+    // MARK: - Life Cycle
     convenience init(viewModel: ViewModel) {
         self.init()
         self.viewModel = viewModel
@@ -58,7 +58,7 @@ class ExpenseViewController: UIViewController {
     
     
     
-// MARK: - Actions
+    // MARK: - Actions
     @objc fileprivate func addButtonTapped(sender: UIBarButtonItem) {
         let addViewModel = viewModel.addNewExpenseViewModel()
         let addVC = AddNewExpenseViewController(viewModel: addViewModel, edit: false)

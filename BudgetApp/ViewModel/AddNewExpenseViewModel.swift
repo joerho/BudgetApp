@@ -115,12 +115,4 @@ extension AddNewExpenseViewController {
         
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
 }
