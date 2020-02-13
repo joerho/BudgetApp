@@ -23,6 +23,5 @@ target 'BudgetApp' do
 
   pod 'Eureka', '~> 5.1.0'
 
-  pod 'Charts', '~> 3.4.0'
   
 end

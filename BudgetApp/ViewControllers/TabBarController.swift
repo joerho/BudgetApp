@@ -20,12 +20,14 @@ class TabBarController: UITabBarController{
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let expenseViewModel = ExpenseViewController.ViewModel(expenses: Database.instance.getExpenses())
-        let incomeViewModel = IncomeViewController.ViewModel(incomes: Database.instance.getIncomes())
+        let expenses = Database.instance.getExpenses()
+        let incomes = Database.instance.getIncomes()
+        let expenseViewModel = ExpenseViewController.ViewModel(expenses: expenses)
+        let incomeViewModel = IncomeViewController.ViewModel(incomes: incomes)
+        let homeViewModel = HomeViewController.ViewModel(expenses: expenses, incomes: incomes)
         
         item1 = UINavigationController(rootViewController: ExpenseViewController(viewModel: expenseViewModel))
-        item2 = UINavigationController(rootViewController: HomeViewController())
+        item2 = UINavigationController(rootViewController: HomeViewController(viewModel: homeViewModel))
         item3 = UINavigationController(rootViewController: IncomeViewController(viewModel: incomeViewModel))
         
         item1?.tabBarItem = UITabBarItem(title: "expense", image: UIImage(systemName: "chevron.down.square.fill"), tag: 0)
