@@ -13,11 +13,11 @@ extension HomeViewController {
         var expenses: [Expense]
         var incomes: [Income]
         
-        func getMonthlyExpense() -> Double {
+        func getCurrentMonthlyExpense() -> Double {
             return 0.0
         }
         
-        func getMonthlyIncome() -> Double {
+        func getCurrentMonthlyIncome() -> Double {
             return 0.0
         }
         

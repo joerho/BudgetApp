@@ -31,6 +31,7 @@
 		3CE1E04C23567E1D008E6317 /* AddNewExpenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE1E04B23567E1D008E6317 /* AddNewExpenseViewController.swift */; };
 		3CE1E0532357A2C0008E6317 /* AddNewExpenseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE1E0522357A2C0008E6317 /* AddNewExpenseViewModel.swift */; };
 		3CE90E0723F4DAED005BD2FF /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE90E0623F4DAED005BD2FF /* HomeViewModel.swift */; };
+		3CE90E0923FE07E4005BD2FF /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE90E0823FE07E4005BD2FF /* CustomView.swift */; };
 		5009D116AF33BC606CB652CA /* Pods_BudgetAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1E1251FFF07EBFF031C3E30 /* Pods_BudgetAppUITests.framework */; };
 		693230677255F6ED4FB07B61 /* Pods_BudgetApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 010666AAF7DF6025D54DD630 /* Pods_BudgetApp.framework */; };
 		F72D276E6DED48FB0149B3B3 /* Pods_BudgetAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01186ABE423C14D24479E650 /* Pods_BudgetAppTests.framework */; };
@@ -91,6 +92,7 @@
 		3CE1E04B23567E1D008E6317 /* AddNewExpenseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewExpenseViewController.swift; sourceTree = "<group>"; };
 		3CE1E0522357A2C0008E6317 /* AddNewExpenseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewExpenseViewModel.swift; sourceTree = "<group>"; };
 		3CE90E0623F4DAED005BD2FF /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		3CE90E0823FE07E4005BD2FF /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
 		4342A5B752999CBD68A1A616 /* Pods-BudgetAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BudgetAppUITests.release.xcconfig"; path = "Target Support Files/Pods-BudgetAppUITests/Pods-BudgetAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		6C36953EB9DB262FE1A683BC /* Pods-BudgetAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BudgetAppTests.debug.xcconfig"; path = "Target Support Files/Pods-BudgetAppTests/Pods-BudgetAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		74A746BA2EAC8C5CD439EF9F /* Pods-BudgetAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BudgetAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-BudgetAppUITests/Pods-BudgetAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 			isa = PBXGroup;
 			children = (
 				3CAF4591236E28B0004BD61F /* TransactionTableViewCell.swift */,
+				3CE90E0823FE07E4005BD2FF /* CustomView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -475,6 +478,7 @@
 				3C96DD4C237F8BD700BCB8EB /* AddNewIncomeViewController.swift in Sources */,
 				3C96DD48237F6FDE00BCB8EB /* AddNewIncomeViewModel.swift in Sources */,
 				3C96DD46237CE35E00BCB8EB /* Income.swift in Sources */,
+				3CE90E0923FE07E4005BD2FF /* CustomView.swift in Sources */,
 				3CE90E0723F4DAED005BD2FF /* HomeViewModel.swift in Sources */,
 				3C7E5B3E234FF792004CFACF /* IncomeViewController.swift in Sources */,
 				3C49DD0F234EFD4900D28820 /* TabBarController.swift in Sources */,

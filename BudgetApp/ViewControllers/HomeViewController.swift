@@ -16,8 +16,9 @@ class HomeViewController: UIViewController {
         let sv = UIStackView()
         sv.translatesAutoresizingMaskIntoConstraints = false
         sv.axis = .vertical
-        sv.distribution = .fillEqually
-        sv.spacing = 20
+        sv.distribution = .fillProportionally
+        sv.layoutMargins = UIEdgeInsets(top: 10, left: 5, bottom: 20, right: 5)
+        sv.isLayoutMarginsRelativeArrangement = true
         return sv
     }()
     
@@ -26,9 +27,7 @@ class HomeViewController: UIViewController {
         sv.translatesAutoresizingMaskIntoConstraints = false
         sv.axis = .horizontal
         sv.distribution = .fillEqually
-        sv.spacing = 20
-        sv.layoutMargins = UIEdgeInsets(top: 20, left: 10, bottom: 0, right: 10)
-        sv.isLayoutMarginsRelativeArrangement = true
+        sv.spacing = 10
         return sv
     }()
     
@@ -36,9 +35,8 @@ class HomeViewController: UIViewController {
         let sv = UIStackView()
         sv.translatesAutoresizingMaskIntoConstraints = false
         sv.axis = .vertical
-        sv.distribution = .fillEqually
-        sv.spacing = 20
-        sv.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10)
+        sv.distribution = .fillProportionally
+        sv.layoutMargins = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
         sv.isLayoutMarginsRelativeArrangement = true
         return sv
         
@@ -51,34 +49,36 @@ class HomeViewController: UIViewController {
         return v
     }()
     
-    let label1: UIView = {
-        let label = UIView()
-        label.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+    let label1: CustomView = {
+        let label = CustomView()
+        label.height = 1.0
         label.backgroundColor = .red
         label.layer.cornerRadius = 5
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let label2: UIView = {
-        let label = UIView()
-        label.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+    let label2: CustomView = {
+        let label = CustomView()
+        label.height = 1.0
         label.backgroundColor = .green
         label.layer.cornerRadius = 5
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let label3: UIView = {
-        let label = UIView()
+    let label3: CustomView = {
+        let label = CustomView()
+        label.height = 2.0
         label.backgroundColor = .blue
         label.layer.cornerRadius = 5
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let label4: UIView = {
-        let label = UIView()
+    let label4: CustomView = {
+        let label = CustomView()
+        label.height = 2.0
         label.backgroundColor = .cyan
         label.layer.cornerRadius = 5
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -105,16 +105,13 @@ class HomeViewController: UIViewController {
 
         horizontalStackView.addArrangedSubview(label1)
         horizontalStackView.addArrangedSubview(label2)
+        bottomStackView.addArrangedSubview(label3)
 
         verticalStackView.addArrangedSubview(horizontalStackView)
-
-        bottomStackView.addArrangedSubview(label3)
-        bottomStackView.addArrangedSubview(label4)
-
         verticalStackView.addArrangedSubview(bottomStackView)
         
         
-        
+
         
 
         

@@ -37,9 +37,10 @@ class TabBarController: UITabBarController{
         controllers.append(item1!)
         controllers.append(item2!)
         controllers.append(item3!)
-
-        self.viewControllers = controllers
         
+        //self.selectedIndex = 1
+        self.viewControllers = controllers
+
     }
 }
     
