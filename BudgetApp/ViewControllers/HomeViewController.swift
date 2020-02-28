@@ -110,7 +110,9 @@ class HomeViewController: UIViewController {
         verticalStackView.addArrangedSubview(horizontalStackView)
         verticalStackView.addArrangedSubview(bottomStackView)
         
-        
+        print(viewModel.getMonthlyExpense(date: "02/26/2020"))
+        print(viewModel.getMonthlyIncome(date: "02/26/2020"))
+
 
         
 

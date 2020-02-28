@@ -31,7 +31,7 @@ extension IncomeViewController {
             if let index = transactions.firstIndex(of: income) {
                 transactions.remove(at: index)
             }
-            separateIntoSections()
+            self.groupedTransactions = separateIntoSections(transactions: self.transactions)
         }
         
         func updateIncome(income: Income) {
@@ -41,7 +41,7 @@ extension IncomeViewController {
         func addIncome(income: Income) {
             Database.instance.addIncome(incomeModel: income)
             transactions.append(income)
-            separateIntoSections()
+            self.groupedTransactions = separateIntoSections(transactions: self.transactions)
         }
         
 // MARK: - Life Cycle

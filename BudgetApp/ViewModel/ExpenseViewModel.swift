@@ -34,7 +34,7 @@ extension ExpenseViewController {
             if let index = transactions.firstIndex(of: expense) {
                 transactions.remove(at: index)
             }
-            separateIntoSections()
+            self.groupedTransactions = separateIntoSections(transactions: self.transactions)
         }
         
         func updateExpense(expense: Expense) {
@@ -45,7 +45,7 @@ extension ExpenseViewController {
         func addExpense(expense: Expense) {
             Database.instance.addExpense(expense: expense)
             transactions.append(expense)
-            separateIntoSections()
+            self.groupedTransactions = separateIntoSections(transactions: self.transactions)
         }
         
         

@@ -10,18 +10,13 @@ import Foundation
 
 class BaseViewModel {
     
-    struct MonthSection {
-        var month: Date
-        var transactions: [Transaction]
-    }
-    
     let dateFormatter: DateFormatter = {
       let formatter = DateFormatter()
       formatter.dateFormat = "MM/dd/yyyy"
       return formatter
     }()
     
-    var groupedTransactions: [MonthSection]
+    var groupedTransactions: [MonthSection] = []
     
     var transactions: [Transaction] {
         didSet{
@@ -72,12 +67,14 @@ class BaseViewModel {
     }
     
     //groups expenses into a list of MonthSection struct
-    func separateIntoSections() {
+    func separateIntoSections(transactions: [Transaction]) -> [MonthSection] {
         let sections = Dictionary(grouping: transactions) { (expense) -> Date in
             return firstDayOfMonth(date: expense.date)
         }
-        groupedTransactions = sections.map(MonthSection.init(month:transactions:))
+        var groupedTransactions = sections.map(MonthSection.init(month:transactions:))
         groupedTransactions.sort{(lhs, rhs) in lhs.month > rhs.month}
+        
+        return groupedTransactions
     }
     
     func amount(at indexPath: IndexPath) -> String {
@@ -100,8 +97,7 @@ class BaseViewModel {
     init(transactions: [Transaction]) {
         self.transactions = transactions
         self.transactions.sort(by: {$0.date > $1.date})
-        self.groupedTransactions = []
+        self.groupedTransactions = separateIntoSections(transactions: self.transactions)
         
-        separateIntoSections()
     }
 }
