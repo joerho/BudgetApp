@@ -22,24 +22,35 @@ extension HomeViewController {
         var groupedExpenses: [MonthSection] = []
         var groupedIncomes: [MonthSection] = []
         
-        func getMonthlyExpense(date: String) -> Int {
+        func getMonthlyExpense(date: String) -> String {
             let month = firstDayOfMonth(date: date)
             for ms in groupedExpenses {
                 if ms.month == month{
-                    return sumOfTransactions(arr: ms.transactions)
+                    return String(format: "$%.2f", Double(sumOfTransactions(arr: ms.transactions)) / 100)
                 }
             }
-            return 0
+            return "?"
         }
         
-        func getMonthlyIncome(date: String) -> Int {
+        func getCurrentMonthlyIncome() -> String {
+            let date = Date()
+            return getMonthlyIncome(date: dateFormatter.string(from: date))
+        }
+        
+        func getCurrentMonthlyExpense() -> String {
+            let date = Date()
+            return getMonthlyExpense(date: dateFormatter.string(from: date))
+        }
+        
+        
+        func getMonthlyIncome(date: String) -> String {
             let month = firstDayOfMonth(date: date)
             for ms in groupedIncomes {
                 if ms.month == month {
-                    return sumOfTransactions(arr: ms.transactions)
+                    return String(format: "$%.2f", Double(sumOfTransactions(arr: ms.transactions)) / 100)
                 }
             }
-            return 0
+            return "?"
         }
         
         private func sumOfTransactions(arr: [Transaction]) -> Int {

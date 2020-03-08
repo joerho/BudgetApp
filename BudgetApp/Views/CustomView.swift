@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 
-class CustomView: UIView {
+class CustomView: UILabel {
     var height = 1.0
     
     override open var intrinsicContentSize: CGSize {
