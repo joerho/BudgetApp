@@ -43,7 +43,6 @@ class AddNewExpenseViewController: FormViewController {
             $0.onChange { [unowned self] row in
                 if let date = row.value {
                     self.viewModel.date = self.viewModel.dateFormatter.string(from: date)
-                    print(self.viewModel.date)
                 }
             }
         }
@@ -163,12 +162,7 @@ class AddNewExpenseViewController: FormViewController {
         addNewExpenseViewControllerDelegate?.didUpdateExpense(model)
         dismiss(animated: true)
     }
-
-
 }
-
-
-
 
 // MARK: - Selector
 extension Selector {
@@ -177,7 +171,6 @@ extension Selector {
     fileprivate static let donePressedAdd = #selector(AddNewExpenseViewController.donePressedAdd(sender:))
     
     fileprivate static let donePressedEdit = #selector(AddNewExpenseViewController.donePressedEdit(sender:))
-
 }
 
 // MARK: - Form

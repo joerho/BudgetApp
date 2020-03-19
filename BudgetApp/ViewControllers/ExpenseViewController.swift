@@ -43,8 +43,6 @@ class ExpenseViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = self.editButtonItem
     }
     
-    
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
@@ -54,9 +52,6 @@ class ExpenseViewController: UIViewController {
         super.setEditing(!isEditing, animated: true)
         tableView.setEditing(!tableView.isEditing, animated: true)
     }
-    
-    
-    
     
     // MARK: - Actions
     @objc fileprivate func addButtonTapped(sender: UIBarButtonItem) {
@@ -74,7 +69,6 @@ extension Selector {
     fileprivate static let addButtonTapped = #selector(ExpenseViewController.addButtonTapped(sender:))
 }
 
-
 // MARK: - UITableViewDataSource
 extension ExpenseViewController: UITableViewDataSource {
     
@@ -91,16 +85,11 @@ extension ExpenseViewController: UITableViewDataSource {
         return viewModel.sectionCount(at: section)
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60.0
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: TransactionTableViewCell.self)) as! TransactionTableViewCell
-        
         cell.textLabel?.text = viewModel.description(at: indexPath)
         cell.detailTextLabel?.text = viewModel.dateText(at: indexPath)
-        cell.customLabel?.text = viewModel.amount(at: indexPath)
+        cell.customLabel.text = viewModel.amount(at: indexPath)
         cell.editingAccessoryType = .disclosureIndicator
         
         return cell
@@ -109,12 +98,13 @@ extension ExpenseViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            viewModel.deleteExpense(at: indexPath)
             tableView.beginUpdates()
             if (viewModel.sectionCount(at: indexPath.section) > 1) {
+                viewModel.deleteExpense(at: indexPath)
                 tableView.deleteRows(at: [indexPath], with: .automatic)
             }
             else {
+                viewModel.deleteExpense(at: indexPath)
                 tableView.deleteSections([indexPath.section], with: .automatic)
             }
             tableView.endUpdates()
@@ -125,6 +115,10 @@ extension ExpenseViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 extension ExpenseViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60.0
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let editViewModel = viewModel.editViewModel(at: indexPath)
@@ -143,9 +137,9 @@ extension ExpenseViewController: AddNewExpenseViewControllerDelegate {
         tableView.reloadData()
     }
     
-    // potentially change to index?
     func didUpdateExpense(_ expense: Expense) {
         viewModel.updateExpense(expense: expense)
+        viewModel.setGroupedTransactions()
         tableView.reloadData()
     }
 }

@@ -10,11 +10,8 @@ import Foundation
 
 
 class Income: Transaction {
-    static var incomeCount: Int64 = 0
-
     override init(id: Int64? = nil, description: String = "", date: String = "", amount: Int = 0) {
-        super.init(id: Income.incomeCount, description: description, date: date, amount: amount)
-        Income.incomeCount += 1
+        super.init(id: id, description: description, date: date, amount: amount)
     }
 }
 

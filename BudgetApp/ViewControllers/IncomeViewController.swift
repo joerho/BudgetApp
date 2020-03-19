@@ -53,7 +53,7 @@ class IncomeViewController: UIViewController {
         tableView.setEditing(!tableView.isEditing, animated: true)
     }
     
-// MARK: - Actions
+    // MARK: - Actions
     @objc func addButtonTapped(sender: UIBarButtonItem) {
         let addViewModel = viewModel.addNewIncomeViewModel()
         let addVC = AddNewIncomeViewController(viewModel: addViewModel, edit: false)
@@ -62,7 +62,6 @@ class IncomeViewController: UIViewController {
         navigationController?.present(nav, animated: true)
     }
 }
-
 
 // MARK: - Selectors
 extension Selector {
@@ -84,15 +83,11 @@ extension IncomeViewController: UITableViewDataSource {
         return viewModel.sectionCount(at: section)
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60.0
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: TransactionTableViewCell.self)) as! TransactionTableViewCell
         cell.textLabel?.text = viewModel.description(at: indexPath)
         cell.detailTextLabel?.text = viewModel.dateText(at: indexPath)
-        cell.customLabel?.text = viewModel.amount(at: indexPath)
+        cell.customLabel.text = viewModel.amount(at: indexPath)
         cell.editingAccessoryType = .disclosureIndicator
         
         return cell
@@ -100,28 +95,27 @@ extension IncomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            viewModel.deleteIncome(at: indexPath)
             tableView.beginUpdates()
             if (viewModel.sectionCount(at: indexPath.section) > 1) {
-                print("here")
+                viewModel.deleteIncome(at: indexPath)
                 tableView.deleteRows(at: [indexPath], with: .automatic)
             }
             else {
-                print("here1")
+                viewModel.deleteIncome(at: indexPath)
                 tableView.deleteSections([indexPath.section], with: .automatic)
             }
             tableView.endUpdates()
         }
     }
-    
-    
-    
-    
-    
 }
 
 // MARK: - UITableViewDelegate
 extension IncomeViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60.0
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let editViewModel = viewModel.editIncomeViewModel(at: indexPath)
         let  editVC = AddNewIncomeViewController(viewModel: editViewModel, edit: true)
@@ -140,6 +134,7 @@ extension IncomeViewController: AddNewIncomeViewControllerDelegate {
     
     func didUpdateIncome(_ income: Income) {
         viewModel.updateIncome(income: income)
+        viewModel.setGroupedTransactions()
         tableView.reloadData()
     }
 }

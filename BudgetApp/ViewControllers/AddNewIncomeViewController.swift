@@ -39,7 +39,6 @@ class AddNewIncomeViewController: FormViewController {
             $0.onChange { [unowned self] row in
                 if let date = row.value {
                     self.viewModel.date = self.viewModel.dateFormatter.string(from: date)
-                    print(self.viewModel.date)
                 }
             }
         }

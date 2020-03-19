@@ -77,6 +77,10 @@ class BaseViewModel {
         return groupedTransactions
     }
     
+    func setGroupedTransactions() {
+        self.groupedTransactions = separateIntoSections(transactions: self.transactions)
+    }
+    
     func amount(at indexPath: IndexPath) -> String {
         let expense = section(at: indexPath.section).transactions[indexPath.row]
         let amount = Double(expense.amount) / 100
@@ -97,7 +101,6 @@ class BaseViewModel {
     init(transactions: [Transaction]) {
         self.transactions = transactions
         self.transactions.sort(by: {$0.date > $1.date})
-        self.groupedTransactions = separateIntoSections(transactions: self.transactions)
-        
+        setGroupedTransactions()
     }
 }

@@ -28,8 +28,8 @@ extension IncomeViewController {
         func deleteIncome(at indexPath: IndexPath) {
             let income = section(at: indexPath.section).transactions[indexPath.row]
             Database.instance.deleteIncome(incomeModel: income as! Income)
-            if let index = transactions.firstIndex(of: income) {
-                transactions.remove(at: index)
+            if let index = self.transactions.firstIndex(of: income) {
+                self.transactions.remove(at: index)
             }
             self.groupedTransactions = separateIntoSections(transactions: self.transactions)
         }
@@ -39,12 +39,13 @@ extension IncomeViewController {
         }
         
         func addIncome(income: Income) {
-            Database.instance.addIncome(incomeModel: income)
+            // Set the id of the Income instance.
+            income.id = Database.instance.addIncome(incomeModel: income)
             transactions.append(income)
             self.groupedTransactions = separateIntoSections(transactions: self.transactions)
         }
         
-// MARK: - Life Cycle
+        // MARK: - Life Cycle
         init(incomes: [Income]) {
             super.init(transactions: incomes)
         }

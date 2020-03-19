@@ -11,6 +11,11 @@ import Foundation
 extension HomeViewController {
     class ViewModel {
         
+        struct TitleContent {
+            var title: String
+            var content: String
+        }
+        
         let dateFormatter: DateFormatter = {
           let formatter = DateFormatter()
           formatter.dateFormat = "MM/dd/yyyy"
@@ -21,6 +26,7 @@ extension HomeViewController {
         var incomes: [Income]
         var groupedExpenses: [MonthSection] = []
         var groupedIncomes: [MonthSection] = []
+        var groupedTitleContent: [TitleContent] = []
         
         func getMonthlyExpense(date: String) -> String {
             let month = firstDayOfMonth(date: date)
@@ -77,12 +83,21 @@ extension HomeViewController {
             return groupedTransactions
         }
         
+        func getTitleContent() -> [TitleContent] {
+            var groupedTitleContent: [TitleContent] = []
+            groupedTitleContent.append(TitleContent.init(title: "Total Expense", content: getCurrentMonthlyExpense()))
+            groupedTitleContent.append(TitleContent.init(title: "Total Income", content: getCurrentMonthlyIncome()))
+            
+            return groupedTitleContent
+        }
+        
         //MARK: - Life Cycle
         init(expenses: [Expense], incomes: [Income]) {
             self.expenses = expenses
             self.incomes = incomes
             self.groupedExpenses = separateIntoSections(transactions: self.expenses)
             self.groupedIncomes = separateIntoSections(transactions: self.incomes)
+            self.groupedTitleContent = getTitleContent()
         }
     }
 }

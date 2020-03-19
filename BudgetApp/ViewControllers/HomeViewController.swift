@@ -11,135 +11,65 @@ import UIKit
 class HomeViewController: UIViewController {
     
     var viewModel : ViewModel!
-    
-    let backgroundView: UIView = {
-        let subView = UIView()
-        subView.translatesAutoresizingMaskIntoConstraints = false
-        subView.backgroundColor = UIColor.systemBackground
-        return subView
-    }()
-    
-    let verticalStackView: UIStackView = {
-        let sv = UIStackView()
-        sv.translatesAutoresizingMaskIntoConstraints = false
-        sv.axis = .vertical
-        sv.distribution = .fillProportionally
-        //sv.layoutMargins = UIEdgeInsets(top: 10, left: 5, bottom: 20, right: 5)
-        sv.isLayoutMarginsRelativeArrangement = true
-        return sv
-    }()
-    
-    let horizontalStackView: UIStackView = {
-        let sv = UIStackView()
-        sv.translatesAutoresizingMaskIntoConstraints = false
-        sv.axis = .horizontal
-        sv.distribution = .fillEqually
-        //sv.spacing = 10
-        return sv
-    }()
-    
-    let bottomStackView: UIStackView = {
-        let sv = UIStackView()
-        sv.translatesAutoresizingMaskIntoConstraints = false
-        sv.axis = .vertical
-        sv.distribution = .fillProportionally
-        //sv.layoutMargins = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
-        sv.isLayoutMarginsRelativeArrangement = true
-        return sv
-        
-    }()
-    
-    let scrollView: UIScrollView = {
-        let v = UIScrollView()
-        v.translatesAutoresizingMaskIntoConstraints = false
-        v.backgroundColor = .cyan
-        return v
-    }()
-    
-    let label1: UILabel = {
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
-        label.center = CGPoint(x: 160, y: 285)
-        label.backgroundColor = UIColor.systemBackground
-        label.layer.masksToBounds = true
-        label.layer.cornerRadius = 5
-        label.layer.borderWidth = 3
-        label.lineBreakMode = .byWordWrapping
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        return label
-    }()
-    
-    let label2: CustomView = {
-        let label = CustomView()
-        label.height = 1.0
-        label.backgroundColor = UIColor.systemBackground
-        label.layer.masksToBounds = true
-        label.layer.cornerRadius = 5
-        label.layer.borderWidth = 3
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
-        return label
-    }()
-    
-    let label3: CustomView = {
-        let label = CustomView()
-        label.height = 3.0
-        label.backgroundColor = UIColor.systemBackground
-        label.layer.masksToBounds = true
-        label.layer.cornerRadius = 5
-        label.layer.borderWidth = 3
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let label4: CustomView = {
-        let label = CustomView()
-        label.height = 1.0
-        label.backgroundColor = .cyan
-        label.layer.cornerRadius = 5
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+
+    lazy var tableView: UITableView = {
+        let tbl = UITableView()
+        tbl.register(HomeViewCell.self, forCellReuseIdentifier: String(describing: HomeViewCell.self))
+        tbl.dataSource = self
+        tbl.delegate = self
+        tbl.tableFooterView = UIView()
+        return tbl
     }()
     
     // MARK: -Life Cycle
     convenience init(viewModel: ViewModel) {
         self.init()
         self.viewModel = viewModel
-        initializeBackground()
         initialize()
     }
     
-    private func initializeBackground() {
-        self.view.addSubview(backgroundView)
-        backgroundView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0).isActive = true
-        backgroundView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0).isActive = true
-        backgroundView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0).isActive = true
-        backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0).isActive = true
+    private func initialize() {
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(tableView)
+        tableView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        tableView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        tableView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        tableView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 30)
+        tableView.isScrollEnabled = true
+        tableView.allowsSelection = false
+        
+        self.title = "Home"
     }
     
-    private func initialize() {
-        self.title = "Home"
-
-        label1.text = "I am a test label"
-        backgroundView.addSubview(label1)
-        
-        //edgesForExtendedLayout = []
-
-//        verticalStackView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0.0).isActive = true
-//        verticalStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0.0).isActive = true
-//        verticalStackView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0.0).isActive = true
-//        verticalStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0).isActive = true
-//
-//        horizontalStackView.addArrangedSubview(label1)
-//        horizontalStackView.addArrangedSubview(label2)
-//        bottomStackView.addArrangedSubview(label3)
-//
-//        verticalStackView.addArrangedSubview(horizontalStackView)
-//        verticalStackView.addArrangedSubview(bottomStackView)
-
-        
-
-        
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
     
 }
+
+// MARK: - UITableViewDataSource
+extension HomeViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.groupedTitleContent.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: HomeViewCell.self)) as! HomeViewCell
+        cell.title.text = viewModel.groupedTitleContent[indexPath.row].title
+        cell.content.text = viewModel.groupedTitleContent[indexPath.row].content
+        
+        return cell
+    }
+    
+    
+}
+
+extension HomeViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100.0
+    }
+}
+

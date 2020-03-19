@@ -41,9 +41,8 @@ extension ExpenseViewController {
             Database.instance.updateExpense(expense: expense)
         }
         
-        // changes should reflect on groupedExpense
         func addExpense(expense: Expense) {
-            Database.instance.addExpense(expense: expense)
+            expense.id = Database.instance.addExpense(expense: expense)
             transactions.append(expense)
             self.groupedTransactions = separateIntoSections(transactions: self.transactions)
         }

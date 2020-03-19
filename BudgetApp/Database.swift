@@ -51,7 +51,8 @@ class Database {
                     t.column(repeats)
                 })
             }
-        } catch {
+        }
+        catch {
             print(error)
         }
     }
@@ -69,7 +70,8 @@ class Database {
                 })
             }
             
-        } catch {
+        }
+        catch {
             print(error)
         }
     }
@@ -80,7 +82,8 @@ class Database {
                 "SELECT EXISTS (SELECT * FROM sqlite_master WHERE type = 'table' AND name = ?)",
                 tableName
             ) as! Int64 > 0
-        } catch {
+        }
+        catch {
             print(error)
         }
         
@@ -89,23 +92,26 @@ class Database {
     }
     
     
-// MARK: - Expense
-    func addExpense(expense: Expense) {
+    // MARK: - Expense
+    func addExpense(expense: Expense) -> Int64 {
+        var returnId: Int64 = -1
+
         do {
             let insert = expenseTable.insert(
-                id <- expense.id!,
                 description <- expense.description,
                 amount <- expense.amount,
                 date <- expense.date,
                 category <- expense.category.rawValue,
                 repeats <- expense.repeats.rawValue
                 )
-            try db!.run(insert)
-            print("successfully added expense (expense)")
+            returnId = try db!.run(insert)
+            print("successfully added expense")
             
-        } catch {
+        }
+        catch {
             print(error)
         }
+        return returnId
     }
     
     func updateExpense(expense: Expense) {
@@ -120,7 +126,8 @@ class Database {
                     repeats <- expense.repeats.rawValue
                 ])
             try db!.run(update)
-        } catch {
+        }
+        catch {
             print(error)
         }
     }
@@ -131,7 +138,8 @@ class Database {
             let delete = item.delete()
             try db!.run(delete)
             print("deleted item ", expense.id!)
-        } catch {
+        }
+        catch {
             print(error)
         }
     }
@@ -150,8 +158,8 @@ class Database {
                     repeats: expense[repeats]
                 ))
             }
-            print(expenses)
-        } catch {
+        }
+        catch {
             print(error)
         }
         
@@ -159,21 +167,27 @@ class Database {
         return expenses
     }
     
-// MARK: - Income
-    func addIncome(incomeModel: Income) {
+    // MARK: - Income
+    
+    // This function returns the ID (primary key) of the newly added entry.
+    // Returns -1 if there is an error.
+    func addIncome(incomeModel: Income) -> Int64 {
+        var returnId: Int64 = -1
+        
         do {
             let insert = incomeTable.insert(
-                id <- incomeModel.id!,
                 description <- incomeModel.description,
                 amount <- incomeModel.amount,
                 date <- incomeModel.date
             )
-            try db!.run(insert)
-            print("successfully added income (income)")
-            
-        } catch {
+            returnId = try db!.run(insert)
+            print("successfully added income")
+        }
+        catch {
             print(error)
         }
+        return returnId
+        
     }
     
     func updateIncome(incomeModel: Income) {
@@ -186,7 +200,8 @@ class Database {
                     date <- incomeModel.date
                 ])
             try db!.run(update)
-        } catch {
+        }
+        catch {
             print(error)
         }
     }
@@ -196,7 +211,9 @@ class Database {
             let item = incomeTable.filter(id == incomeModel.id!)
             let delete = item.delete()
             try db!.run(delete)
-        } catch {
+            print("deleted item ", incomeModel.id!)
+        }
+        catch {
             print(error)
         }
     }
@@ -213,7 +230,8 @@ class Database {
                     amount: income[amount]
                 ))
             }
-        } catch {
+        }
+        catch {
             print(error)
         }
         

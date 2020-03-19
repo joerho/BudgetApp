@@ -11,7 +11,6 @@ import Foundation
 
 class Transaction: Comparable {
     
-    
     var id: Int64?
     var description: String
     var date: String

@@ -10,22 +10,17 @@ import Foundation
 
 
 class Expense: Transaction {
-    static var expenseCount: Int64 = 0
     fileprivate var category_raw: String
     fileprivate var repeats_raw: String
-    
     
     init(id: Int64? = nil, description: String = "", date: String = "", amount: Int = 0, category: String = Category.misc.rawValue, repeats: String = RepeatFrequency.never.rawValue) {
         self.category_raw = category
         self.repeats_raw = repeats
-        super.init(id: Expense.expenseCount, description: description, date: date, amount: amount)
-        Expense.expenseCount += 1
+        super.init(id: id, description: description, date: date, amount: amount)
     }
-    
 }
 
 // MARK: - Category, Repeats
-
 extension Expense {
     enum Category: String {
         case misc = "Misc."
@@ -46,9 +41,7 @@ extension Expense {
     }
 }
 
-
 // MARK: - Computed Variables
-
 extension Expense {
     var category: Category {
         get{
