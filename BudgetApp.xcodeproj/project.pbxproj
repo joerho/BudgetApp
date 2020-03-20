@@ -219,8 +219,8 @@
 				3C49DD0D234EFD4900D28820 /* TabBarController.swift */,
 				3C7E5B3F235048DA004CFACF /* HomeViewController.swift */,
 				3C49DD03234D4C9200D28820 /* ExpenseViewController.swift */,
-				3CE1E04B23567E1D008E6317 /* AddNewExpenseViewController.swift */,
 				3C7E5B3D234FF792004CFACF /* IncomeViewController.swift */,
+				3CE1E04B23567E1D008E6317 /* AddNewExpenseViewController.swift */,
 				3C96DD4B237F8BD700BCB8EB /* AddNewIncomeViewController.swift */,
 			);
 			path = ViewControllers;

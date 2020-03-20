@@ -113,6 +113,15 @@ extension AddNewExpenseViewController {
             return self.expense
         }
         
+        func extractEmoji() -> String {
+            let categoryArr = expense.category.rawValue.split{$0 == " "}
+            if categoryArr.count > 1 {
+                return String(categoryArr[1])
+            }
+            else {
+                return ""
+            }
+        }
     }
     
 }

@@ -24,12 +24,12 @@ class Expense: Transaction {
 extension Expense {
     enum Category: String {
         case misc = "Misc."
-        case food = "Food"
-        case transportation = "Transportation"
-        case housing = "Housing"
-        case utilities = "Utilities"
-        case personal = "Personal"
-        case entertainment = "Entertainment"
+        case food = "Food 🍖"
+        case transportation = "Transportation 🚗"
+        case housing = "Housing 🏠"
+        case utilities = "Utilities 🚰"
+        case personal = "Personal 👑"
+        case entertainment = "Entertainment 🏌️‍♂️"
     }
     
     enum RepeatFrequency: String {

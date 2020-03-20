@@ -21,8 +21,7 @@ class AddNewExpenseViewController: FormViewController {
     var edit: Bool!
     
     
-// MARK: - Life Cycle
-    
+    // MARK: - Life Cycle
     convenience init(viewModel: ViewModel, edit: Bool) {
         self.init()
         self.viewModel = viewModel
@@ -47,10 +46,9 @@ class AddNewExpenseViewController: FormViewController {
             }
         }
             
-        //+++ Section()
         <<< TextRow() {
             $0.title = "Description"
-            $0.placeholder = "e.g. Pho with Brandon"
+            $0.placeholder = "e.g. Dinner with GF"
             $0.value = viewModel.description
             $0.onChange { [unowned self] row in
                 if let value = row.value {
@@ -74,7 +72,6 @@ class AddNewExpenseViewController: FormViewController {
             }
         }
         
-        //+++ Section()
         <<< DecimalRow() {
             $0.useFormatterDuringInput = true
             $0.title = "Amount"

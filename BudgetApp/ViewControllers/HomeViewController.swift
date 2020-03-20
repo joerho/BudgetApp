@@ -39,11 +39,14 @@ class HomeViewController: UIViewController {
         tableView.isScrollEnabled = true
         tableView.allowsSelection = false
         
-        self.title = "Home"
+        self.title = viewModel.getCurrentMonthYear()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        let expenses = Database.instance.getExpenses()
+        let incomes = Database.instance.getIncomes()
+        self.viewModel = .init(expenses: expenses, incomes: incomes)
         tableView.reloadData()
     }
     

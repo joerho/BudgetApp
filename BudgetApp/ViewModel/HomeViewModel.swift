@@ -39,15 +39,12 @@ extension HomeViewController {
         }
         
         func getCurrentMonthlyIncome() -> String {
-            let date = Date()
-            return getMonthlyIncome(date: dateFormatter.string(from: date))
+            return getMonthlyIncome(date: dateFormatter.string(from: Date()))
         }
         
         func getCurrentMonthlyExpense() -> String {
-            let date = Date()
-            return getMonthlyExpense(date: dateFormatter.string(from: date))
+            return getMonthlyExpense(date: dateFormatter.string(from: Date()))
         }
-        
         
         func getMonthlyIncome(date: String) -> String {
             let month = firstDayOfMonth(date: date)
@@ -91,6 +88,14 @@ extension HomeViewController {
             return groupedTitleContent
         }
         
+        func getCurrentMonthYear() -> String {
+            let date = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MMMM yyyy"
+            
+            return dateFormatter.string(from: date)
+            
+        }
         //MARK: - Life Cycle
         init(expenses: [Expense], incomes: [Income]) {
             self.expenses = expenses

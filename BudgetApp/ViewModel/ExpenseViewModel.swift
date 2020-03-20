@@ -16,15 +16,16 @@ extension ExpenseViewController {
         func editViewModel(at indexPath: IndexPath) -> AddNewExpenseViewController.ViewModel {
             let expense = section(at: indexPath.section).transactions[indexPath.row]
             let editViewModel = AddNewExpenseViewController.ViewModel(expense: expense as! Expense)
+            
             return editViewModel
         }
         
         func addNewExpenseViewModel() -> AddNewExpenseViewController.ViewModel {
             let expense = Expense()
             let addViewModel = AddNewExpenseViewController.ViewModel(expense: expense)
+            
             return addViewModel
         }
-        
         
         // MARK: - Database Interaction Methods
 
