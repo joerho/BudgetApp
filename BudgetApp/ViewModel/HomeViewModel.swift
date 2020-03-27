@@ -53,6 +53,7 @@ extension HomeViewController {
                     return String(format: "$%.2f", Double(sumOfTransactions(arr: ms.transactions)) / 100)
                 }
             }
+            
             return "?"
         }
         
@@ -94,8 +95,8 @@ extension HomeViewController {
             dateFormatter.dateFormat = "MMMM yyyy"
             
             return dateFormatter.string(from: date)
-            
         }
+        
         //MARK: - Life Cycle
         init(expenses: [Expense], incomes: [Income]) {
             self.expenses = expenses

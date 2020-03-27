@@ -29,6 +29,7 @@ class HomeViewController: UIViewController {
     }
     
     private func initialize() {
+        // Initialize UITableView
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
         tableView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
@@ -39,7 +40,15 @@ class HomeViewController: UIViewController {
         tableView.isScrollEnabled = true
         tableView.allowsSelection = false
         
+        // Initialize title with current Month and Year
         self.title = viewModel.getCurrentMonthYear()
+        
+        // Initialize gear button on navigation bar
+        let settingsButton = UIBarButtonItem(title: NSString(string: "\u{2699}\u{0000FE0E}") as String, style: .plain, target: self, action: .gearButtonTapped)
+        let font = UIFont.systemFont(ofSize: 30) // adjust the size as required
+        let attributes = [NSAttributedString.Key.font : font]
+        settingsButton.setTitleTextAttributes(attributes, for: .normal)
+        self.navigationItem.leftBarButtonItem = settingsButton
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,6 +59,16 @@ class HomeViewController: UIViewController {
         tableView.reloadData()
     }
     
+    // MARK: - Actions
+    @objc fileprivate func gearButtonTapped(sender: UIBarButtonItem) {
+        let newVC = UIViewController()
+        navigationController?.pushViewController(newVC, animated: false)
+    }
+    
+}
+// MARK: - Selectors
+extension Selector {
+    fileprivate static let gearButtonTapped = #selector(HomeViewController.gearButtonTapped(sender:))
 }
 
 // MARK: - UITableViewDataSource
@@ -70,6 +89,7 @@ extension HomeViewController: UITableViewDataSource {
     
 }
 
+// MARK: - UITableViewDelegate
 extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100.0
