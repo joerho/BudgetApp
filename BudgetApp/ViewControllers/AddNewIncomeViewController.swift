@@ -13,6 +13,7 @@ protocol AddNewIncomeViewControllerDelegate {
     func didAddIncome(_ income: Income)
     func didUpdateIncome(_ income: Income)
 }
+
 class AddNewIncomeViewController: FormViewController {
     var addNewIncomeViewControllerDelegate: AddNewIncomeViewControllerDelegate?
     var viewModel: ViewModel!

@@ -43,6 +43,11 @@ class ExpenseViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = self.editButtonItem
     }
     
+    override func viewDidLoad() {
+        navigationController?.navigationBar.prefersLargeTitles = true
+        print(navigationController == nil)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
@@ -71,7 +76,6 @@ extension Selector {
 
 // MARK: - UITableViewDataSource
 extension ExpenseViewController: UITableViewDataSource {
-    
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.numberOfSections

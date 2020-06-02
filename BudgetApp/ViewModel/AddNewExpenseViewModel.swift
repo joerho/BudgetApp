@@ -103,7 +103,6 @@ extension AddNewExpenseViewController {
         }
         
         // MARK: - Life Cycle
-        
         init(expense: Expense) {
             self.expense = expense
         }

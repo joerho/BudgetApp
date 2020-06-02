@@ -18,10 +18,12 @@ class HomeViewController: UIViewController {
         tbl.dataSource = self
         tbl.delegate = self
         tbl.tableFooterView = UIView()
+        tbl.isScrollEnabled = false
+        tbl.allowsSelection = false
         return tbl
     }()
     
-    // MARK: -Life Cycle
+    // MARK: - Life Cycle
     convenience init(viewModel: ViewModel) {
         self.init()
         self.viewModel = viewModel
@@ -30,15 +32,13 @@ class HomeViewController: UIViewController {
     
     private func initialize() {
         // Initialize UITableView
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
         tableView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         tableView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         tableView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 30)
-        tableView.isScrollEnabled = true
-        tableView.allowsSelection = false
         
         // Initialize title with current Month and Year
         self.title = viewModel.getCurrentMonthYear()
@@ -61,8 +61,9 @@ class HomeViewController: UIViewController {
     
     // MARK: - Actions
     @objc fileprivate func gearButtonTapped(sender: UIBarButtonItem) {
-        let newVC = UIViewController()
-        navigationController?.pushViewController(newVC, animated: false)
+        let viewModel = SettingViewController.ViewModel()
+        let newVC = SettingViewController(viewModel: viewModel)
+        navigationController?.pushViewController(newVC, animated: true)
     }
     
 }
