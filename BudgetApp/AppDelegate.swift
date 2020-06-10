@@ -12,12 +12,11 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
+//    func createObserver() {
+//        NotificationCenter.default.addObserver(self, selector: <#T##Selector#>, name: NSNotification.Name.NSCalendarDayChanged, object: nil)
+//    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-//        window = UIWindow(frame:UIScreen.main.bounds)
-//        window?.rootViewController = TabBarController()
-//        UINavigationController(rootViewController: TabBarController())
-//        window?.makeKeyAndVisible()
         // Override point for customization after application launch.
         return true
     }
