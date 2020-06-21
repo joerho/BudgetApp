@@ -31,6 +31,7 @@
 		3CE1E04C23567E1D008E6317 /* AddNewExpenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE1E04B23567E1D008E6317 /* AddNewExpenseViewController.swift */; };
 		3CE1E0532357A2C0008E6317 /* AddNewExpenseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE1E0522357A2C0008E6317 /* AddNewExpenseViewModel.swift */; };
 		3CE7A782248F47C700750BEB /* TimeTraveler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE7A781248F47C700750BEB /* TimeTraveler.swift */; };
+		3CE7A7842491956B00750BEB /* Repeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE7A7832491956B00750BEB /* Repeat.swift */; };
 		3CE90E0723F4DAED005BD2FF /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE90E0623F4DAED005BD2FF /* HomeViewModel.swift */; };
 		3CE90E0923FE07E4005BD2FF /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE90E0823FE07E4005BD2FF /* CustomView.swift */; };
 		3CE90E0F240781A6005BD2FF /* MonthSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE90E0E240781A6005BD2FF /* MonthSection.swift */; };
@@ -99,6 +100,7 @@
 		3CE1E04B23567E1D008E6317 /* AddNewExpenseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewExpenseViewController.swift; sourceTree = "<group>"; };
 		3CE1E0522357A2C0008E6317 /* AddNewExpenseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewExpenseViewModel.swift; sourceTree = "<group>"; };
 		3CE7A781248F47C700750BEB /* TimeTraveler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTraveler.swift; sourceTree = "<group>"; };
+		3CE7A7832491956B00750BEB /* Repeat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repeat.swift; sourceTree = "<group>"; };
 		3CE90E0623F4DAED005BD2FF /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		3CE90E0823FE07E4005BD2FF /* CustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
 		3CE90E0E240781A6005BD2FF /* MonthSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthSection.swift; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 				3C49DCCF234C24F500D28820 /* Transaction.swift */,
 				3C96DD45237CE35E00BCB8EB /* Income.swift */,
 				3C460DA723D3CD4600267D70 /* Expense.swift */,
+				3CE7A7832491956B00750BEB /* Repeat.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -505,6 +508,7 @@
 				3C7E5B3E234FF792004CFACF /* IncomeViewController.swift in Sources */,
 				3C49DD0F234EFD4900D28820 /* TabBarController.swift in Sources */,
 				3CD90659234BF985007AED2D /* AppDelegate.swift in Sources */,
+				3CE7A7842491956B00750BEB /* Repeat.swift in Sources */,
 				3CE90E53242ECE1A005BD2FF /* SettingTableViewCell.swift in Sources */,
 				3C460DA823D3CD4600267D70 /* Expense.swift in Sources */,
 				3C7E5B40235048DA004CFACF /* HomeViewController.swift in Sources */,

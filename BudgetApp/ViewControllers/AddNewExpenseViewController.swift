@@ -13,7 +13,6 @@ protocol AddNewExpenseViewControllerDelegate {
     func didUpdateExpense(_ transaction: Expense)
 }
 
-
 class AddNewExpenseViewController: FormViewController {
     
     var addNewExpenseViewControllerDelegate: AddNewExpenseViewControllerDelegate?

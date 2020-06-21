@@ -13,6 +13,8 @@ class Database {
     
     static let instance = Database()
     private let db: Connection?
+    
+    //Income and Expense columns and data
     private let incomeTable = Table("income")
     private let expenseTable = Table("expense")
     private let id = Expression<Int64>("id")
@@ -21,6 +23,20 @@ class Database {
     private let date = Expression<String>("date")
     private let category = Expression<String>("category")
     private let repeats = Expression<String>("repeats")
+    
+    // Repeat table columns and data
+    private let repeatTable = Table("repeat")
+    private let type = Expression<Int>("type") // 0 if expense 1 if income
+    private let fk_id = Expression<Int64>("fk_id") // used to locate entries in either tables
+    private let max_num_of_occurrences = Expression<Int>("max_num_of_occurrences")
+    private let recurring_type = Expression<Int>("recurring_type")
+    private let separation_count = Expression<Int>("separation_count")
+    private let day_of_week = Expression<Int>("day_of_the_week")
+    private let week_of_month = Expression<Int>("week_of_the_month")
+    private let month_of_year = Expression<Int>("month_of_year")
+    
+    
+    
     
     private init() {
         do {
@@ -36,7 +52,7 @@ class Database {
         createExpenseTable()
     }
     
-// MARK: - Create
+    // MARK: - Create
     func createExpenseTable() {
         do {
             if !tableExists(tableName: "expense") {
@@ -70,6 +86,28 @@ class Database {
                 })
             }
             
+        }
+        catch {
+            print(error)
+        }
+    }
+    
+    func createRepeatsTable() {
+        do {
+            if !tableExists(tableName: "repeat") {
+                print("creating table 'repeat'")
+            }
+            try db?.run(repeatTable.create { t in
+                t.column(id, primaryKey: .autoincrement)
+                t.column(type)
+                t.column(fk_id)
+                t.column(max_num_of_occurrences)
+                t.column(recurring_type)
+                t.column(separation_count)
+                t.column(day_of_week)
+                t.column(week_of_month)
+                t.column(month_of_year)
+            })
         }
         catch {
             print(error)
@@ -163,7 +201,6 @@ class Database {
             print(error)
         }
         
-        
         return expenses
     }
     
@@ -237,5 +274,87 @@ class Database {
         
         return incomes
     }
+    
+    // MARK: - Repeat
+    
+    func addRepeat(repeatModel: Repeat) -> Int64 {
+        var returnId: Int64 = -1
+        
+        do{
+            let insert = repeatTable.insert(
+                type <- repeatModel.type,
+                fk_id <- repeatModel.fk_id,
+                max_num_of_occurrences <- repeatModel.max_num_of_occurrences,
+                recurring_type <- repeatModel.recurring_type,
+                separation_count <- repeatModel.separation_count,
+                day_of_week <- repeatModel.day_of_week,
+                week_of_month <- repeatModel.week_of_month,
+                month_of_year <- repeatModel.month_of_year
+                )
+            returnId = try db!.run(insert)
+            print("successfully added expense")
+        }
+        catch {
+            print(error)
+        }
+        return returnId
+    }
+    
+    func updateRepeat(repeatModel: Repeat) {
+        do {
+            let item = repeatTable.filter(id == repeatModel.id!)
+            let update = item.update(
+                [
+                    type <- repeatModel.type,
+                    max_num_of_occurrences <- repeatModel.max_num_of_occurrences,
+                    recurring_type <- repeatModel.recurring_type,
+                    separation_count <- repeatModel.separation_count,
+                    day_of_week <- repeatModel.day_of_week,
+                    week_of_month <- repeatModel.week_of_month,
+                    month_of_year <- repeatModel.month_of_year
+                ])
+            try db!.run(update)
+        }
+        catch {
+            print(error)
+        }
+    }
+    
+    func deleteRepeat(repeatModel: Repeat) {
+        do {
+            let item = repeatTable.filter(id == repeatModel.id!)
+            let delete = item.delete()
+            try db!.run(delete)
+            print("deleted item (repeat table) ", repeatModel.id!)
+        }
+        catch {
+            print(error)
+        }
+    }
+    
+    func getRepeats() -> [Repeat] {
+        var repeats = [Repeat]()
+        
+        do {
+            for repeatModel in try db!.prepare(repeatTable) {
+                repeats.append(Repeat(
+                    id: repeatModel[id],
+                    type: repeatModel[type],
+                    fk_id: repeatModel[fk_id],
+                    max_num_of_occurrences: repeatModel[max_num_of_occurrences],
+                    recurring_type: repeatModel[recurring_type],
+                    separation_count: repeatModel[separation_count],
+                    day_of_week: repeatModel[day_of_week],
+                    week_of_month: repeatModel[week_of_month],
+                    month_of_year: repeatModel[month_of_year]
+                ))
+            }
+        }
+        catch {
+            print(error)
+        }
+        return repeats
+    }
+
     
 }

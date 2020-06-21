@@ -26,10 +26,11 @@ class ExpenseViewController: UIViewController {
     convenience init(viewModel: ViewModel) {
         self.init()
         self.viewModel = viewModel
+        initializeTableView()
         initialize()
     }
     
-    private func initialize() {
+    private func initializeTableView() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
         tableView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
@@ -38,6 +39,9 @@ class ExpenseViewController: UIViewController {
         tableView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         tableView.allowsSelectionDuringEditing = true
         tableView.allowsSelection = false
+    }
+    
+    private func initialize() {
         self.title = "Expense"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: .addButtonTapped)
         self.navigationItem.leftBarButtonItem = self.editButtonItem
@@ -66,7 +70,6 @@ class ExpenseViewController: UIViewController {
         addVC.addNewExpenseViewControllerDelegate = self
         navigationController?.present(nav, animated: true)
     }
-    
 }
 
 // MARK: - Selectors
