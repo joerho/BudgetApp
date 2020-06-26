@@ -27,10 +27,11 @@ class HomeViewController: UIViewController {
     convenience init(viewModel: ViewModel) {
         self.init()
         self.viewModel = viewModel
+        initializeTableView()
         initialize()
     }
     
-    private func initialize() {
+    private func initializeTableView() {
         // Initialize UITableView
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -39,7 +40,9 @@ class HomeViewController: UIViewController {
         tableView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         tableView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 30)
-        
+    }
+    
+    private func initialize() {
         // Initialize title with current Month and Year
         self.title = viewModel.getCurrentMonthYear()
         
@@ -49,13 +52,18 @@ class HomeViewController: UIViewController {
         let attributes = [NSAttributedString.Key.font : font]
         settingsButton.setTitleTextAttributes(attributes, for: .normal)
         self.navigationItem.leftBarButtonItem = settingsButton
+        
+        if let lastOpened = UserDefaults.standard.object(forKey: "lastOpened") as? Date {
+            print(viewModel.dateFormatter.string(from: lastOpened))
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let expenses = Database.instance.getExpenses()
         let incomes = Database.instance.getIncomes()
-        self.viewModel = .init(expenses: expenses, incomes: incomes)
+        let repeats = Database.instance.getRepeats()
+        self.viewModel = .init(expenses: expenses, incomes: incomes, repeats: repeats)
         tableView.reloadData()
     }
     
@@ -65,8 +73,8 @@ class HomeViewController: UIViewController {
         let newVC = SettingViewController(viewModel: viewModel)
         navigationController?.pushViewController(newVC, animated: true)
     }
-    
 }
+
 // MARK: - Selectors
 extension Selector {
     fileprivate static let gearButtonTapped = #selector(HomeViewController.gearButtonTapped(sender:))
@@ -86,8 +94,6 @@ extension HomeViewController: UITableViewDataSource {
         
         return cell
     }
-    
-    
 }
 
 // MARK: - UITableViewDelegate

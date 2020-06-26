@@ -10,13 +10,13 @@ import Foundation
 
 class Repeat {
     var id: Int64?
-    var type: Int
-    var fk_id: Int64
+    var type: Int // expenses - 0 , incomes - 1
+    var fk_id: Int64 // foreign key
     var max_num_of_occurrences: Int
-    var recurring_type: Int
+    var recurring_type: Int // 0 - daily, 1 - weekly, 2 - monthly, 3 - yearly
     var separation_count: Int
-    var day_of_week: Int
-    var week_of_month: Int
+    var day_of_week: Int // 0 - 7, Mon - Sun
+    var week_of_month: Int //
     var month_of_year: Int
     
     init(id: Int64? = nil, type: Int, fk_id: Int64, max_num_of_occurrences: Int, recurring_type: Int, separation_count: Int, day_of_week: Int, week_of_month: Int, month_of_year: Int) {

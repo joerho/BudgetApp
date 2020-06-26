@@ -22,9 +22,10 @@ class TabBarController: UITabBarController {
         super.viewDidLoad()
         let expenses = Database.instance.getExpenses()
         let incomes = Database.instance.getIncomes()
+        let repeats = Database.instance.getRepeats()
         let expenseViewModel = ExpenseViewController.ViewModel(expenses: expenses)
         let incomeViewModel = IncomeViewController.ViewModel(incomes: incomes)
-        let homeViewModel = HomeViewController.ViewModel(expenses: expenses, incomes: incomes)
+        let homeViewModel = HomeViewController.ViewModel(expenses: expenses, incomes: incomes, repeats: repeats)
         
         item1 = UINavigationController(rootViewController: ExpenseViewController(viewModel: expenseViewModel))
         item2 = UINavigationController(rootViewController: HomeViewController(viewModel: homeViewModel))
