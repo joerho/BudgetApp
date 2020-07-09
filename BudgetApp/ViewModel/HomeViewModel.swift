@@ -16,12 +16,6 @@ extension HomeViewController {
             var content: String
         }
         
-        let dateFormatter: DateFormatter = {
-          let formatter = DateFormatter()
-          formatter.dateFormat = "MM/dd/yyyy"
-          return formatter
-        }()
-        
         var expenses: [Expense]
         var incomes: [Income]
         var repeats: [Repeat]
@@ -40,11 +34,11 @@ extension HomeViewController {
         }
         
         func getCurrentMonthlyIncome() -> String {
-            return getMonthlyIncome(date: dateFormatter.string(from: Date()))
+            return getMonthlyIncome(date: Formatter.mmddyyyy.string(from: Date()))
         }
         
         func getCurrentMonthlyExpense() -> String {
-            return getMonthlyExpense(date: dateFormatter.string(from: Date()))
+            return getMonthlyExpense(date: Formatter.mmddyyyy.string(from: Date()))
         }
         
         func getMonthlyIncome(date: String) -> String {
@@ -68,7 +62,7 @@ extension HomeViewController {
         
         func firstDayOfMonth(date: String) -> Date {
             let calendar = Calendar.current
-            let components = calendar.dateComponents([.year, .month], from: dateFormatter.date(from: date)!)
+            let components = calendar.dateComponents([.year, .month], from: Formatter.mmddyyyy.date(from: date)!)
             return calendar.date(from: components)!
         }
         
@@ -99,39 +93,47 @@ extension HomeViewController {
         }
         
         private func repeatHandler() {
-            if let last_opened_date = UserDefaults.standard.object(forKey: "lastOpened") as? Date {
-                let last_opened_string = dateFormatter.string(from: last_opened_date)
-                for r in repeats {
-                    let type = r.type
-                    let fk_id = r.fk_id
-                    let max_occurrences = r.max_num_of_occurrences
-                    let recurring_type = r.recurring_type
-                    let separation_count = r.separation_count
-                    let day_of_week = r.day_of_week
-                    let week_of_month = r.week_of_month
-                    let month_of_year = r.month_of_year
-                    let transaction = type == 0 ? getMatchingTransaction(fk_id: fk_id, arr: expenses) :
-                                                  getMatchingTransaction(fk_id: fk_id, arr: incomes)
-                    
-                    switch recurring_type {
-                    case 0:
-                        dailyRepeat(last_opened: last_opened_string, separation_count: separation_count, transaction: transaction!, type: type)
-                    case 1:
-                        weeklyRepeat(last_opened: last_opened_string, day_of_week: day_of_week, separation_count: separation_count, transaction: transaction!, type: type)
-                    case 2:
-                        monthlyRepeat(last_opened: last_opened_string, day_of_week: day_of_week, week_of_month: week_of_month, separation_count: separation_count, transaction: transaction!, type: type)
-                    case 3:
-                        yearlyRepeat(last_opened: last_opened_string, day_of_week: day_of_week, week_of_month: week_of_month, month_of_year: month_of_year, separation_count: separation_count, transaction: transaction!, type: type)
-                    default:
-                        break
-                    }
+            // change this to guard let?
+            guard let last_opened_date = UserDefaults.standard.object(forKey: "lastOpened") as? Date else {
+                return
+            }
+            let last_opened_string = Formatter.mmddyyyy.string(from: last_opened_date)
+            for r in repeats {
+                let type = r.type
+                let fk_id = r.fk_id
+                //let max_occurrences = r.max_num_of_occurrences
+                let recurring_type = r.recurring_type
+                let separation_count = r.separation_count
+                let day_of_week = r.day_of_week
+                let week_of_month = r.week_of_month
+                let month_of_year = r.month_of_year
+                let transaction = type == 0 ? getMatchingTransaction(fk_id: fk_id, arr: expenses) :
+                                              getMatchingTransaction(fk_id: fk_id, arr: incomes)
+                
+                switch recurring_type {
+                case 0:
+                    dailyRepeat(last_opened: last_opened_date, separation_count: separation_count, transaction: transaction!, type: type)
+                case 1:
+                    weeklyRepeat(last_opened: last_opened_string, day_of_week: day_of_week, separation_count: separation_count, transaction: transaction!, type: type)
+                case 2:
+                    monthlyRepeat(last_opened: last_opened_string, day_of_week: day_of_week, week_of_month: week_of_month, separation_count: separation_count, transaction: transaction!, type: type)
+                case 3:
+                    yearlyRepeat(last_opened: last_opened_string, day_of_week: day_of_week, week_of_month: week_of_month, month_of_year: month_of_year, separation_count: separation_count, transaction: transaction!, type: type)
+                default:
+                    break
                 }
             }
         }
         
-        private func dailyRepeat(last_opened: String, separation_count: Int, transaction: Transaction, type: Int) {
+        private func dailyRepeat(last_opened: Date, separation_count: Int, transaction: Transaction, type: Int) {
             //Fill gaps from last opened date to current date
-            
+            var dates = Date.getDailyInterval(fromDate: last_opened, toDate: Date())
+            let last_opened_string = Formatter.mmddyyyy.string(from: last_opened)
+            let start_date = transaction.date
+            dates = trimDateInterval(dateInterval: dates, last_opened: last_opened_string, start_date: start_date)
+            for date in dates {
+                
+            }
         }
         
         private func weeklyRepeat(last_opened: String, day_of_week: Int, separation_count: Int,
@@ -158,12 +160,37 @@ extension HomeViewController {
             return nil
         }
         
-        private func getDateInterval(last_opened: String) {
-            let current_date = dateFormatter.string(from: Date())
+        // Use this function to handle separation count
+        // TO-DO
+        private func handleSeparationCount(dateInterval: [String], separation_count: Int, last_opened: String, start_date: String) -> [String] {
+            var newDateInterval: [String] = dateInterval
             
-            
+            return newDateInterval
         }
-
+        
+        // Use this function to get rid of overlaps
+        private func trimDateInterval(dateInterval: [String], last_opened: String, start_date: String) -> [String] {
+            var newDateInterval: [String] = dateInterval
+            
+            // Future
+            if start_date > last_opened {
+                return []
+            }
+            // Past or on start_date
+            else {
+                newDateInterval = deleteDate(dateInterval: newDateInterval, date: last_opened)
+            }
+            
+            return newDateInterval
+        }
+        
+        private func deleteDate(dateInterval: [String], date: String) -> [String] {
+            var newDateInterval: [String] = dateInterval
+            if let index = newDateInterval.firstIndex(of: date) {
+                newDateInterval.remove(at: index)
+            }
+            return newDateInterval
+        }
         
         //MARK: - Life Cycle
         init(expenses: [Expense], incomes: [Income], repeats: [Repeat]) {
@@ -178,8 +205,43 @@ extension HomeViewController {
 }
 
 extension Date {
-    static func dates(fromDate: Date, toDate: Date) -> [String] {
+    static func getDailyInterval(fromDate: Date, toDate: Date) -> [String] {
         var dates: [String] = []
+        var date = fromDate
+        
+        while date <= toDate {
+            guard let newDate = Calendar.current.date(byAdding: .day, value: 1, to: date) else { break }
+            dates.append(Formatter.mmddyyyy.string(from: newDate))
+            date = newDate
+        }
+        
+        return dates
+    }
+    
+    // not working
+    static func getWeeklyInterval(fromDate: Date, toDate: Date) -> [String] {
+        var dates: [String] = []
+        var date = fromDate
+        
+        while date <= toDate {
+            dates.append(Formatter.mmddyyyy.string(from: date))
+            guard let newDate = Calendar.current.date(byAdding: .day, value: 7, to: date) else { break }
+            date = newDate
+        }
+        
+        return dates
+    }
+    
+    // not working
+    static func getMonthlyInterval(fromDate: Date, toDate: Date) -> [String] {
+        var dates: [String] = []
+        var date = fromDate
+        
+        while date <= toDate {
+            dates.append(Formatter.mmddyyyy.string(from: date))
+            guard let newDate = Calendar.current.date(byAdding: .month, value: 1, to: date) else { break }
+            date = newDate
+        }
         
         return dates
     }

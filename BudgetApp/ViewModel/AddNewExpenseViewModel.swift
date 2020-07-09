@@ -15,12 +15,6 @@ extension AddNewExpenseViewController {
         
         private let expense: Expense
         
-        let dateFormatter: DateFormatter = {
-          let formatter = DateFormatter()
-          formatter.dateFormat = "MM/dd/yyyy"
-          return formatter
-        }()
-        
         let numberFormatter: CurrencyFormatter = {
             let formatter = CurrencyFormatter()
             formatter.numberStyle = .currency
@@ -57,7 +51,7 @@ extension AddNewExpenseViewController {
         var date: String {
             get {
                 if expense.date == "" {
-                    expense.date = dateFormatter.string(from: Date())
+                    expense.date = Formatter.mmddyyyy.string(from: Date())
                 }
                 return expense.date
             }

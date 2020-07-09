@@ -34,12 +34,12 @@ class AddNewIncomeViewController: FormViewController {
         form
         +++ Section("Income")
         <<< DateRow() {
-            $0.dateFormatter = viewModel.dateFormatter
+            $0.dateFormatter = Formatter.mmddyyyy
             $0.title = "Date"
-            $0.value = viewModel.dateFormatter.date(from: viewModel.date)
+            $0.value = Formatter.mmddyyyy.date(from: viewModel.date)
             $0.onChange { [unowned self] row in
                 if let date = row.value {
-                    self.viewModel.date = self.viewModel.dateFormatter.string(from: date)
+                    self.viewModel.date = Formatter.mmddyyyy.string(from: date)
                 }
             }
         }

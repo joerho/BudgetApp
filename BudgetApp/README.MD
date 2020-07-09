@@ -88,3 +88,22 @@ for every item in repeats
 observer will go in the home view controller
 homeviewmodel has all the necessary components
 will need to add a new component: repeats
+
+
+6/29/2020
+start_date vs last_opened vs current_date
+
+special cases:
+adding a new entry with repeat that is before the current date
+adding a new entry with repeat that is in the future
+adding a new entry with repeat that is the current date
+the day after the starting date (last_opened is start_date)
+
+if start_date > last_opened
+    if start_date > current_date
+        do nothing
+    else
+        put repeats
+
+if start_date <= last_opened
+    

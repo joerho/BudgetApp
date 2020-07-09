@@ -14,12 +14,6 @@ extension AddNewIncomeViewController {
         
         private let income: Income
         
-        let dateFormatter: DateFormatter = {
-          let formatter = DateFormatter()
-          formatter.dateFormat = "MM/dd/yyyy"
-          return formatter
-        }()
-        
         let numberFormatter: CurrencyFormatter = {
             let formatter = CurrencyFormatter()
             formatter.numberStyle = .currency
@@ -56,7 +50,7 @@ extension AddNewIncomeViewController {
         var date: String {
             get {
                 if income.date == "" {
-                    income.date = dateFormatter.string(from: Date())
+                    income.date = Formatter.mmddyyyy.string(from: Date())
                 }
                 return income.date
             }

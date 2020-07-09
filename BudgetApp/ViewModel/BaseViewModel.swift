@@ -9,13 +9,7 @@
 import Foundation
 
 class BaseViewModel {
-    
-    let dateFormatter: DateFormatter = {
-      let formatter = DateFormatter()
-      formatter.dateFormat = "MM/dd/yyyy"
-      return formatter
-    }()
-    
+
     var groupedTransactions: [MonthSection] = []
     
     var transactions: [Transaction] {
@@ -43,7 +37,7 @@ class BaseViewModel {
     
     func firstDayOfMonth(date: String) -> Date {
         let calendar = Calendar.current
-        let components = calendar.dateComponents([.year, .month], from: dateFormatter.date(from: date)!)
+        let components = calendar.dateComponents([.year, .month], from: Formatter.mmddyyyy.date(from: date)!)
         return calendar.date(from: components)!
     }
     
