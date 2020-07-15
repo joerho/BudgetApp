@@ -126,7 +126,8 @@ extension IncomeViewController: UITableViewDelegate {
 }
 
 // MARK: - AddNewIncomeViewControllerDelegate
-extension IncomeViewController: AddNewIncomeViewControllerDelegate {
+extension IncomeViewController: AddNewIncomeViewControllerDelegate, HomeViewModelIncomeDelegate {
+    
     func didAddIncome(_ income: Income) {
         viewModel.addIncome(income: income)
         tableView.reloadData()

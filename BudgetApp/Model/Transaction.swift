@@ -11,16 +11,20 @@ import Foundation
 
 class Transaction: Comparable {
     
+    fileprivate var repeats_raw: String
     var id: Int64?
     var description: String
     var date: String
     var amount: Int
+        
     
-    init(id: Int64? = nil, description: String = "", date: String = "", amount: Int = 0) {
+    init(id: Int64? = nil, description: String = "", date: String = "", amount: Int = 0, repeats: String = RepeatFrequency.never.rawValue) {
         self.id = id
         self.description = description
         self.date = date
         self.amount = amount
+        self.repeats_raw = repeats
+
     }
     
     static func < (lhs: Transaction, rhs: Transaction) -> Bool {
@@ -46,4 +50,24 @@ class Transaction: Comparable {
 
 }
 
+extension Transaction {
+    enum RepeatFrequency: String {
+        case never = "Never"
+        case daily = "Every Day"
+        case weekly = "Every Week"
+        case biweekly = "Every 2 Weeks"
+        case monthly = "Every Month"
+        case annually = "Every Year"
+    }
+}
 
+extension Transaction {
+    var repeats: RepeatFrequency {
+        get {
+            return RepeatFrequency(rawValue: self.repeats_raw)!
+        }
+        set {
+            self.repeats_raw = newValue.rawValue
+        }
+    }
+}

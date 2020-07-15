@@ -8,6 +8,14 @@
 
 import Foundation
 
+protocol HomeViewModelExpenseDelegate {
+    func didAddExpense(_ transaction: Expense)
+}
+
+protocol HomeViewModelIncomeDelegate {
+    func didAddIncome(_ transaction: Income)
+}
+
 extension HomeViewController {
     class ViewModel {
         
@@ -16,6 +24,8 @@ extension HomeViewController {
             var content: String
         }
         
+        var homeViewExpenseDelegate: HomeViewModelExpenseDelegate?
+        var homeViewIncomeDelegate: HomeViewModelIncomeDelegate?
         var expenses: [Expense]
         var incomes: [Income]
         var repeats: [Repeat]
@@ -92,8 +102,8 @@ extension HomeViewController {
             return dateFormatter.string(from: date)
         }
         
-        private func repeatHandler() {
-            // change this to guard let?
+        // MARK: - Repeats
+        func repeatHandler() {
             guard let last_opened_date = UserDefaults.standard.object(forKey: "lastOpened") as? Date else {
                 return
             }
@@ -125,15 +135,35 @@ extension HomeViewController {
             }
         }
         
+        private func populateWithExpenses(dateInterval: [String], transaction: Transaction) {
+            let description = transaction.description
+            let amount = transaction.amount
+            let repeats = transaction.repeats.rawValue
+            let category = (transaction as! Expense).category.rawValue
+            for date in dateInterval {
+                let expenseEntry = Expense(id: nil, description: description, date: date, amount: amount, category: category, repeats: repeats)
+                homeViewExpenseDelegate?.didAddExpense(expenseEntry)
+            }
+        }
+        
+        private func populateWithIncomes(dateInterval: [String], transaction: Transaction) {
+            let description = transaction.description
+            let amount = transaction.amount
+            let repeats = transaction.repeats.rawValue
+            for date in dateInterval {
+                let incomeEntry = Income(id: nil, description: description, date: date, amount: amount, repeats: repeats)
+                homeViewIncomeDelegate?.didAddIncome(incomeEntry)
+            }
+        }
+        
         private func dailyRepeat(last_opened: Date, separation_count: Int, transaction: Transaction, type: Int) {
             //Fill gaps from last opened date to current date
             var dates = Date.getDailyInterval(fromDate: last_opened, toDate: Date())
             let last_opened_string = Formatter.mmddyyyy.string(from: last_opened)
             let start_date = transaction.date
             dates = trimDateInterval(dateInterval: dates, last_opened: last_opened_string, start_date: start_date)
-            for date in dates {
-                
-            }
+            type == 0 ? populateWithExpenses(dateInterval: dates, transaction: transaction) : populateWithIncomes(dateInterval: dates, transaction: transaction)
+            
         }
         
         private func weeklyRepeat(last_opened: String, day_of_week: Int, separation_count: Int,
@@ -192,7 +222,7 @@ extension HomeViewController {
             return newDateInterval
         }
         
-        //MARK: - Life Cycle
+        // MARK: - Life Cycle
         init(expenses: [Expense], incomes: [Income], repeats: [Repeat]) {
             self.expenses = expenses
             self.incomes = incomes
@@ -204,6 +234,7 @@ extension HomeViewController {
     }
 }
 
+// MARK: - Date
 extension Date {
     static func getDailyInterval(fromDate: Date, toDate: Date) -> [String] {
         var dates: [String] = []

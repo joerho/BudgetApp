@@ -100,7 +100,17 @@ class AddNewIncomeViewController: FormViewController {
                 }
             }
         }
-
+        
+        <<< PushRow<String>() { //1
+            $0.title = "Repeats" //2
+            $0.value = viewModel.repeats //3
+            $0.options = viewModel.repeatOptions //4
+            $0.onChange { [unowned self] row in //5
+              if let value = row.value {
+                self.viewModel.repeats = value
+              }
+            }
+        }
         
         form.validate()
     }

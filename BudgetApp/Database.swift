@@ -50,6 +50,7 @@ class Database {
         }
         createIncomeTable()
         createExpenseTable()
+        createRepeatsTable()
     }
     
     // MARK: - Create
@@ -57,7 +58,6 @@ class Database {
         do {
             if !tableExists(tableName: "expense") {
                 print("creating table 'expense'")
-                //let expense = Table("expense")
                 try db?.run(expenseTable.create { t in
                     t.column(id, primaryKey: .autoincrement)
                     t.column(description)
@@ -77,15 +77,14 @@ class Database {
         do {
             if !tableExists(tableName: "income") {
                 print("creating table 'income'")
-                //let income = Table("income")
                 try db?.run(incomeTable.create { t in
                     t.column(id, primaryKey: .autoincrement)
                     t.column(description)
                     t.column(amount)
                     t.column(date)
+                    t.column(repeats)
                 })
             }
-            
         }
         catch {
             print(error)
@@ -96,18 +95,18 @@ class Database {
         do {
             if !tableExists(tableName: "repeat") {
                 print("creating table 'repeat'")
+                try db?.run(repeatTable.create { t in
+                    t.column(id, primaryKey: .autoincrement)
+                    t.column(type)
+                    t.column(fk_id)
+                    t.column(max_num_of_occurrences)
+                    t.column(recurring_type)
+                    t.column(separation_count)
+                    t.column(day_of_week)
+                    t.column(week_of_month)
+                    t.column(month_of_year)
+                })
             }
-            try db?.run(repeatTable.create { t in
-                t.column(id, primaryKey: .autoincrement)
-                t.column(type)
-                t.column(fk_id)
-                t.column(max_num_of_occurrences)
-                t.column(recurring_type)
-                t.column(separation_count)
-                t.column(day_of_week)
-                t.column(week_of_month)
-                t.column(month_of_year)
-            })
         }
         catch {
             print(error)
@@ -215,7 +214,8 @@ class Database {
             let insert = incomeTable.insert(
                 description <- incomeModel.description,
                 amount <- incomeModel.amount,
-                date <- incomeModel.date
+                date <- incomeModel.date,
+                repeats <- incomeModel.repeats.rawValue
             )
             returnId = try db!.run(insert)
             print("successfully added income")
@@ -234,7 +234,8 @@ class Database {
                 [
                     description <- incomeModel.description,
                     amount <- incomeModel.amount,
-                    date <- incomeModel.date
+                    date <- incomeModel.date,
+                    repeats <- incomeModel.repeats.rawValue
                 ])
             try db!.run(update)
         }
@@ -264,7 +265,8 @@ class Database {
                     id: income[id],
                     description: income[description],
                     date: income[date],
-                    amount: income[amount]
+                    amount: income[amount],
+                    repeats: income[repeats]
                 ))
             }
         }

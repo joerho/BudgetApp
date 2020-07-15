@@ -11,16 +11,14 @@ import Foundation
 
 class Expense: Transaction {
     fileprivate var category_raw: String
-    fileprivate var repeats_raw: String
     
     init(id: Int64? = nil, description: String = "", date: String = "", amount: Int = 0, category: String = Category.misc.rawValue, repeats: String = RepeatFrequency.never.rawValue) {
         self.category_raw = category
-        self.repeats_raw = repeats
-        super.init(id: id, description: description, date: date, amount: amount)
+        super.init(id: id, description: description, date: date, amount: amount, repeats: repeats)
     }
 }
 
-// MARK: - Category, Repeats
+// MARK: - Category
 extension Expense {
     enum Category: String {
         case misc = "Misc."
@@ -30,14 +28,6 @@ extension Expense {
         case utilities = "Utilities 🚰"
         case personal = "Personal 👑"
         case entertainment = "Entertainment 🏌️‍♂️"
-    }
-    
-    enum RepeatFrequency: String {
-        case never = "Never"
-        case daily = "Daily"
-        case weekly = "Weekly"
-        case monthly = "Monthly"
-        case annually = "Annually"
     }
 }
 
@@ -49,15 +39,6 @@ extension Expense {
         }
         set {
             self.category_raw = newValue.rawValue
-        }
-    }
-    
-    var repeats: RepeatFrequency {
-        get {
-            return RepeatFrequency(rawValue: self.repeats_raw)!
-        }
-        set {
-            self.repeats_raw = newValue.rawValue
         }
     }
 }

@@ -11,6 +11,7 @@ import UIKit
 class HomeViewController: UIViewController {
     
     var viewModel : ViewModel!
+    
 
     lazy var tableView: UITableView = {
         let tbl = UITableView()
@@ -29,6 +30,7 @@ class HomeViewController: UIViewController {
         self.viewModel = viewModel
         initializeTableView()
         initialize()
+        createObserver()
     }
     
     private func initializeTableView() {
@@ -52,10 +54,6 @@ class HomeViewController: UIViewController {
         let attributes = [NSAttributedString.Key.font : font]
         settingsButton.setTitleTextAttributes(attributes, for: .normal)
         self.navigationItem.leftBarButtonItem = settingsButton
-        
-        if let lastOpened = UserDefaults.standard.object(forKey: "lastOpened") as? Date {
-            print(viewModel.dateFormatter.string(from: lastOpened))
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,17 +65,30 @@ class HomeViewController: UIViewController {
         tableView.reloadData()
     }
     
+    func createObserver() {
+        guard let last_opened_date = UserDefaults.standard.object(forKey: "lastOpened") as? Date else {
+            return
+        }
+        print(last_opened_date)
+        NotificationCenter.default.addObserver(self, selector: .handleRepeat, name: NSNotification.Name.NSCalendarDayChanged, object: nil)
+    }
+    
     // MARK: - Actions
     @objc fileprivate func gearButtonTapped(sender: UIBarButtonItem) {
         let viewModel = SettingViewController.ViewModel()
         let newVC = SettingViewController(viewModel: viewModel)
         navigationController?.pushViewController(newVC, animated: true)
     }
+    
+    @objc fileprivate func handleRepeat() {
+        viewModel.repeatHandler()
+    }
 }
 
 // MARK: - Selectors
 extension Selector {
     fileprivate static let gearButtonTapped = #selector(HomeViewController.gearButtonTapped(sender:))
+    fileprivate static let handleRepeat = #selector(HomeViewController.handleRepeat)
 }
 
 // MARK: - UITableViewDataSource

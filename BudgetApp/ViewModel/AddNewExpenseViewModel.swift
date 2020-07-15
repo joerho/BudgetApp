@@ -83,6 +83,7 @@ extension AddNewExpenseViewController {
             Expense.RepeatFrequency.never.rawValue,
             Expense.RepeatFrequency.daily.rawValue,
             Expense.RepeatFrequency.weekly.rawValue,
+            Expense.RepeatFrequency.biweekly.rawValue,
             Expense.RepeatFrequency.monthly.rawValue,
             Expense.RepeatFrequency.annually.rawValue,
         ]

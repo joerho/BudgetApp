@@ -10,8 +10,8 @@ import Foundation
 
 
 class Income: Transaction {
-    override init(id: Int64? = nil, description: String = "", date: String = "", amount: Int = 0) {
-        super.init(id: id, description: description, date: date, amount: amount)
+    override init(id: Int64? = nil, description: String = "", date: String = "", amount: Int = 0, repeats: String = RepeatFrequency.never.rawValue) {
+        super.init(id: id, description: description, date: date, amount: amount, repeats: repeats)
     }
 }
 

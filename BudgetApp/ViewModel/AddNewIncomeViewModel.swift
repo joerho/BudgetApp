@@ -59,6 +59,23 @@ extension AddNewIncomeViewController {
             }
         }
         
+        var repeatOptions: [String] = [
+            Income.RepeatFrequency.never.rawValue,
+            Income.RepeatFrequency.daily.rawValue,
+            Income.RepeatFrequency.weekly.rawValue,
+            Income.RepeatFrequency.biweekly.rawValue,
+            Income.RepeatFrequency.monthly.rawValue,
+            Income.RepeatFrequency.annually.rawValue,
+        ]
+        
+        var repeats: String {
+            get {
+                return income.repeats.rawValue
+            }
+            set {
+                income.repeats = Expense.RepeatFrequency(rawValue: newValue)!
+            }
+        }
         
         func getIncome() -> Income {
             return self.income

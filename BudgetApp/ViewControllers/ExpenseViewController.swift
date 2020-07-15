@@ -146,7 +146,7 @@ extension ExpenseViewController: UITableViewDelegate {
 }
 
 // MARK: - AddNewExpenseViewControllerDelegate
-extension ExpenseViewController: AddNewExpenseViewControllerDelegate {
+extension ExpenseViewController: AddNewExpenseViewControllerDelegate, HomeViewModelExpenseDelegate {
     func didAddExpense(_ expense: Expense) {
         viewModel.addExpense(expense: expense)
         tableView.reloadData()
@@ -158,3 +158,4 @@ extension ExpenseViewController: AddNewExpenseViewControllerDelegate {
         tableView.reloadData()
     }
 }
+
