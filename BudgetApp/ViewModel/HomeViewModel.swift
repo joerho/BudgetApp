@@ -104,6 +104,7 @@ extension HomeViewController {
         
         // MARK: - Repeats
         func repeatHandler() {
+            print("repeatHandler")
             guard let last_opened_date = UserDefaults.standard.object(forKey: "lastOpened") as? Date else {
                 return
             }

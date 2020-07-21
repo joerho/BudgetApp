@@ -31,6 +31,15 @@ class HomeViewController: UIViewController {
         initializeTableView()
         initialize()
         createObserver()
+        createTestButton()
+    }
+    
+    private func createTestButton() {
+        let button = UIButton(frame: CGRect(x: 100, y: 500, width: 100, height: 50))
+        button.backgroundColor = .green
+        button.setTitle("Time Travel", for: .normal)
+        button.addTarget(self, action: #selector(buttonAction(sender:)), for: .touchUpInside)
+        self.view.addSubview(button)
     }
     
     private func initializeTableView() {
@@ -82,6 +91,10 @@ class HomeViewController: UIViewController {
     
     @objc fileprivate func handleRepeat() {
         viewModel.repeatHandler()
+    }
+    
+    @objc func buttonAction(sender: UIButton!) {
+        NotificationCenter.default.post(name: .NSCalendarDayChanged, object: nil)
     }
 }
 
