@@ -33,6 +33,19 @@ extension HomeViewController {
         var groupedIncomes: [MonthSection] = []
         var groupedTitleContent: [TitleContent] = []
         
+        
+        func getExpenses() -> [Expense] {
+            return expenses
+        }
+        
+        func getIncomes() -> [Income] {
+            return incomes
+        }
+        
+        func getRepeats() -> [Repeat] {
+            return repeats
+        }
+        
         func getMonthlyExpense(date: String) -> String {
             let month = firstDayOfMonth(date: date)
             for ms in groupedExpenses {

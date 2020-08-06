@@ -37,12 +37,10 @@ class AddNewExpenseViewController: FormViewController {
         <<< DateRow() {
             $0.dateFormatter = Formatter.mmddyyyy
             $0.title = "Date"
-            $0.value = Formatter.mmddyyyy
-.date(from: viewModel.date)
+            $0.value = Formatter.mmddyyyy.date(from: viewModel.date)
             $0.onChange { [unowned self] row in
                 if let date = row.value {
-                    self.viewModel.date = Formatter.mmddyyyy
-.string(from: date)
+                    self.viewModel.date = Formatter.mmddyyyy.string(from: date)
                 }
             }
         }

@@ -13,7 +13,7 @@ class Repeat {
     var type: Int // expenses - 0 , incomes - 1
     var fk_id: Int64 // foreign key
     var max_num_of_occurrences: Int
-    var recurring_type: Int // 0 - daily, 1 - weekly, 2 - monthly, 3 - yearly
+    var recurring_type: Int // 0 - daily, 1 - weekly, 2 - biweekly, 3 - monthly, 4 - yearly
     var separation_count: Int
     var day_of_week: Int // 0 - 7, Mon - Sun
     var week_of_month: Int //

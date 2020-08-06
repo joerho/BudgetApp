@@ -40,8 +40,6 @@ class HomeViewCell: UITableViewCell {
         content.heightAnchor.constraint(equalToConstant: 40).isActive = true
         content.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         content.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        
-        
     }
     
     required init?(coder aDecoder: NSCoder) {

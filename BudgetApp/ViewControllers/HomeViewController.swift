@@ -74,6 +74,8 @@ class HomeViewController: UIViewController {
         tableView.reloadData()
     }
     
+    // Does not catch the notification
+    // Possibly move elsewhere
     func createObserver() {
         guard let last_opened_date = UserDefaults.standard.object(forKey: "lastOpened") as? Date else {
             return
@@ -84,8 +86,11 @@ class HomeViewController: UIViewController {
     
     // MARK: - Actions
     @objc fileprivate func gearButtonTapped(sender: UIBarButtonItem) {
-        let viewModel = SettingViewController.ViewModel()
-        let newVC = SettingViewController(viewModel: viewModel)
+        let repeatList = viewModel.getRepeats()
+        let expenseList = viewModel.getExpenses()
+        let incomeList = viewModel.getIncomes()
+        let viewModel = RepeatsViewController.ViewModel(repeats: repeatList, expenses: expenseList, incomes: incomeList)
+        let newVC = RepeatsViewController(viewModel: viewModel)
         navigationController?.pushViewController(newVC, animated: true)
     }
     
@@ -93,6 +98,9 @@ class HomeViewController: UIViewController {
         viewModel.repeatHandler()
     }
     
+    
+    //Repeat Tester button action
+    //Delete after use
     @objc func buttonAction(sender: UIButton!) {
         NotificationCenter.default.post(name: .NSCalendarDayChanged, object: nil)
     }
